@@ -1,15 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import {Product} from "@/pages/api/products";
 import Link from "next/link";
 import Image from "next/image";
+import { Product } from "@/interfaces/product";
 export const HomeComponent = ({products=[]}:{products: Product[]}) => {
-  console.log(products)
-
-  const handleClick = () =>{
-
-  
-  }
   return (
     <Box
       position="absolute"
@@ -34,19 +28,19 @@ export const HomeComponent = ({products=[]}:{products: Product[]}) => {
           </Link>
         </Box>
       </Stack>
-      <Stack direction="row" flexWrap="wrap" height="calc(100% - 50px)" overflow="auto">
+      <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
         {products?.map(product => (
-        <Box width="50%" padding="15px" key={product.id}>
+        <Box width="50%" padding="16px" key={product.id}>
           <Box position="relative" height={160} width="100%">
           <Image fill alt={product?.title ?? ''}  objectFit="cover" src={`${typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
           </Box>
         <Link passHref href={`/product/${product.id}`}>
-          <Typography component="p" textAlign="center" marginTop={1} onClick={handleClick}>
+          <Typography component="p" textAlign="center" marginTop={1} >
             {product?.title}
           </Typography>
         </Link>
         <Typography component="p" textAlign="center" color="#0984e3">
-         {product.price} đ
+         {product.price.toLocaleString("en-US")} đ
         </Typography>
       </Box>
         ))
@@ -55,3 +49,4 @@ export const HomeComponent = ({products=[]}:{products: Product[]}) => {
     </Box>
   );
 };
+

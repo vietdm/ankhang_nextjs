@@ -66,7 +66,7 @@ export const DialogAddToCart = ({ open, onSubmit, onClose, name, price,quantityI
             </Box>
           </Stack>
           <Typography textAlign="center" marginTop={2}>
-            {priceTemp}đ
+            {priceTemp.toLocaleString("en-US")}đ
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>

@@ -6,8 +6,8 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useState } from "react";
 import { HomeComponent } from "@/components/home/Home";
-import { getProductsList, Product } from "./api/products";
-
+import { getProductsList } from "./api/products";
+import { Product } from "../interfaces/product";
 
 type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 

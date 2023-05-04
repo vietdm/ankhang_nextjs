@@ -1,9 +1,12 @@
 import { useEffect,useState } from "react"
-import { CartItem, getCartDetail, saveCart, deleteProductFromCart, getProductsList,Product } from "../api/products"
 import { Box, Button, Stack,Typography } from "@mui/material"
 import CartItemComponent from "@/components/ui/CartItemComponent"
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useRouter } from 'next/router'
+import { getProductsList } from "../api/products";
+import { deleteProductFromCart, saveCart, getCartDetail } from "@/utils/helper/cart";
+import { CartItem, Product } from "../../interfaces/product";
+import { Alert } from "@/libraries/alert";
 const CartPage = ({products}: {products: Product[]})=>{
   const [cart, setCart] = useState<CartItem[]>([])
   const router = useRouter()
@@ -12,10 +15,12 @@ const CartPage = ({products}: {products: Product[]})=>{
   },[])
   const handleUpdate = ({quantity,id}: CartItem)=>{
     saveCart({quantity,id: id});
+    Alert.success('Cập nhật giỏ hàng thành công!');
     handleGetCart();
   }
   const handleDelete = (id: number) => {
     deleteProductFromCart(id);
+    Alert.success('Đã xóa sản phẩm khỏi giỏ hàng!');
     handleGetCart();
   }
   const handleGetCart = () => {
@@ -55,14 +60,14 @@ const CartPage = ({products}: {products: Product[]})=>{
       </Stack>}
     </Box>
   </Box>
-    
   )
-
 }
+
 export async function getStaticProps() {
   const reponse = await getProductsList() as any;
   return {
       props:{products: reponse?.products}
   }
 }
+
 export default CartPage

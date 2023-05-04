@@ -1,9 +1,9 @@
-import { CartItem, Product, getProductDetail } from "@/pages/api/products";
 import { Button, Stack , Box, Typography} from "@mui/material";
 import Image from "next/image";
 import { useState,useEffect } from "react";
 import { DialogAddToCart } from "./DialogAddToCart";
 import { DialogDelete } from "./DialogDelete";
+import { CartItem, Product } from "@/interfaces/product";
 type CartItemComponentProps= {
   quantity: number;
   id: number;
@@ -39,7 +39,7 @@ const CartItemComponent = ({id,quantity,product,onDelete,onUpdate}:CartItemCompo
          Số lượng: {quantity}
         </Typography>
         <Typography component="p" textAlign="center" sx={{fontSize: '14px'}}>
-         Đơn giá: {product?.price} đ
+         Đơn giá: {((product?.price ?? 1) * quantity).toLocaleString("en-US")} đ
         </Typography>
     </Box>
     <Stack alignItems="center" marginY={2}>
