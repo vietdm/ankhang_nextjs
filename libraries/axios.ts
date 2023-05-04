@@ -1,14 +1,21 @@
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 const instance = axios.create({
   baseURL: "http://mvtp.site/api/",
 });
 
+export interface ApiResponse {
+  success: boolean;
+  data?: any;
+  message?: string;
+}
+
 instance.interceptors.request.use(
   async (config) => {
     // Implement function to get token
     const token = {
-      accessToken: "",
+      accessToken: getCookie('_token'),
       refreshToken: "",
     };
 
@@ -24,9 +31,9 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response: any) => {
     if (typeof response?.data != "undefined") {
-      return response.data as Response;
+      return response.data as ApiResponse;
     }
-    return response;
+    return response as ApiResponse;
   },
   async (error) => {
     if (typeof error.response?.data != "undefined") {

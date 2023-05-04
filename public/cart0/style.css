@@ -1,0 +1,23 @@
+body {
+    font-family: 'Mulish', sans-serif;
+}
+
+.header .back {
+    padding: 4px;
+    margin-right: 10px;
+}
+
+.cart-list .list .img {
+    width: 120px;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-right: 30px;
+}
+
+.cart-list .list .img img {
+    width: 100%;
+}
+
+.cart-list .list .content {
+    width: calc(100% - 120px);
+}

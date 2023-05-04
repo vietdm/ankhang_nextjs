@@ -18,7 +18,7 @@ type Props = {
   price: number;
   quantityInp?: number;
 };
-export const DialogAddToCart = ({ open, onSubmit, onClose, name, price,quantityInp=1 }: Props) => {
+export const DialogAddToCart = ({ open, onSubmit, onClose, name, price, quantityInp = 1 }: Props) => {
   const [quantity, setQuantity] = useState<number>(quantityInp);
   const [priceTemp, setPriceTemp] = useState<number>(price);
   const handleClose = () => {
@@ -71,7 +71,7 @@ export const DialogAddToCart = ({ open, onSubmit, onClose, name, price,quantityI
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={()=> onSubmit(quantity)}>Đồng ý</Button>
+          <Button onClick={() => onSubmit(quantity)}>Đồng ý</Button>
         </DialogActions>
       </Dialog>
     </div>

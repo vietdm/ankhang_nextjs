@@ -11,13 +11,13 @@ import { useRouter } from "next/router";
 
 type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 
-const Layout = ({children}:{children: any})=>{
+const Layout = ({ children }: { children: any }) => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("user");
   const router = useRouter();
-  useEffect(()=>{
+  useEffect(() => {
     if (router.asPath === '/') setMenuActive('home')
     else setMenuActive(router.asPath.split('/')[1] as BottomMenu)
-  },[])
+  }, [])
 
   return (
     <Box minHeight="100vh" position="relative">
@@ -44,7 +44,7 @@ const Layout = ({children}:{children: any})=>{
           sx={{ backgroundColor: menuActive == "home" ? "#0984e3" : undefined, transition: "all .2s" }}
           onClick={() => setMenuActive("home")}
         >
-           <Link href="/" passHref>
+          <Link href="/" passHref>
             <HomeOutlinedIcon
               sx={{ fontSize: 32, color: menuActive == "home" ? "#fff" : "#676ddf", transition: "all .2s" }}
             />

@@ -1,19 +1,31 @@
 import { Box, Button } from "@mui/material";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SvgIcon from "@mui/material/SvgIcon";
 import { Login } from "@/components/auth0/login";
 import { Signup } from "@/components/auth0/signup";
+import { useRouter } from "next/router";
+import { fetch } from "@/libraries/axios";
+import { ForgotPassword } from "@/components/auth0/forgot";
 
-type TypePage = "login" | "signup";
+type TypePage = "login" | "signup" | "forgot";
 
 const Index = () => {
   const [typePage, setTypePage] = useState<TypePage>("login");
+  const route = useRouter();
 
   const changeTypePage = (newTypePage: TypePage) => {
     setTypePage(newTypePage);
   };
+
+  useEffect(() => {
+    fetch.post('/auth/info').then(() => {
+      route.push('/');
+    }).catch(() => {
+      //
+    });
+  }, []);
 
   return (
     <Box minHeight="100vh">
@@ -65,7 +77,7 @@ const Index = () => {
         <Box
           sx={{
             position: "absolute",
-            left: typePage == "login" ? "25%" : "75%",
+            left: typePage == "login" ? "25%" : typePage == 'forgot' ? '50%' : "75%",
             transform: "translateX(-50%)",
             bottom: 0,
             width: "40px",
@@ -80,15 +92,9 @@ const Index = () => {
         </Box>
       </Box>
       <Box marginBottom="3rem">
-        {typePage == "login" ? (
-          <Login />
-        ) : (
-          <Signup
-            gotoLogin={() => {
-              changeTypePage("login");
-            }}
-          />
-        )}
+        {typePage == "login" && <Login gotoForgot={() => { changeTypePage("forgot"); }} />}
+        {typePage == 'signup' && <Signup gotoLogin={() => { changeTypePage("login"); }} />}
+        {typePage == 'forgot' && <ForgotPassword gotoLogin={() => { changeTypePage("login"); }} />}
       </Box>
     </Box>
   );

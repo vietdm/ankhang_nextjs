@@ -6,13 +6,17 @@ import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
 import { Error } from "@/components/ui/Error";
 import { ErrorMessage } from "@hookform/error-message";
+import { setCookies } from "cookies-next";
+import { useRouter } from "next/router";
 
 type FormValues = {
   phone: string;
   password: string;
 };
 
-export const Login = () => {
+export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -24,9 +28,8 @@ export const Login = () => {
       .post("auth/login", data)
       .then((response) => {
         Alert.success(response.message);
-        setTimeout(() => {
-          window.location.href = "/api/auth0?token=" + response.token;
-        }, 1000);
+        setCookies('_token', response.token);
+        router.push('/');
       })
       .catch((error) => {
         Alert.error(error.message);
@@ -77,6 +80,7 @@ export const Login = () => {
           <Button variant="contained" type="submit">
             Đăng nhập
           </Button>
+          <Typography component="p" marginTop={3} fontStyle='italic' fontSize="17px" onClick={() => gotoForgot()}>Quên mật khẩu</Typography>
         </Box>
       </form>
     </Box>
