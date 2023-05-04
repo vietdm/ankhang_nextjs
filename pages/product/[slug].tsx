@@ -3,10 +3,22 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { DialogAddToCart } from "@/components/ui/DialogAddToCart";
 import { useState } from "react";
+import { Product, getProductDetail, saveCart } from "../api/products";
+import { GetStaticPaths } from "next";
+import { useRouter } from 'next/router'
+import Link from "next/link";
 
-const ProductPage = () => {
+const ProductPage = ({product}:{product: Product}) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
-
+  const router = useRouter()
+  const handleAddToCart = (quantity: number)=>{
+    saveCart({quantity,id: product.id});
+    setOpenModal(false);
+  }
+  
+  const handleBack = ()=>{
+    router.back();
+  }
   return (
     <Box height="100vh" maxHeight="100vh" minHeight="100vh">
       <Stack
@@ -17,14 +29,16 @@ const ProductPage = () => {
         width="100%"
         sx={{ background: "#0984e3" }}
       >
-        <Box padding={1}>
+        <Box padding={1} onClick={handleBack}>
           <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
         </Box>
         <Typography component="h2" color="#fff">
-          Sản phẩm A Có 5 giá trị
+          {product?.title}
         </Typography>
         <Box padding={1}>
+          <Link href="/cart" passHref>
           <ShoppingCartOutlinedIcon sx={{ color: "#fff" }} />
+          </Link>
         </Box>
       </Stack>
       <Stack height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto">
@@ -32,21 +46,16 @@ const ProductPage = () => {
           Chi tiết sản phẩm
         </Typography>
         <Box textAlign="center">
-          <img src="http://mvtp.site/images/products/nano.jpg" alt="Demo" width="100%" />
+          <img src={typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]} alt={product?.title} width="100%" />
         </Box>
-        <Typography component="p" marginTop={1}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
-          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-          make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-          typesetting, remaining essentially unchanged.
-        </Typography>
+        <Typography component="div" marginTop={1} dangerouslySetInnerHTML={{__html: product?.description}}></Typography>
         <hr style={{ margin: "15px 0" }} />
         <Stack>
           <Typography component="b" fontWeight="500">
-            Sản phẩm A Có 5 giá trị
+          {product?.title}
           </Typography>
         </Stack>
-        <Stack alignItems="flex-end">Giá bán: 3.000.000đ</Stack>
+        <Stack alignItems="flex-end">Giá bán: {product?.price}đ</Stack>
         <Stack alignItems="center" marginY={2}>
           <Button variant="contained" onClick={() => setOpenModal(true)}>
             Thêm vào giỏ hàng
@@ -54,18 +63,26 @@ const ProductPage = () => {
         </Stack>
         <DialogAddToCart
           open={openModal}
-          onSubmit={() => {
-            setOpenModal(false);
-          }}
+          onSubmit={handleAddToCart}
           onClose={() => {
             setOpenModal(false);
           }}
-          name="Hahaha"
-          price={3000000}
+          name={product?.title}
+          price={product.price}
         />
       </Stack>
     </Box>
   );
 };
+
+
+export async function getServerSideProps(context: any) {
+  const slug= Number(context.params?.slug ?? 1);
+  const data = await getProductDetail(slug) as Product;
+  return {
+      props:{product: data},
+  }
+}
+
 
 export default ProductPage;

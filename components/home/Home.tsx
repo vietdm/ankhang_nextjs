@@ -1,7 +1,14 @@
 import { Box, Stack, Typography } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import {Product} from "@/pages/api/products";
+import Link from "next/link";
+export const HomeComponent = ({products=[]}:{products: Product[]}) => {
+  console.log(products)
 
-export const HomeComponent = () => {
+  const handleClick = () =>{
+
+  
+  }
   return (
     <Box
       position="absolute"
@@ -24,101 +31,30 @@ export const HomeComponent = () => {
         </Box>
       </Stack>
       <Stack direction="row" flexWrap="wrap" height="calc(100% - 50px)" overflow="auto">
-        <Box width="50%" padding="15px">
-          <Box
-            sx={{
-              backgroundImage: 'url("http://mvtp.site/images/products/nano.jpg")',
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              width: "100%",
-              height: "160px",
-              margin: "auto",
-            }}
-          ></Box>
-          <Typography component="p" textAlign="center" marginTop={1}>
-            Sản phẩm A Có 5 giá trị
+        {products?.map(product => (
+        <Box width="50%" padding="15px" key={product.id}>
+        <Box
+          sx={{
+            backgroundImage: `url(${typeof(product.images) === 'string' ? JSON.parse(product.images)[0] : product.images[0]})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            width: "100%",
+            height: "160px",
+            margin: "auto",
+          }}
+        ></Box>
+        <Link passHref href={`/product/${product.id}`}>
+          <Typography component="p" textAlign="center" marginTop={1} onClick={handleClick}>
+            {product?.title}
           </Typography>
-          <Typography component="p" textAlign="center" color="#0984e3">
-            3.000.000 đ
-          </Typography>
-        </Box>
-        <Box width="50%" padding="15px">
-          <Box
-            sx={{
-              backgroundImage: 'url("http://mvtp.site/images/products/nano.jpg")',
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              width: "100%",
-              height: "160px",
-              margin: "auto",
-            }}
-          ></Box>
-          <Typography component="p" textAlign="center" marginTop={1}>
-            Sản phẩm A Có 5 giá trị
-          </Typography>
-          <Typography component="p" textAlign="center" color="#0984e3">
-            3.000.000 đ
-          </Typography>
-        </Box>
-        <Box width="50%" padding="15px">
-          <Box
-            sx={{
-              backgroundImage: 'url("http://mvtp.site/images/products/nano.jpg")',
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              width: "100%",
-              height: "160px",
-              margin: "auto",
-            }}
-          ></Box>
-          <Typography component="p" textAlign="center" marginTop={1}>
-            Sản phẩm A Có 5 giá trị
-          </Typography>
-          <Typography component="p" textAlign="center" color="#0984e3">
-            3.000.000 đ
-          </Typography>
-        </Box>
-        <Box width="50%" padding="15px">
-          <Box
-            sx={{
-              backgroundImage: 'url("http://mvtp.site/images/products/nano.jpg")',
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              width: "100%",
-              height: "160px",
-              margin: "auto",
-            }}
-          ></Box>
-          <Typography component="p" textAlign="center" marginTop={1}>
-            Sản phẩm A Có 5 giá trị
-          </Typography>
-          <Typography component="p" textAlign="center" color="#0984e3">
-            3.000.000 đ
-          </Typography>
-        </Box>
-        <Box width="50%" padding="15px">
-          <Box
-            sx={{
-              backgroundImage: 'url("http://mvtp.site/images/products/nano.jpg")',
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-              width: "100%",
-              height: "160px",
-              margin: "auto",
-            }}
-          ></Box>
-          <Typography component="p" textAlign="center" marginTop={1}>
-            Sản phẩm A Có 5 giá trị
-          </Typography>
-          <Typography component="p" textAlign="center" color="#0984e3">
-            3.000.000 đ
-          </Typography>
-        </Box>
+        </Link>
+        <Typography component="p" textAlign="center" color="#0984e3">
+         {product.price} đ
+        </Typography>
+      </Box>
+        ))
+          }
       </Stack>
     </Box>
   );
