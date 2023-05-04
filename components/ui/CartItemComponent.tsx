@@ -35,7 +35,7 @@ const CartItemComponent = ({id,quantity,product,onDelete,onUpdate}:CartItemCompo
       <Typography component="b" textAlign="center" fontWeight="600" sx={{fontSize: '16px'}}>
         {product?.title}
       </Typography>
-          <Typography component="p" textAlign="center" sx={{fontSize: '14px'}}>
+        <Typography component="p" textAlign="center" sx={{fontSize: '14px'}}>
          Số lượng: {quantity}
         </Typography>
         <Typography component="p" textAlign="center" sx={{fontSize: '14px'}}>
