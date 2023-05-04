@@ -30,8 +30,8 @@ const CartItemComponent = ({id,quantity,product,onDelete,onUpdate}:CartItemCompo
     <Stack  direction="row"
     justifyContent="space-between"
     alignItems="center">
-    <Image width={100} height={100} alt={product?.title ?? ''} src={`${typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
-    <Box sx={{padding: '12px'}} textAlign="center" >
+    <Image width={120} height={120} alt={product?.title ?? ''} src={`${typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
+    <Box sx={{padding: '12px'}} textAlign="center" flexGrow={1}>
       <Typography component="b" textAlign="center" fontWeight="600" sx={{fontSize: '16px'}}>
         {product?.title}
       </Typography>
@@ -43,10 +43,10 @@ const CartItemComponent = ({id,quantity,product,onDelete,onUpdate}:CartItemCompo
         </Typography>
     </Box>
     <Stack alignItems="center" marginY={2}>
-      <Button variant="contained" onClick={() => handleOpenModal('update')} sx={{borderRadius: '15px', margin: '4px 0'}}>
+      <Button variant="contained" onClick={() => handleOpenModal('update')} sx={{borderRadius: '16px', margin: '4px 0'}}>
         Sửa
       </Button>
-      <Button variant="contained" onClick={() => handleOpenModal('delete')}  color="warning" sx={{borderRadius: '15px', margin: '4px 0'}}>
+      <Button variant="contained" onClick={() => handleOpenModal('delete')}  color="warning" sx={{borderRadius: '16px', margin: '4px 0'}}>
         Xóa
     </Button>
   </Stack>

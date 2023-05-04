@@ -7,6 +7,7 @@ import { Product, getProductDetail, saveCart } from "../api/products";
 import { GetStaticPaths } from "next";
 import { useRouter } from 'next/router'
 import Link from "next/link";
+import Image from "next/image";
 
 const ProductPage = ({product}:{product: Product}) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -45,10 +46,10 @@ const ProductPage = ({product}:{product: Product}) => {
         <Typography variant="h6" marginY={1} textAlign="center">
           Chi tiết sản phẩm
         </Typography>
-        <Box textAlign="center">
-          <img src={typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]} alt={product?.title} width="100%" />
-        </Box>
-        <Typography component="div" marginTop={1} dangerouslySetInnerHTML={{__html: product?.description}}></Typography>
+        <Box position="relative" maxHeight={200} height={140} width="100%" marginY={1}>
+          <Image fill alt={product?.title ?? ''}  objectFit="cover" src={`${typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
+          </Box>
+        <div dangerouslySetInnerHTML={{__html: product?.description}}></div>
         <hr style={{ margin: "15px 0" }} />
         <Stack>
           <Typography component="b" fontWeight="500">

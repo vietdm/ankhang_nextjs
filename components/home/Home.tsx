@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import {Product} from "@/pages/api/products";
 import Link from "next/link";
+import Image from "next/image";
 export const HomeComponent = ({products=[]}:{products: Product[]}) => {
   console.log(products)
 
@@ -17,6 +18,7 @@ export const HomeComponent = ({products=[]}:{products: Product[]}) => {
       height="calc(100% - 50px)"
       maxHeight="calc(100% - 50px)"
       minHeight="calc(100% - 50px)"
+      overflow="auto"
     >
       <Stack
         direction="row"
@@ -27,23 +29,17 @@ export const HomeComponent = ({products=[]}:{products: Product[]}) => {
         sx={{ background: "#0984e3" }}
       >
         <Box padding={1}>
+          <Link href="/cart" passHref>
           <ShoppingCartOutlinedIcon sx={{ color: "#fff" }} />
+          </Link>
         </Box>
       </Stack>
       <Stack direction="row" flexWrap="wrap" height="calc(100% - 50px)" overflow="auto">
         {products?.map(product => (
         <Box width="50%" padding="15px" key={product.id}>
-        <Box
-          sx={{
-            backgroundImage: `url(${typeof(product.images) === 'string' ? JSON.parse(product.images)[0] : product.images[0]})`,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            width: "100%",
-            height: "160px",
-            margin: "auto",
-          }}
-        ></Box>
+          <Box position="relative" height={160} width="100%">
+          <Image fill alt={product?.title ?? ''}  objectFit="cover" src={`${typeof(product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
+          </Box>
         <Link passHref href={`/product/${product.id}`}>
           <Typography component="p" textAlign="center" marginTop={1} onClick={handleClick}>
             {product?.title}

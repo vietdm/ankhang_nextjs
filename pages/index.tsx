@@ -13,7 +13,7 @@ type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 
 const Home = ({products = []}: {products : Product[]}) => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("home");
-console.log(products)
+
   return (
     <Box minHeight="100vh" position="relative">
       <Box height="calc(100vh - 50px)" overflow="auto">

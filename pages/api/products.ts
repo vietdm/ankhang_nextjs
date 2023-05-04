@@ -50,8 +50,8 @@ export function saveCart(data: CartItem) {
 
 export function deleteProductFromCart(id: number){
   const cartData = getCart() as CartItem[];
-  let index = cartData.findIndex(item => item.id === id);
-  const newCart = cartData.splice(index,1);
+  let index = cartData.findIndex(item => item.id == id);
+  cartData.splice(index,1);
   localStorage.removeItem("cart");
-  localStorage.setItem("cart", JSON.stringify(newCart));
+  localStorage.setItem("cart", JSON.stringify(cartData));
 }
