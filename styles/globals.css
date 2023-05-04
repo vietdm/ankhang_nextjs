@@ -87,6 +87,7 @@ body {
 
 body {
     color: rgb(var(--foreground-rgb));
+    font-family: "Mulish", "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 a {

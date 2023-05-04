@@ -4,6 +4,7 @@ import Logo from "@/public/logo.png";
 import { useState } from "react";
 import SvgIcon from "@mui/material/SvgIcon";
 import { Login } from "@/components/auth0/login";
+import { Signup } from "@/components/auth0/signup";
 
 type TypePage = "login" | "signup";
 
@@ -78,7 +79,17 @@ const Index = () => {
           </SvgIcon>
         </Box>
       </Box>
-      <Login></Login>
+      <Box marginBottom="3rem">
+        {typePage == "login" ? (
+          <Login />
+        ) : (
+          <Signup
+            gotoLogin={() => {
+              changeTypePage("login");
+            }}
+          />
+        )}
+      </Box>
     </Box>
   );
 };
