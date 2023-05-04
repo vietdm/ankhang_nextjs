@@ -6,16 +6,18 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useState } from "react";
 import { HomeComponent } from "@/components/home/Home";
+import { getProductsList } from "./api/products";
+import { Product } from "../interfaces/product";
 
 type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 
-const Home = () => {
+const Home = ({products = []}: {products : Product[]}) => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("home");
 
   return (
     <Box minHeight="100vh" position="relative">
       <Box height="calc(100vh - 50px)" overflow="auto">
-        <HomeComponent />
+        <HomeComponent products={products}/>
       </Box>
       <Stack
         position="absolute"
@@ -94,4 +96,10 @@ const Home = () => {
   );
 };
 
+export async function getStaticProps() {
+  const reponse = await getProductsList() as any;
+  return {
+      props:{products: reponse?.products}
+  }
+}
 export default Home;

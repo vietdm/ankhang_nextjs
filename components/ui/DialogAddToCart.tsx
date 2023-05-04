@@ -12,13 +12,14 @@ import { useEffect, useState } from "react";
 
 type Props = {
   open: boolean;
-  onSubmit: () => void;
+  onSubmit: (quantity: number) => void;
   onClose: () => void;
   name: string;
   price: number;
+  quantityInp?: number;
 };
-export const DialogAddToCart = ({ open, onSubmit, onClose, name, price }: Props) => {
-  const [quantity, setQuantity] = useState<number>(1);
+export const DialogAddToCart = ({ open, onSubmit, onClose, name, price,quantityInp=1 }: Props) => {
+  const [quantity, setQuantity] = useState<number>(quantityInp);
   const [priceTemp, setPriceTemp] = useState<number>(price);
   const handleClose = () => {
     onClose();
@@ -65,12 +66,12 @@ export const DialogAddToCart = ({ open, onSubmit, onClose, name, price }: Props)
             </Box>
           </Stack>
           <Typography textAlign="center" marginTop={2}>
-            {priceTemp}
+            {priceTemp.toLocaleString("en-US")}đ
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={onSubmit}>Đồng ý</Button>
+          <Button onClick={()=> onSubmit(quantity)}>Đồng ý</Button>
         </DialogActions>
       </Dialog>
     </div>
