@@ -11,6 +11,7 @@ import { Product } from "../interfaces/product";
 import { UserComponent } from "@/components/user/User";
 import { withAuth } from "@/interfaces/withAuth";
 import { MissionComponent } from "@/components/mission";
+import { LuckyWheel } from "@/components/luckywheel";
 
 type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 
@@ -30,6 +31,7 @@ const Home = ({ products = [] }: { products: Product[] }) => {
         {menuActive == 'home' && <HomeComponent products={products} />}
         {menuActive == 'user' && <UserComponent />}
         {menuActive == 'mission' && <MissionComponent />}
+        {menuActive == 'gift' && <LuckyWheel />}
       </Box>
       <Stack
         position="absolute"
