@@ -28,6 +28,11 @@ export const UserComponent = () => {
           Cấp bậc: <b>{userLevel(user?.level)}</b>
         </Typography>
         <Box marginY={5}>
+          <Link href='/user/tree' passHref>
+            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+              Xem sơ đồ user
+            </Typography>
+          </Link>
           <Link href='/' passHref>
             <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
               Chỉnh sửa thông tin
