@@ -8,15 +8,17 @@ import YouTube from 'react-youtube';
 export const MissionComponent = () => {
     const [limit, setLimit] = useState<number>(0);
     const [videoMission, setVideoMission] = useState<string | null>(null);
+    const [listVideoMission, setListVideoMission] = useState<any>([]);
     const [missionId, setMissionId] = useState<number>(0);
     const [calledMission, setCalledMission] = useState<boolean>(false);
 
     useEffect(() => {
         fetch.get('/mission-list/video').then(result => {
-            const idVideo = youtubeParser(result.mission.content.url);
+            const idVideo = youtubeParser(result.mission[0].content.url);
             setLimit(result.limit);
             setVideoMission(idVideo);
-            setMissionId(result.mission.id);
+            setMissionId(result.mission[0].id);
+            setListVideoMission(result.mission);
         });
     }, []);
 
