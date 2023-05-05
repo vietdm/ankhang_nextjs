@@ -35,7 +35,7 @@ const UserTree = () => {
                     <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
                 </Box>
                 <Typography component="h2" color="#fff">
-                    Cây người dùng
+                    Đội nhóm
                 </Typography>
                 <Box></Box>
             </Stack>
