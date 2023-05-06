@@ -80,6 +80,11 @@ export const UserComponent = () => {
               Chỉnh sửa thông tin
             </Typography>
           </Link>
+          <Link href='/order/history' passHref>
+            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+              Lịch sử mua hàng
+            </Typography>
+          </Link>
           <Link href='/' passHref>
             <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
               Đổi mật khẩu
