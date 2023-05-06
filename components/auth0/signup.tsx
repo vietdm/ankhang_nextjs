@@ -67,8 +67,12 @@ export const Signup = ({ gotoLogin }: Props) => {
 
   useEffect(() => {
     if (hasAffilate) {
-      setValue('present_phone', router.query.r);
-      getPresentName(router.query.r);
+      fetch.post('/__/____', { username: router.query.r }).then(result => {
+        setValue('present_phone', result.phone);
+        getPresentName(result.phone);
+      }).catch(error => {
+        Alert.error(error.message);
+      })
     }
   }, [hasAffilate]);
 

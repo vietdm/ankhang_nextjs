@@ -28,21 +28,35 @@ export const UserComponent = () => {
   }
 
   const affilate = useMemo(() => {
-    return window.location.origin + '/auth0/?r=' + user?.phone;
+    return window.location.origin + '/auth0/?r=' + user?.username;
   }, [user]);
 
   return (
     <>
-      <Box position="relative" textAlign="center" height={140} width={140} sx={{ margin: '24px auto' }} marginTop={6}>
-        <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
-      </Box>
+      <Stack direction="row" width="90%" margin="2.5rem auto 0 auto" sx={{
+        backgroundColor: '#e3e3e3',
+        padding: '14px',
+        borderRadius: '14px'
+      }}>
+        <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
+          <Box position="relative" textAlign="center" height={80} width={80}>
+            <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
+          </Box>
+        </Stack>
+        <Box width="calc(100% - 80px)">
+          <Typography component="h4" textAlign="center" sx={{ fontSize: '22px' }} fontWeight="600">
+            {user?.fullname}
+          </Typography>
+          <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+            Mã KH: {user?.phone}
+          </Typography>
+          <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+            Điểm thưởng: {user?.akg_point}
+          </Typography>
+        </Box>
+      </Stack>
+
       <Box marginBottom={4}>
-        <Typography component="h4" textAlign="center" sx={{ fontSize: '22px' }} fontWeight="600">
-          {user?.fullname}
-        </Typography>
-        <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-          Cấp bậc: <b>{userLevel(user?.level)}</b>
-        </Typography>
         <Box marginY={5}>
           <Typography
             component="p"
