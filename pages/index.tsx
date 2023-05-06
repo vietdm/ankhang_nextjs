@@ -13,6 +13,7 @@ import { withAuth } from "@/interfaces/withAuth";
 import { MissionComponent } from "@/components/mission";
 import { LuckyWheel } from "@/components/luckywheel";
 import UserTree from "./user/tree";
+import { Alert } from "@/libraries/alert";
 
 type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 
@@ -20,10 +21,43 @@ const Home = ({ products = [] }: { products: Product[] }) => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("home");
   const [ready, setReady] = useState<boolean>(false);
 
+  const isAddToHomeScreenSupported = () => {
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isSafari = /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent.toLowerCase());
+    const isChromeForAndroid = /chrome/i.test(window.navigator.userAgent.toLowerCase()) && /android/i.test(window.navigator.userAgent.toLowerCase());
+
+    return (isIos && isSafari) || isChromeForAndroid;
+  }
+
+  const installApp = () => {
+    const promptEvent = window.deferredPrompt;
+
+    if (promptEvent) {
+      promptEvent.prompt();
+      promptEvent.userChoice.then((result) => {
+        if (result.outcome === 'accepted') {
+          Alert.success('Shortcut đã được cài đặt!');
+        } else {
+          Alert.success('Shortcut không được cài đặt');
+        }
+
+        window.deferredPrompt = null;
+      });
+    }
+  }
+
   useEffect(() => {
     withAuth(() => {
       setReady(true);
     });
+
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone == true) {
+      //
+    } else {
+      if (confirm('Bạn có muốn cài đặt app của chúng tôi ra ngoài màn hình chính không?')) {
+        installApp();
+      }
+    }
   }, []);
 
   return (
