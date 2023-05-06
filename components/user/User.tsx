@@ -1,10 +1,12 @@
 import { useUser } from "@/hooks/useUser";
+import { Alert } from "@/libraries/alert";
 import { userLevel } from "@/utils";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 export const UserComponent = () => {
   const router = useRouter();
@@ -14,6 +16,20 @@ export const UserComponent = () => {
     deleteCookie('_token');
     router.push('/auth0');
   }
+
+  const copyAffilate = (value: string) => {
+    const tempInput = document.createElement("input");
+    tempInput.value = value;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+    Alert.success('Đã sao chép');
+  }
+
+  const affilate = useMemo(() => {
+    return window.location.origin + '/auth0/?r=' + user?.phone;
+  }, [user]);
 
   return (
     <>
@@ -28,6 +44,19 @@ export const UserComponent = () => {
           Cấp bậc: <b>{userLevel(user?.level)}</b>
         </Typography>
         <Box marginY={5}>
+          <Typography
+            component="p"
+            textAlign="center"
+            marginY={1}
+            sx={{ borderBottom: '1px solid #3333' }}
+            padding={1}
+            marginX={5}
+            onClick={() => copyAffilate(affilate)}
+          >
+            Link giới thiệu:
+            <br />
+            <span>{affilate}</span>
+          </Typography>
           <Link href='/user/tree' passHref>
             <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
               Xem đội nhóm

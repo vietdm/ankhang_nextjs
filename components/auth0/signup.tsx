@@ -9,6 +9,8 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Error } from "@/components/ui/Error";
 import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 type FormValues = {
   fullname: string;
@@ -26,10 +28,16 @@ type Props = {
 };
 
 export const Signup = ({ gotoLogin }: Props) => {
+  const [presentName, setPresentName] = useState<any>(null);
+  const router = useRouter();
+
+  let debounceTimeout: any = null;
+
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>();
 
@@ -44,6 +52,32 @@ export const Signup = ({ gotoLogin }: Props) => {
         Alert.error(error.message);
       });
   });
+
+  const getPresentName = (phone) => {
+    fetch.get('/present/name?phone=' + phone).then(result => {
+      setPresentName(result.name);
+    }).catch(() => {
+      setPresentName(null);
+    })
+  };
+
+  useEffect(() => {
+    if (router.query?.r) {
+      setValue('present_phone', router.query.r);
+      getPresentName(router.query.r);
+    }
+  }, [router.query]);
+
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      clearTimeout(debounceTimeout);
+      if (name != 'present_phone') return;
+      debounceTimeout = setTimeout(() => {
+        getPresentName(value.present_phone);
+      }, 300);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
   return (
     <Box
@@ -136,6 +170,7 @@ export const Signup = ({ gotoLogin }: Props) => {
             role="presentation"
             {...register("present_phone", { required: "Hãy nhập số điện thoại người giới thiệu!" })}
           />
+          {presentName && <Box width="100%" textAlign="center" marginTop={1}>{presentName}</Box>}
           <ErrorMessage errors={errors} name="present_phone" render={({ message }) => <Error mgs={message} />} />
         </Stack>
         <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">

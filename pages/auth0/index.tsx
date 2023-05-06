@@ -27,6 +27,12 @@ const Index = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (route.query?.r) {
+      setTypePage('signup');
+    }
+  }, [route.query]);
+
   return (
     <Box minHeight="100vh">
       <Box
