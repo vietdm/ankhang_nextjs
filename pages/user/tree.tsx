@@ -43,7 +43,7 @@ const UserTree = () => {
                 {ready && (
                     <Tree
                         initialDepth={2}
-                        translate={{ x: window.innerWidth / 2, y: 50 }}
+                        translate={{ x: 100, y: 50 }}
                         data={userTree}
                         orientation="vertical"
                         separation={{ siblings: 1, nonSiblings: 1 }}

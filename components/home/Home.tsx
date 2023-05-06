@@ -12,6 +12,7 @@ export const HomeComponent = ({ products = [] }: { products: Product[] }) => {
       height="calc(100% - 50px)"
       maxHeight="calc(100% - 50px)"
       minHeight="calc(100% - 50px)"
+      width="100vw"
       overflow="auto"
     >
       <Stack
