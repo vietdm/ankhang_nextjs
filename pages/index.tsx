@@ -40,11 +40,11 @@ const Home = ({ products = [] }: { products: Product[] }) => {
         //
       } else {
         if (isAddToHomeScreenSupported()) {
-          if (confirm('Bạn có muốn cài đặt app của chúng tôi ra ngoài màn hình chính không?')) {
-            setTimeout(() => {
-              installApp();
-            }, 1000);
-          }
+          setTimeout(() => {
+            // if (confirm('Bạn có muốn cài đặt app của chúng tôi ra ngoài màn hình chính không?')) {
+            //   installApp();
+            // }
+          }, 1000);
         }
       }
     });
