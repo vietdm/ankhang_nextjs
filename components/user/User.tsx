@@ -1,6 +1,5 @@
 import { useUser } from "@/hooks/useUser";
 import { Alert } from "@/libraries/alert";
-import { userLevel } from "@/utils";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { deleteCookie } from "cookies-next";
 import Image from "next/image";
