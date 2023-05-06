@@ -49,15 +49,18 @@ const Home = ({ products = [] }: { products: Product[] }) => {
   useEffect(() => {
     withAuth(() => {
       setReady(true);
-    });
-
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone == true) {
-      //
-    } else {
-      if (confirm('Bạn có muốn cài đặt app của chúng tôi ra ngoài màn hình chính không?')) {
-        installApp();
+      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone == true) {
+        //
+      } else {
+        if (isAddToHomeScreenSupported()) {
+          if (confirm('Bạn có muốn cài đặt app của chúng tôi ra ngoài màn hình chính không?')) {
+            setTimeout(() => {
+              installApp();
+            }, 1000);
+          }
+        }
       }
-    }
+    });
   }, []);
 
   return (

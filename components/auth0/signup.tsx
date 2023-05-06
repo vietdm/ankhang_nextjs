@@ -10,7 +10,7 @@ import { Error } from "@/components/ui/Error";
 import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type FormValues = {
   fullname: string;
@@ -61,12 +61,16 @@ export const Signup = ({ gotoLogin }: Props) => {
     })
   };
 
+  const hasAffilate = useMemo(() => {
+    return !!router.query?.r;
+  }, [router.query]);
+
   useEffect(() => {
-    if (router.query?.r) {
+    if (hasAffilate) {
       setValue('present_phone', router.query.r);
       getPresentName(router.query.r);
     }
-  }, [router.query]);
+  }, [hasAffilate]);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
@@ -159,7 +163,7 @@ export const Signup = ({ gotoLogin }: Props) => {
           />
           <ErrorMessage errors={errors} name="phone" render={({ message }) => <Error mgs={message} />} />
         </Stack>
-        <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
+        <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap" display={hasAffilate ? 'none' : 'flex'}>
           <PhoneAndroidOutlinedIcon sx={{ width: "60px", color: "grey" }} />
           <TextField
             id="present_phone"
