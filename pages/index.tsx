@@ -30,20 +30,7 @@ const Home = ({ products = [] }: { products: Product[] }) => {
   }
 
   const installApp = () => {
-    const promptEvent = window.deferredPrompt;
-
-    if (promptEvent) {
-      promptEvent.prompt();
-      promptEvent.userChoice.then((result) => {
-        if (result.outcome === 'accepted') {
-          Alert.success('Shortcut đã được cài đặt!');
-        } else {
-          Alert.success('Shortcut không được cài đặt');
-        }
-
-        window.deferredPrompt = null;
-      });
-    }
+    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').then(() => { Alert.success('Đã cài đặt thành công'); }); }
   }
 
   useEffect(() => {
