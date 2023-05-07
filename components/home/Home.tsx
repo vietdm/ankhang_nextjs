@@ -9,19 +9,19 @@ import { useUser } from "@/hooks/useUser";
 import { userLevel } from "@/utils";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
+import Countdown from "react-countdown";
 
 export const HomeComponent = () => {
     const { user } = useUser();
+    const [dateCount, setDateCount] = useState<any>(null);
     const [dashboardData, setDashboardData] = useState<any>(null);
 
     useEffect(() => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
         });
-        setTimeout(() => {
-            const twoDaysFromNow = (new Date().getTime() / 1000) + (86400 * 2) + 1;
-            new FlipDown(twoDaysFromNow).start();
-        }, 500);
+        const timeEnd = new Date('2023-05-10 20:00:00');
+        setDateCount(timeEnd);
     }, []);
 
     return (
@@ -59,7 +59,14 @@ export const HomeComponent = () => {
             </Swiper>
             <Box marginY={3}>
                 <Typography variant="h5" textAlign="center">Count Down...</Typography>
-                <div id="flipdown" className="flipdown" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}></div>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: '34px'
+                }}>
+                    {dateCount && <Countdown date={dateCount} />}
+                </div>
             </Box>
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
