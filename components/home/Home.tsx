@@ -2,8 +2,18 @@ import { Box, Stack, Typography } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "next/link";
 import Image from "next/image";
-import { Product } from "@/interfaces/product";
-export const HomeComponent = ({ products = [] }: { products: Product[] }) => {
+import { useEffect, useState } from "react";
+import { fetch } from "@/libraries/axios";
+
+export const HomeComponent = () => {
+  const [products, setProducts] = useState<any>([]);
+
+  useEffect(() => {
+    fetch.get('/products').then(result => {
+      setProducts(result.products);
+    })
+  }, []);
+
   return (
     <Box
       position="absolute"

@@ -6,8 +6,6 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useEffect, useState } from "react";
 import { HomeComponent } from "@/components/home/Home";
-import { getProductsList } from "./api/products";
-import { Product } from "../interfaces/product";
 import { UserComponent } from "@/components/user/User";
 import { withAuth } from "@/interfaces/withAuth";
 import { MissionComponent } from "@/components/mission";
@@ -17,7 +15,7 @@ import { Alert } from "@/libraries/alert";
 
 type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
 
-const Home = ({ products = [] }: { products: Product[] }) => {
+const Home = () => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("home");
   const [ready, setReady] = useState<boolean>(false);
 
@@ -53,7 +51,7 @@ const Home = ({ products = [] }: { products: Product[] }) => {
   return (
     <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
       <Box height="calc(100vh - 50px)" overflow="auto">
-        {menuActive == 'home' && <HomeComponent products={products} />}
+        {menuActive == 'home' && <HomeComponent />}
         {menuActive == 'user' && <UserComponent />}
         {menuActive == 'mission' && <MissionComponent />}
         {menuActive == 'gift' && <LuckyWheel />}
@@ -136,10 +134,4 @@ const Home = ({ products = [] }: { products: Product[] }) => {
   );
 };
 
-export async function getStaticProps() {
-  const reponse = await getProductsList() as any;
-  return {
-    props: { products: reponse?.products }
-  }
-}
 export default Home;
