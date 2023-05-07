@@ -25,7 +25,7 @@ export const HomeComponent = () => {
     }, []);
 
     return (
-        <Box>
+        <Box paddingBottom="50px">
             <Swiper
                 pagination={true}
                 modules={[Pagination, Autoplay]}
