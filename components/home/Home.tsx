@@ -54,7 +54,7 @@ export const HomeComponent = () => {
                     <Typography component="p" fontSize={15} textAlign="right">{userLevel(user?.level)}</Typography>
                 </BoxMenu>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Tổng DS</Typography>
+                    <Typography component="h4" fontSize={17}>Tổng doanh số</Typography>
                     <Typography component="p" fontSize={15} textAlign="right">0</Typography>
                 </BoxMenu>
                 <BoxMenu>

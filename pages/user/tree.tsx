@@ -4,16 +4,16 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useRouter } from 'next/router';
 import { fetch } from '@/libraries/axios';
 import { useUser } from '@/hooks/useUser';
-// import { TreeBox } from '@/components/user/TreeBox';
+import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined';
 
 const UserTree = () => {
-    const [userTree, setUserTree] = useState<any>([]);
+    const [userTree, setUserTree] = useState<any>(null);
     const router = useRouter();
     const { user } = useUser();
 
     useEffect(() => {
         if (!user) return;
-        fetch.get('/user/tree/').then(result => {
+        fetch.get('/user/tree').then(result => {
             setUserTree(result.tree);
         }).catch(() => {
             //
@@ -38,20 +38,35 @@ const UserTree = () => {
                 </Typography>
                 <Box></Box>
             </Stack>
-            <Box>
-                <Typography variant="h5" textAlign="center" marginTop="50px">Đang phát triển...</Typography>
+            <Box marginTop={3} paddingX="15px">
+                {userTree && (
+                    <div id="Menu_tree">
+                        <details>
+                            <summary data-view={userTree.children.length}>{userTree.fullname}</summary>
+                            {userTree.children.map((childLevel1: any, index1: number) => (
+                                <details key={index1}>
+                                    <summary data-view={childLevel1.children.length}>{childLevel1.fullname}</summary>
+                                    {childLevel1.children.map((childLevel2: any, index2: number) => (
+                                        <details key={index2}>
+                                            <summary data-view={childLevel2.children.length}>{childLevel2.fullname}</summary>
+                                            {childLevel2.children.length > 0 && (
+                                                <ul>
+                                                    {childLevel2.children.map((childLevel3: any, index3: number) => (
+                                                        <li className="item" key={index3}>
+                                                            <Brightness1OutlinedIcon sx={{ fontSize: '16px' }} />
+                                                            <p>{childLevel3.fullname}</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </details>
+                                    ))}
+                                </details>
+                            ))}
+                        </details>
+                    </div>
+                )}
             </Box>
-            {/* <Box
-                height="calc(100vh - 50px)"
-                maxHeight="calc(100vh - 50px)"
-                minHeight="calc(100vh - 50px)"
-                padding="15px"
-                overflow="auto"
-            >
-                <Box marginTop={2}>
-                    <TreeBox user={userTree} />
-                </Box>
-            </Box> */}
         </Box >
     );
 }
