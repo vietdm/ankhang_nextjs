@@ -25,7 +25,7 @@ a {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 78px;
+    height: 55px;
     background-color: #ffffff;
     border-top: 2px solid rgb(0, 183, 255);
     font-family: "Raleway", sans-serif;
@@ -68,8 +68,8 @@ a {
 #Menu .Menu__list ul .Menu__list--item.main {
     position: relative;
     bottom: 40px;
-    width: 117px;
-    height: 117px;
+    width: 90px;
+    height: 90px;
     display: flex;
     justify-content: center;
     align-items: center;
