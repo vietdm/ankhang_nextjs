@@ -24,22 +24,17 @@ export const HomeComponent = () => {
             </SwiperSlide>
             <SwiperSlide>
                 <Box>
-                    <img src="/imgs/banner2.jpg" alt="Banner1" style={{ width: '100%' }} />
+                    <img src="/imgs/banner3.jpg" alt="Banner3" style={{ width: '100%' }} />
                 </Box>
             </SwiperSlide>
             <SwiperSlide>
                 <Box>
-                    <img src="/imgs/banner3.jpg" alt="Banner1" style={{ width: '100%' }} />
+                    <img src="/imgs/banner4.jpg" alt="Banner4" style={{ width: '100%' }} />
                 </Box>
             </SwiperSlide>
             <SwiperSlide>
                 <Box>
-                    <img src="/imgs/banner4.jpg" alt="Banner1" style={{ width: '100%' }} />
-                </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-                <Box>
-                    <img src="/imgs/banner5.jpg" alt="Banner1" style={{ width: '100%' }} />
+                    <img src="/imgs/banner5.jpg" alt="Banner5" style={{ width: '100%' }} />
                 </Box>
             </SwiperSlide>
         </Swiper>
