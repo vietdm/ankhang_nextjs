@@ -4,7 +4,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useRouter } from 'next/router';
 import { fetch } from '@/libraries/axios';
 import { useUser } from '@/hooks/useUser';
-import Brightness1OutlinedIcon from '@mui/icons-material/Brightness1Outlined';
+import CircleIcon from '@mui/icons-material/Circle';
 
 const UserTree = () => {
     const [userTree, setUserTree] = useState<any>(null);
@@ -53,7 +53,7 @@ const UserTree = () => {
                                                 <ul>
                                                     {childLevel2.children.map((childLevel3: any, index3: number) => (
                                                         <li className="item" key={index3}>
-                                                            <Brightness1OutlinedIcon sx={{ fontSize: '16px' }} />
+                                                            <CircleIcon sx={{ fontSize: '16px', color: '#9f9f9f' }} />
                                                             <p>{childLevel3.username}</p>
                                                         </li>
                                                     ))}
