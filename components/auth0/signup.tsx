@@ -49,7 +49,11 @@ export const Signup = ({ gotoLogin }: Props) => {
         gotoLogin();
       })
       .catch((error) => {
-        Alert.error(error.message);
+        if (typeof error.message == 'undefined') {
+          Alert.error(Object.values(error)[0]);
+        } else {
+          Alert.error(error.message);
+        }
       });
   });
 
