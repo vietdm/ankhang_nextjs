@@ -10,7 +10,7 @@ export const BoxMenu = ({ children }: { children: any }) => {
                 sx={{
                     boxShadow: '0 2px 4px 2px rgba(0, 0, 0, 0.2)',
                     borderRadius: '4px',
-                    background: "radial-gradient(#c1e3f3, #63c3f0)",
+                    background: "radial-gradient(#f4f9fd, #bae4f4)",
                 }}
             >
                 {children}

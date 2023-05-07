@@ -94,6 +94,7 @@ a {
     width: 52px;
     height: 52px;
     border-radius: 10px;
+    background-color: #0a7cd5;
 }
 
 #Menu .Menu__list ul .Menu__list--item.main .icon i {
@@ -116,9 +117,9 @@ a {
     align-items: center;
     width: 46px;
     height: 46px;
-    background-color: rgb(0, 183, 255);
+    background-color: #0a7cd5;
     border-radius: 100%;
-    color: #4c4c4c;
+    color: #fff;
 }
 
 #Menu .Menu__list ul .Menu__list--item a .icon i {
