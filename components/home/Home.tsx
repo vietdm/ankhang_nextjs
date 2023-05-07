@@ -46,28 +46,28 @@ export const HomeComponent = () => {
             </Swiper>
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Điểm AKG</Typography>
-                    <Typography component="p" fontSize={15} textAlign="right">{user?.akg_point}</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Điểm AKG</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{user?.akg_point}</Typography>
                 </BoxMenu>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Chức vụ</Typography>
-                    <Typography component="p" fontSize={15} textAlign="right">{userLevel(user?.level)}</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Chức vụ</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{userLevel(user?.level)}</Typography>
                 </BoxMenu>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Tổng doanh số</Typography>
-                    <Typography component="p" fontSize={15} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng doanh số</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
                 </BoxMenu>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Tổng hoa hồng</Typography>
-                    <Typography component="p" fontSize={15} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng hoa hồng</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
                 </BoxMenu>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Hoa hồng ngày</Typography>
-                    <Typography component="p" fontSize={15} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Hoa hồng ngày</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
                 </BoxMenu>
                 <BoxMenu>
-                    <Typography component="h4" fontSize={17}>Tổng thành viên</Typography>
-                    <Typography component="p" fontSize={15} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng thành viên</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
                 </BoxMenu>
             </Stack>
         </Box>
