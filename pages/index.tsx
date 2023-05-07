@@ -1,9 +1,4 @@
-import { Box, Stack } from "@mui/material";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
-import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { StoreComponent } from "@/components/store/Store";
 import { UserComponent } from "@/components/user/User";
@@ -11,6 +6,11 @@ import { withAuth } from "@/interfaces/withAuth";
 import { MissionComponent } from "@/components/mission";
 import { LuckyWheel } from "@/components/luckywheel";
 import { HomeComponent } from "@/components/home/Home";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
+import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 
 type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
 
@@ -33,79 +33,63 @@ const Home = () => {
         {menuActive == 'gift' && <LuckyWheel />}
         {menuActive == 'main' && <HomeComponent />}
       </Box>
-      <Stack
-        position="absolute"
-        bottom={0}
-        left={0}
-        zIndex={99}
-        width="100vw"
-        height="50px"
-        direction="row"
-        sx={{
-          background: "#7dd6df",
-        }}
-      >
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          width="20%"
-          sx={{ backgroundColor: menuActive == "store" ? "#0984e3" : undefined, transition: "all .2s" }}
-          onClick={() => setMenuActive("store")}
-        >
-          <StoreOutlinedIcon
-            sx={{ fontSize: 32, color: menuActive == "store" ? "#fff" : "#676ddf", transition: "all .2s" }}
-          />
-        </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          width="20%"
-          sx={{ backgroundColor: menuActive == "mission" ? "#0984e3" : undefined, transition: "all .2s" }}
-          onClick={() => setMenuActive("mission")}
-        >
-          <AssignmentTurnedInOutlinedIcon
-            sx={{ fontSize: 32, color: menuActive == "mission" ? "#fff" : "#676ddf", transition: "all .2s" }}
-          />
-        </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          width="20%"
-          sx={{ backgroundColor: menuActive == "main" ? "#0984e3" : undefined, transition: "all .2s" }}
-          onClick={() => setMenuActive("main")}
-        >
-          <HomeOutlinedIcon
-            sx={{ fontSize: 32, color: menuActive == "main" ? "#fff" : "#676ddf", transition: "all .2s" }}
-          />
-        </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          width="20%"
-          sx={{ backgroundColor: menuActive == "gift" ? "#0984e3" : undefined, transition: "all .2s" }}
-          onClick={() => setMenuActive("gift")}
-        >
-          <CardGiftcardOutlinedIcon
-            sx={{ fontSize: 32, color: menuActive == "gift" ? "#fff" : "#676ddf", transition: "all .2s" }}
-          />
-        </Stack>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          width="20%"
-          sx={{ backgroundColor: menuActive == "user" ? "#0984e3" : undefined, transition: "all .2s" }}
-          onClick={() => setMenuActive("user")}
-        >
-          <PersonOutlineOutlinedIcon
-            sx={{ fontSize: 32, color: menuActive == "user" ? "#fff" : "#676ddf", transition: "all .2s" }}
-          />
-        </Stack>
-      </Stack>
+      <div id="Menu">
+        <div className="Menu__list">
+          <ul>
+            <li className={'Menu__list--item ' + (menuActive == 'store' ? 'active' : '')}>
+              <a href="" onClick={(e) => {
+                e.preventDefault();
+                setMenuActive('store');
+              }}>
+                <div className="icon">
+                  <StoreOutlinedIcon />
+                </div>
+              </a>
+            </li>
+            <li className={'Menu__list--item ' + (menuActive == 'mission' ? 'active' : '')}>
+              <a href="" onClick={(e) => {
+                e.preventDefault();
+                setMenuActive('mission');
+              }}>
+                <div className="icon">
+                  <AssignmentTurnedInOutlinedIcon />
+                </div>
+              </a>
+            </li>
+            <li className={'Menu__list--item main ' + (menuActive == 'main' ? 'active' : '')}>
+              <a href="" onClick={(e) => {
+                e.preventDefault();
+                setMenuActive('main');
+              }}>
+                <div className="icon">
+                  <HomeOutlinedIcon />
+                </div>
+              </a>
+            </li>
+
+            <li className={'Menu__list--item ' + (menuActive == 'gift' ? 'active' : '')}>
+              <a href="" onClick={(e) => {
+                e.preventDefault();
+                setMenuActive('gift');
+              }}>
+                <div className="icon">
+                  <CardGiftcardOutlinedIcon />
+                </div>
+              </a>
+            </li>
+            <li className={'Menu__list--item ' + (menuActive == 'user' ? 'active' : '')}>
+              <a href="" onClick={(e) => {
+                e.preventDefault();
+                setMenuActive('user');
+              }}>
+                <div className="icon">
+                  <PersonOutlineOutlinedIcon />
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </Box>
   );
 };
