@@ -4,7 +4,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useRouter } from 'next/router';
 import { fetch } from '@/libraries/axios';
 import { useUser } from '@/hooks/useUser';
-import { TreeBox } from '@/components/user/TreeBox';
+// import { TreeBox } from '@/components/user/TreeBox';
 
 const UserTree = () => {
     const [userTree, setUserTree] = useState<any>([]);
