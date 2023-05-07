@@ -27,7 +27,7 @@ export const UserComponent = () => {
   }
 
   const affilate = useMemo(() => {
-    return window.location.origin + '/auth0/?r=' + user?.username;
+    return window.location.origin + '/auth0/?r=' + (user?.username || '');
   }, [user]);
 
   return (

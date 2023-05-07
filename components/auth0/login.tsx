@@ -8,6 +8,7 @@ import { Error } from "@/components/ui/Error";
 import { ErrorMessage } from "@hookform/error-message";
 import { setCookies } from "cookies-next";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 type FormValues = {
   phone: string;
@@ -16,6 +17,7 @@ type FormValues = {
 
 export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
   const router = useRouter();
+  const [isRequesting, setIsRequesting] = useState<boolean>(false);
 
   const {
     register,
@@ -24,6 +26,7 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
   } = useForm<FormValues>();
 
   const onSubmit = handleSubmit((data) => {
+    setIsRequesting(true);
     fetch
       .post("auth/login", data)
       .then((response) => {
@@ -33,6 +36,7 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
       })
       .catch((error) => {
         Alert.error(error.message);
+        setIsRequesting(false);
       });
   });
 
@@ -77,7 +81,7 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
           <ErrorMessage errors={errors} name="password" render={({ message }) => <Error mgs={message} />} />
         </Stack>
         <Box textAlign="center">
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={isRequesting}>
             Đăng nhập
           </Button>
           <Typography component="p" marginTop={3} fontStyle='italic' fontSize="17px" onClick={() => gotoForgot()}>Quên mật khẩu</Typography>
