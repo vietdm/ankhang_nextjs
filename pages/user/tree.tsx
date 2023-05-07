@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-// import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useRouter } from 'next/router';
 import { fetch } from '@/libraries/axios';
 import { useUser } from '@/hooks/useUser';
@@ -22,7 +21,7 @@ const UserTree = () => {
     }, [user]);
 
     return (
-        <Box height="100vh" maxHeight="100vh" minHeight="100vh" overflow="hidden">
+        <Box height="100vh" maxHeight="100vh" minHeight="100vh" overflow="auto">
             <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -44,9 +43,9 @@ const UserTree = () => {
                 maxHeight="calc(100vh - 50px)"
                 minHeight="calc(100vh - 50px)"
                 padding="15px"
-                overflow="hidden"
+                overflow="auto"
             >
-                <Box overflow="auto">
+                <Box marginTop={2}>
                     <TreeBox user={userTree} />
                 </Box>
             </Box>
