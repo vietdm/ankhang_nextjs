@@ -6,10 +6,11 @@ import "swiper/css/autoplay";
 import { Box, Stack, Typography } from "@mui/material";
 import { BoxMenu } from "./BoxMenu";
 import { useUser } from "@/hooks/useUser";
-import { userLevel } from "@/utils";
+import { formatMoney, userLevel } from "@/utils";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 import Countdown from "react-countdown";
+import Image from "next/image";
 
 export const HomeComponent = () => {
     const { user } = useUser();
@@ -57,6 +58,29 @@ export const HomeComponent = () => {
                     </Box>
                 </SwiperSlide>
             </Swiper>
+            <Stack direction="row" width="90%" margin="2.5rem auto 0 auto" sx={{
+                backgroundColor: '#e3e3e3',
+                padding: '14px',
+                borderRadius: '14px',
+                background: "radial-gradient(#f4f9fd, #bae4f4)"
+            }}>
+                <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
+                    <Box position="relative" textAlign="center" height={80} width={80}>
+                        <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
+                    </Box>
+                </Stack>
+                <Box width="calc(100% - 80px)">
+                    <Typography component="h4" textAlign="center" sx={{ fontSize: '22px' }} fontWeight="600">
+                        {user?.fullname}
+                    </Typography>
+                    <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                        Mã KH: {user?.username}
+                    </Typography>
+                    <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                        Số điện thoại: {user?.phone}
+                    </Typography>
+                </Box>
+            </Stack>
             <Box marginY={3}>
                 <Typography variant="h5" textAlign="center">Count Down...</Typography>
                 <div style={{
@@ -83,11 +107,11 @@ export const HomeComponent = () => {
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng hoa hồng</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.money_bonus}</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.money_bonus ?? 0)}</Typography>
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Hoa hồng ngày</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.money_bonus_day}</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.money_bonus_day ?? 0)}</Typography>
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng thành viên</Typography>
