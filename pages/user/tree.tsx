@@ -42,19 +42,19 @@ const UserTree = () => {
                 {userTree && (
                     <div id="Menu_tree">
                         <details>
-                            <summary data-view={userTree.children.length}>{userTree.fullname}</summary>
+                            <summary data-view={userTree.children.length}>{userTree.username}</summary>
                             {userTree.children.map((childLevel1: any, index1: number) => (
                                 <details key={index1}>
-                                    <summary data-view={childLevel1.children.length}>{childLevel1.fullname}</summary>
+                                    <summary data-view={childLevel1.children.length}>{childLevel1.username}</summary>
                                     {childLevel1.children.map((childLevel2: any, index2: number) => (
                                         <details key={index2}>
-                                            <summary data-view={childLevel2.children.length}>{childLevel2.fullname}</summary>
+                                            <summary data-view={childLevel2.children.length}>{childLevel2.username}</summary>
                                             {childLevel2.children.length > 0 && (
                                                 <ul>
                                                     {childLevel2.children.map((childLevel3: any, index3: number) => (
                                                         <li className="item" key={index3}>
                                                             <Brightness1OutlinedIcon sx={{ fontSize: '16px' }} />
-                                                            <p>{childLevel3.fullname}</p>
+                                                            <p>{childLevel3.username}</p>
                                                         </li>
                                                     ))}
                                                 </ul>
