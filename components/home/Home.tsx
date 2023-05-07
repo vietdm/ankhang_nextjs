@@ -7,9 +7,22 @@ import { Box, Stack, Typography } from "@mui/material";
 import { BoxMenu } from "./BoxMenu";
 import { useUser } from "@/hooks/useUser";
 import { userLevel } from "@/utils";
+import { useEffect, useState } from "react";
+import { fetch } from "@/libraries/axios";
 
 export const HomeComponent = () => {
     const { user } = useUser();
+    const [dashboardData, setDashboardData] = useState<any>(null);
+
+    useEffect(() => {
+        fetch.post('/user/dashboard').then((result: any) => {
+            setDashboardData(result);
+        });
+        setTimeout(() => {
+            const twoDaysFromNow = (new Date().getTime() / 1000) + (86400 * 2) + 1;
+            new FlipDown(twoDaysFromNow).start();
+        }, 500);
+    }, []);
 
     return (
         <Box>
@@ -44,6 +57,10 @@ export const HomeComponent = () => {
                     </Box>
                 </SwiperSlide>
             </Swiper>
+            <Box marginY={3}>
+                <Typography variant="h5" textAlign="center">Count Down...</Typography>
+                <div id="flipdown" className="flipdown" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}></div>
+            </Box>
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Điểm AKG</Typography>
@@ -59,11 +76,11 @@ export const HomeComponent = () => {
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng hoa hồng</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.money_bonus}</Typography>
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Hoa hồng ngày</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.money_bonus_day}</Typography>
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng thành viên</Typography>
