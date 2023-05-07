@@ -1,61 +1,37 @@
 import { Box, Stack } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
-import QrCodeScannerOutlinedIcon from "@mui/icons-material/QrCodeScannerOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 import { useEffect, useState } from "react";
-import { HomeComponent } from "@/components/home/Home";
+import { StoreComponent } from "@/components/store/Store";
 import { UserComponent } from "@/components/user/User";
 import { withAuth } from "@/interfaces/withAuth";
 import { MissionComponent } from "@/components/mission";
 import { LuckyWheel } from "@/components/luckywheel";
-import UserTree from "./user/tree";
-import { Alert } from "@/libraries/alert";
+import { HomeComponent } from "@/components/home/Home";
 
-type BottomMenu = "home" | "mission" | "main" | "gift" | "user";
+type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
 
 const Home = () => {
-  const [menuActive, setMenuActive] = useState<BottomMenu>("home");
+  const [menuActive, setMenuActive] = useState<BottomMenu>("main");
   const [ready, setReady] = useState<boolean>(false);
-
-  const isAddToHomeScreenSupported = () => {
-    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
-    const isSafari = /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent.toLowerCase());
-    const isChromeForAndroid = /chrome/i.test(window.navigator.userAgent.toLowerCase()) && /android/i.test(window.navigator.userAgent.toLowerCase());
-
-    return (isIos && isSafari) || isChromeForAndroid;
-  }
-
-  const installApp = () => {
-    if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').then(() => { Alert.success('Đã cài đặt thành công'); }); }
-  }
 
   useEffect(() => {
     withAuth(() => {
       setReady(true);
-      if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone == true) {
-        //
-      } else {
-        if (isAddToHomeScreenSupported()) {
-          setTimeout(() => {
-            // if (confirm('Bạn có muốn cài đặt app của chúng tôi ra ngoài màn hình chính không?')) {
-            //   installApp();
-            // }
-          }, 1000);
-        }
-      }
     });
   }, []);
 
   return (
     <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
       <Box height="calc(100vh - 50px)" overflow="auto">
-        {menuActive == 'home' && <HomeComponent />}
+        {menuActive == 'store' && <StoreComponent />}
         {menuActive == 'user' && <UserComponent />}
         {menuActive == 'mission' && <MissionComponent />}
         {menuActive == 'gift' && <LuckyWheel />}
-        {menuActive == 'main' && <UserTree />}
+        {menuActive == 'main' && <HomeComponent />}
       </Box>
       <Stack
         position="absolute"
@@ -74,11 +50,11 @@ const Home = () => {
           justifyContent="center"
           alignItems="center"
           width="20%"
-          sx={{ backgroundColor: menuActive == "home" ? "#0984e3" : undefined, transition: "all .2s" }}
-          onClick={() => setMenuActive("home")}
+          sx={{ backgroundColor: menuActive == "store" ? "#0984e3" : undefined, transition: "all .2s" }}
+          onClick={() => setMenuActive("store")}
         >
-          <HomeOutlinedIcon
-            sx={{ fontSize: 32, color: menuActive == "home" ? "#fff" : "#676ddf", transition: "all .2s" }}
+          <StoreOutlinedIcon
+            sx={{ fontSize: 32, color: menuActive == "store" ? "#fff" : "#676ddf", transition: "all .2s" }}
           />
         </Stack>
         <Stack
@@ -101,7 +77,7 @@ const Home = () => {
           sx={{ backgroundColor: menuActive == "main" ? "#0984e3" : undefined, transition: "all .2s" }}
           onClick={() => setMenuActive("main")}
         >
-          <QrCodeScannerOutlinedIcon
+          <HomeOutlinedIcon
             sx={{ fontSize: 32, color: menuActive == "main" ? "#fff" : "#676ddf", transition: "all .2s" }}
           />
         </Stack>
