@@ -62,7 +62,6 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
             label="Số điện thoại"
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
-            type="number"
             autoComplete="off"
             {...register("phone", { required: "Số điện thoại không được trống!" })}
           />
