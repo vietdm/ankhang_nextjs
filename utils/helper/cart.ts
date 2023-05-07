@@ -32,7 +32,8 @@ export function deleteProductFromCart(id: number) {
   localStorage.setItem("cart", JSON.stringify(cartData));
 }
 
-export function getQuantityOfProduct(id: number) {
+export function getQuantityOfProduct(id?: number) {
+  if (!id) return 0;
   const cartData = getCart() as CartItem[];
   let index = cartData.findIndex(item => item.id == id);
   return index > -1 ? cartData[index].quantity : 1;

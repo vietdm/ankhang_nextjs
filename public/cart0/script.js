@@ -67,7 +67,7 @@ function getProducts() {
 
 function renderList(data) {
   return `
-        <div class="list d-flex">
+        <div class="list d-flex mb-2">
             <div class="img">
                 <img src="${data.img}" alt="img">
             </div>
@@ -148,6 +148,7 @@ async function init() {
   });
 
   $(".btn-trace-store").on("click", async function () {
+    $(this).prop('disabled', true);
     $.ajax({
       url: api + "order",
       type: 'post',
@@ -165,9 +166,20 @@ async function init() {
       dataType: 'json',
       success: () => {
         localStorage.removeItem('cart');
-        window.location.href = "/";
+        Swal.fire({
+          title: 'Thành công',
+          text: "Đơn hàng đã được đặt thành công!",
+          icon: 'success',
+        }).then(() => {
+          window.location.href = "/";
+        });
       }, error: (err) => {
-        alert(Object.values(err.responseJSON)[0]);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: Object.values(err.responseJSON)[0]
+        });
+        $(this).prop('disabled', false);
       }
     });
   });

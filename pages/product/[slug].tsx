@@ -2,27 +2,45 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { DialogAddToCart } from "@/components/ui/DialogAddToCart";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from 'next/router'
 import Link from "next/link";
-import Image from "next/image";
 import { getQuantityOfProduct, saveCart } from "@/utils/helper/cart";
-import { Product } from "../../interfaces/product";
-import { getProductDetail } from "../api/products";
 import { Alert } from "@/libraries/alert";
+import { fetch } from "@/libraries/axios";
 
-const ProductPage = ({ product }: { product: Product }) => {
+const ProductPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [product, setProduct] = useState<any>(null);
   const router = useRouter()
+  const productId = router.query.slug;
+
   const handleAddToCart = (quantity: number) => {
     saveCart({ quantity, id: product.id });
     Alert.success('Đã thêm sản phẩm vào giỏ hàng!');
     setOpenModal(false);
   }
 
-  const handleBack = () => {
-    router.back();
-  }
+  useEffect(() => {
+    if (!productId) return;
+    fetch.get(`/product/${productId}`).then((result) => {
+      setProduct(result.product);
+    });
+  }, [productId]);
+
+  const productImg = useMemo(() => {
+    try {
+      return JSON.parse(product?.images)[0];
+    } catch (e) {
+      return '';
+    }
+  }, [product]);
+
+  const quantityOfProduct = useMemo(() => {
+    if (!product) return 0;
+    return getQuantityOfProduct(product.id);
+  }, [product]);
+
   return (
     <Box height="100vh" maxHeight="100vh" minHeight="100vh">
       <Stack
@@ -33,7 +51,7 @@ const ProductPage = ({ product }: { product: Product }) => {
         width="100%"
         sx={{ background: "#0984e3" }}
       >
-        <Box padding={1} onClick={handleBack}>
+        <Box padding={1} onClick={() => router.back()}>
           <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
         </Box>
         <Typography component="h2" color="#fff">
@@ -49,9 +67,12 @@ const ProductPage = ({ product }: { product: Product }) => {
         <Typography variant="h6" marginY={1} textAlign="center">
           Chi tiết sản phẩm
         </Typography>
-        <Box position="relative" maxHeight={200} height={140} width="100%" marginY={1}>
-          <Image fill alt={product?.title ?? ''} objectFit="cover" src={`${typeof (product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
-        </Box>
+        <Box position="relative" minHeight={200} maxHeight={200} height={200} width="100%" marginY={1} sx={{
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundImage: `url("${productImg}")`
+        }} />
         <Typography component="p">
           {product?.description}
         </Typography>
@@ -67,28 +88,21 @@ const ProductPage = ({ product }: { product: Product }) => {
             Thêm vào giỏ hàng
           </Button>
         </Stack>
-        <DialogAddToCart
-          open={openModal}
-          onSubmit={handleAddToCart}
-          onClose={() => {
-            setOpenModal(false);
-          }}
-          name={product?.title}
-          price={product.price}
-          quantityInp={getQuantityOfProduct(product.id)}
-        />
+        {product && (
+          <DialogAddToCart
+            open={openModal}
+            onSubmit={handleAddToCart}
+            onClose={() => {
+              setOpenModal(false);
+            }}
+            name={product?.title}
+            price={product?.price}
+            quantityInp={quantityOfProduct}
+          />
+        )}
       </Stack>
     </Box>
   );
 };
-
-
-export async function getServerSideProps(context: any) {
-  const slug = Number(context.params?.slug ?? 1);
-  const response = await getProductDetail(slug) as any;
-  return {
-    props: { product: response?.product ?? {} },
-  }
-}
 
 export default ProductPage;
