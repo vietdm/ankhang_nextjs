@@ -1,25 +1,25 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Tree from 'react-d3-tree';
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import { useRouter } from 'next/router';
 import { fetch } from '@/libraries/axios';
-import { UserHelper } from '@/utils/helper/UserHelper';
+import { useUser } from '@/hooks/useUser';
+import { TreeBox } from '@/components/user/TreeBox';
 
 const UserTree = () => {
-    const [ready, setReady] = useState<boolean>(false);
-    const [userTree, setUserTree] = useState<any>({});
+    const [userTree, setUserTree] = useState<any>([]);
     const router = useRouter();
+    const { user } = useUser();
 
     useEffect(() => {
-        fetch.get('/user/tree').then(result => {
-            const tree = UserHelper.build(result.tree);
-            setUserTree(tree);
-            setReady(true);
+        if (!user) return;
+        fetch.get('/user/tree/').then(result => {
+            setUserTree(result.tree);
         }).catch(() => {
             //
         })
-    }, []);
+    }, [user]);
 
     return (
         <Box height="100vh" maxHeight="100vh" minHeight="100vh" overflow="hidden">
@@ -39,18 +39,18 @@ const UserTree = () => {
                 </Typography>
                 <Box></Box>
             </Stack>
-            <Box height="calc(100vh - 50px)" maxHeight="calc(100vh - 50px)" minHeight="calc(100vh - 50px)" overflow="hidden">
-                {ready && (
-                    <Tree
-                        initialDepth={2}
-                        translate={{ x: 100, y: 50 }}
-                        data={userTree}
-                        orientation="vertical"
-                        separation={{ siblings: 1, nonSiblings: 1 }}
-                    />
-                )}
+            <Box
+                height="calc(100vh - 50px)"
+                maxHeight="calc(100vh - 50px)"
+                minHeight="calc(100vh - 50px)"
+                padding="15px"
+                overflow="hidden"
+            >
+                <Box overflow="auto">
+                    <TreeBox user={userTree} />
+                </Box>
             </Box>
-        </Box>
+        </Box >
     );
 }
 

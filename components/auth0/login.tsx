@@ -59,11 +59,11 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
           <PhoneAndroidOutlinedIcon sx={{ width: "60px", color: "grey" }} />
           <TextField
             id="phone"
-            label="Số điện thoại"
+            label="Username hoặc Số điện thoại"
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             autoComplete="off"
-            {...register("phone", { required: "Số điện thoại không được trống!" })}
+            {...register("phone", { required: "Thông tin này không được trống!" })}
           />
           <ErrorMessage errors={errors} name="phone" render={({ message }) => <Error mgs={message} />} />
         </Stack>

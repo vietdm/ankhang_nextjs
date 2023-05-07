@@ -1,6 +1,7 @@
 export const UserHelper = {
     build(data: any) {
         const children = data?.children;
+
         data = {
             name: data.fullname,
             attributes: {
