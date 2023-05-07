@@ -38,7 +38,10 @@ const UserTree = () => {
                 </Typography>
                 <Box></Box>
             </Stack>
-            <Box
+            <Box>
+                <Typography variant="h5" textAlign="center" marginTop="50px">Đang phát triển...</Typography>
+            </Box>
+            {/* <Box
                 height="calc(100vh - 50px)"
                 maxHeight="calc(100vh - 50px)"
                 minHeight="calc(100vh - 50px)"
@@ -48,7 +51,7 @@ const UserTree = () => {
                 <Box marginTop={2}>
                     <TreeBox user={userTree} />
                 </Box>
-            </Box>
+            </Box> */}
         </Box >
     );
 }
