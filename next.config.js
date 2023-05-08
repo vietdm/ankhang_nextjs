@@ -1,17 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  images: {
-    domains: [
-      "api.ankhang.asia"
-    ],
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "**",
-      },
-    ],
-  },
   typescript: {
     ignoreBuildErrors: true,
   }
