@@ -9,7 +9,7 @@ export const StoreComponent = () => {
   const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
-    fetch.get('/products').then(result => {
+    fetch.get('/products').then((result: any) => {
       setProducts(result.products);
     })
   }, []);
@@ -40,11 +40,11 @@ export const StoreComponent = () => {
         </Box>
       </Stack>
       <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
-        {products?.map(product => (
+        {products?.map((product: any) => (
           <Box width="50%" padding="16px" key={product.id}>
             <Link passHref href={`/product/${product.id}`}>
               <Box position="relative" height={160} width="100%">
-                <Image fill alt={product?.title ?? ''} objectFit="cover" src={`${typeof (product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
+                <img alt={product?.title ?? ''} src={`${typeof (product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
               </Box>
               <Typography component="p" textAlign="center" marginTop={1} >
                 {product?.title}
