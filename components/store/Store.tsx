@@ -39,14 +39,14 @@ export const StoreComponent = () => {
         </Box>
       </Stack>
       <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
-        {products?.map((product: any) => (
+        {products.map((product: any) => (
           <Box width="50%" padding="16px" key={product.id}>
             <Link passHref href={`/product/${product.id}`}>
               <Box position="relative" height={160} width="100%">
-                <img alt={product?.title ?? ''} src={`${typeof (product?.images) === 'string' ? JSON.parse(product?.images)[0] : product?.images[0]}`} />
+                <img alt={product.title} src={product.images[0]} style={{ width: '100%' }} />
               </Box>
               <Typography component="p" textAlign="center" marginTop={1} >
-                {product?.title}
+                {product.title}
               </Typography>
               <Typography component="p" textAlign="center" color="#0984e3">
                 {product.price.toLocaleString("en-US")} đ
