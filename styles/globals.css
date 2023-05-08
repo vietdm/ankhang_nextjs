@@ -455,3 +455,7 @@ a {
         height: 25px
     }
 }
+
+.swal2-container {
+    z-index: 10600;
+}

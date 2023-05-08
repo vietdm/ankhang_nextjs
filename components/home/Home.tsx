@@ -59,11 +59,12 @@ export const HomeComponent = () => {
                     </Box>
                 </SwiperSlide>
             </Swiper>
-            <Stack direction="row" width="90%" margin="2.5rem auto 0 auto" sx={{
+            <Stack direction="row" width="90%" margin="1.5rem auto 0 auto" sx={{
                 backgroundColor: '#e3e3e3',
                 padding: '14px',
                 borderRadius: '14px',
-                background: "radial-gradient(#f4f9fd, #bae4f4)"
+                background: "radial-gradient(#f4f9fd, #bae4f4)",
+                boxShadow: '0 4px 4px 1px rgba(0, 0, 0, 0.2)'
             }}>
                 <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
                     <Box position="relative" textAlign="center" height={80} width={80}>
