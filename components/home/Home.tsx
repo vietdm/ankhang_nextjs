@@ -78,7 +78,7 @@ export const HomeComponent = () => {
                         Mã KH: <b>{user?.username}</b>
                     </Typography>
                     <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                        Gói tham gia: <b>{user?.package_joined && UserHelper.getPackageName(user.package_joined)}</b>
+                        Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{user?.package_joined && UserHelper.getPackageName(user.package_joined)}</b>
                     </Typography>
                 </Box>
             </Stack>
