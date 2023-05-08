@@ -28,14 +28,6 @@ const ProductPage = () => {
     });
   }, [productId]);
 
-  const productImg = useMemo(() => {
-    try {
-      return JSON.parse(product?.images)[0];
-    } catch (e) {
-      return '';
-    }
-  }, [product]);
-
   const quantityOfProduct = useMemo(() => {
     if (!product) return 0;
     return getQuantityOfProduct(product.id);
@@ -71,7 +63,7 @@ const ProductPage = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundImage: `url("${productImg}")`
+          backgroundImage: `url("${product?.images[0]}")`
         }} />
         <Typography component="p">
           {product?.description}
