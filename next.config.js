@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: [
-      "mvtp.site"
+      "api.ankhang.asia"
     ],
     remotePatterns: [
       {

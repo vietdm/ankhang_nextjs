@@ -4,7 +4,7 @@ const url = new URL(window.location.href);
 // );
 
 const params = new URLSearchParams(url.search);
-const api = "https://mvtp.site/api/";
+const api = "https://api.ankhang.asia/api/";
 
 function copyText(textToCopy) {
   const tempInput = document.createElement("input");
