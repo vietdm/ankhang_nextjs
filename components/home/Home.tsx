@@ -111,7 +111,7 @@ export const HomeComponent = () => {
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng thành viên</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.total_child}</Typography>
                 </BoxMenu>
             </Stack>
         </Box>
