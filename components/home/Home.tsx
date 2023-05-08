@@ -99,7 +99,7 @@ export const HomeComponent = () => {
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng doanh số</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">0</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.total_sale ?? 0)}</Typography>
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng hoa hồng</Typography>
