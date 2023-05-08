@@ -136,10 +136,9 @@ async function init() {
 
   $(".lists").empty();
   carts.map((cart) => {
-    const img = JSON.parse(cart.product.images);
     $(".lists").append(
       renderList({
-        img: img[0],
+        img: cart.product.images[0],
         title: cart.product.title,
         quantity: cart.quantity,
         price: formatMoney(cart.quantity * cart.product.price) + " đ",

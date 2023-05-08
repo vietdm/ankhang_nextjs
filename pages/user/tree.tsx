@@ -41,7 +41,7 @@ const UserTree = () => {
             <Box marginTop={3} paddingX="15px">
                 {userTree && (
                     <div id="Menu_tree">
-                        <details>
+                        <details open>
                             <summary data-view={userTree.children.length}>{userTree.username}</summary>
                             {userTree.children.map((childLevel1: any, index1: number) => (
                                 <details key={index1}>

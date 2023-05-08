@@ -91,7 +91,7 @@ export const HomeComponent = () => {
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Điểm AKG</Typography>
-                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{user?.akg_point}</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(user?.akg_point)}</Typography>
                 </BoxMenu>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Chức vụ</Typography>
