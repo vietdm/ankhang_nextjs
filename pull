@@ -2,5 +2,5 @@
 
 git reset --hard
 git pull
-npm run build
+npm run build --update-env
 pm2 restart ankhang
