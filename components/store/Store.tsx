@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 
