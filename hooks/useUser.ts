@@ -10,14 +10,16 @@ export interface UserInterface {
     present_phone: string;
     address: string;
     level: string;
+    akg_point: number;
+    package_joined: 'star' | 'vip';
 }
 
 export const useUser = () => {
     const [user, setUser] = useState<UserInterface | null>(null);
     useEffect(() => {
-        fetch.post('auth/info').then(result => {
+        fetch.post('auth/info').then((result: any) => {
             setUser(result.user);
-        }).catch(error => {
+        }).catch(() => {
             window.location.href = '/auth0';
         });
     }, []);

@@ -86,7 +86,7 @@ const Index = () => {
             left: typePage == "login" ? "25%" : typePage == 'forgot' ? '50%' : "75%",
             transform: "translateX(-50%)",
             bottom: 0,
-            width: "40px",
+            width: "50px",
             height: "40px",
             transition: "all .3s",
             borderBottom: "1px solid #fff",

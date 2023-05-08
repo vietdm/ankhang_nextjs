@@ -18,5 +18,10 @@ export const UserHelper = {
         }
 
         return data;
+    },
+    getPackageName(package_joined: any) {
+        if (package_joined == 'star') return 'Star';
+        if (package_joined == 'vip') return 'VIP';
+        return 'Chưa tham gia gói';
     }
 }

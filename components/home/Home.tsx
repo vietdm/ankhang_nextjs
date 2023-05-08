@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 import Countdown from "react-countdown";
 import Image from "next/image";
+import { UserHelper } from "@/utils/helper/UserHelper";
 
 export const HomeComponent = () => {
     const { user } = useUser();
@@ -74,23 +75,18 @@ export const HomeComponent = () => {
                         {user?.fullname}
                     </Typography>
                     <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                        Mã KH: {user?.username}
+                        Mã KH: <b>{user?.username}</b>
                     </Typography>
                     <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                        Số điện thoại: {user?.phone}
+                        Gói tham gia: <b>{user?.package_joined && UserHelper.getPackageName(user.package_joined)}</b>
                     </Typography>
                 </Box>
             </Stack>
             <Box marginY={3}>
                 <Typography variant="h5" textAlign="center">Count Down...</Typography>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: '34px'
-                }}>
+                <Stack justifyContent="center" alignItems="center" fontSize="34px">
                     {dateCount && <Countdown date={dateCount} />}
-                </div>
+                </Stack>
             </Box>
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
