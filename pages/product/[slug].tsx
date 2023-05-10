@@ -6,8 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from 'next/router'
 import Link from "next/link";
 import { getQuantityOfProduct, saveCart } from "@/utils/helper/cart";
-import { Alert } from "@/libraries/alert";
 import { fetch } from "@/libraries/axios";
+import { CartIcon } from "@/components/ui/CartIcon";
 
 const ProductPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -17,13 +17,13 @@ const ProductPage = () => {
 
   const handleAddToCart = (quantity: number) => {
     saveCart({ quantity, id: product.id });
-    Alert.success('Đã thêm sản phẩm vào giỏ hàng!');
     setOpenModal(false);
+    router.push('/cart');
   }
 
   useEffect(() => {
     if (!productId) return;
-    fetch.get(`/product/${productId}`).then((result) => {
+    fetch.get(`/product/${productId}`).then((result: any) => {
       setProduct(result.product);
     });
   }, [productId]);
@@ -49,11 +49,7 @@ const ProductPage = () => {
         <Typography component="h2" color="#fff">
           {product?.title}
         </Typography>
-        <Box padding={1}>
-          <Link href="/cart" passHref>
-            <ShoppingCartOutlinedIcon sx={{ color: "#fff" }} />
-          </Link>
-        </Box>
+        <CartIcon />
       </Stack>
       <Stack height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto">
         <Typography variant="h6" marginY={1} textAlign="center">
@@ -77,7 +73,7 @@ const ProductPage = () => {
         <Stack alignItems="flex-end">Giá bán: {product?.price.toLocaleString("en-US")} đ</Stack>
         <Stack alignItems="center" marginY={2}>
           <Button variant="contained" onClick={() => setOpenModal(true)}>
-            Thêm vào giỏ hàng
+            Mua ngay
           </Button>
         </Stack>
         {product && (

@@ -15,7 +15,13 @@ type FormValues = {
   password: string;
 };
 
-export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
+type Props = {
+  gotoForgot: () => any;
+  gotoVerify: () => any;
+  setUserId: (userId: number) => any;
+}
+
+export const Login = ({ gotoForgot, gotoVerify, setUserId }: Props) => {
   const router = useRouter();
   const [isRequesting, setIsRequesting] = useState<boolean>(false);
 
@@ -29,10 +35,15 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
     setIsRequesting(true);
     fetch
       .post("auth/login", data)
-      .then((response) => {
+      .then((response: any) => {
         Alert.success(response.message);
         setCookies('_token', response.token);
-        router.push('/');
+        if (response.verified == '1') {
+          router.push('/');
+        } else {
+          setUserId(response.user_id);
+          gotoVerify();
+        }
       })
       .catch((error) => {
         Alert.error(error.message);
@@ -46,7 +57,7 @@ export const Login = ({ gotoForgot }: { gotoForgot: () => void }) => {
       sx={{
         margin: "auto",
         marginTop: "30px",
-        boxShadow: "0 0 4px 1px rgba(0, 0, 0, 0.2)",
+        boxShadow: "0 2px 4px 2px rgba(0, 0, 0, 0.2)",
         padding: "15px",
         borderRadius: "7px",
       }}

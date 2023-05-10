@@ -1,8 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
+import { CartIcon } from "../ui/CartIcon";
 
 export const StoreComponent = () => {
   const [products, setProducts] = useState<any>([]);
@@ -10,7 +10,7 @@ export const StoreComponent = () => {
   useEffect(() => {
     fetch.get('/products').then((result: any) => {
       setProducts(result.products);
-    })
+    });
   }, []);
 
   return (
@@ -32,17 +32,13 @@ export const StoreComponent = () => {
         width="100%"
         sx={{ background: "#0984e3" }}
       >
-        <Box padding={1}>
-          <Link href="/cart" passHref>
-            <ShoppingCartOutlinedIcon sx={{ color: "#fff" }} />
-          </Link>
-        </Box>
+        <CartIcon />
       </Stack>
       <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
         {products.map((product: any) => (
           <Box width="50%" padding="16px" key={product.id}>
             <Link passHref href={`/product/${product.id}`}>
-              <Box position="relative" height={160} width="100%">
+              <Box position="relative" width="100%">
                 <img alt={product.title} src={product.images[0]} style={{ width: '100%' }} />
               </Box>
               <Typography component="p" textAlign="center" marginTop={1} >
@@ -53,8 +49,7 @@ export const StoreComponent = () => {
               </Typography>
             </Link>
           </Box>
-        ))
-        }
+        ))}
       </Stack>
     </Box>
   );

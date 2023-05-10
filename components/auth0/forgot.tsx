@@ -5,7 +5,7 @@ import { useState } from "react";
 import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
 
-export const ForgotPassword = ({ gotoLogin }: { gotoLogin: () => void }) => {
+export const ForgotPassword = ({ gotoLogin }: { gotoLogin: () => any }) => {
   const [phone, setPhone] = useState<string>('');
   const [token, setToken] = useState<string>('');
   const [tokenStep3, setTokenStep3] = useState<string>('');

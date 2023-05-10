@@ -8,11 +8,13 @@ import { Signup } from "@/components/auth0/signup";
 import { useRouter } from "next/router";
 import { fetch } from "@/libraries/axios";
 import { ForgotPassword } from "@/components/auth0/forgot";
+import { VerifyAccount } from "@/components/auth0/verify";
 
-type TypePage = "login" | "signup" | "forgot";
+type TypePage = "login" | "signup" | "forgot" | "verify";
 
 const Index = () => {
   const [typePage, setTypePage] = useState<TypePage>("login");
+  const [userId, setUserId] = useState<number>(0);
   const route = useRouter();
 
   const changeTypePage = (newTypePage: TypePage) => {
@@ -20,8 +22,10 @@ const Index = () => {
   };
 
   useEffect(() => {
-    fetch.post('/auth/info').then(() => {
-      route.push('/');
+    fetch.post('/auth/info').then((result) => {
+      console.log(result);
+
+      // route.push('/');
     }).catch(() => {
       //
     });
@@ -83,7 +87,7 @@ const Index = () => {
         <Box
           sx={{
             position: "absolute",
-            left: typePage == "login" ? "25%" : typePage == 'forgot' ? '50%' : "75%",
+            left: typePage == "login" ? "25%" : typePage == 'signup' ? '75%' : "50%",
             transform: "translateX(-50%)",
             bottom: 0,
             width: "50px",
@@ -98,9 +102,10 @@ const Index = () => {
         </Box>
       </Box>
       <Box marginBottom="3rem">
-        {typePage == "login" && <Login gotoForgot={() => { changeTypePage("forgot"); }} />}
-        {typePage == 'signup' && <Signup gotoLogin={() => { changeTypePage("login"); }} />}
-        {typePage == 'forgot' && <ForgotPassword gotoLogin={() => { changeTypePage("login"); }} />}
+        {typePage == "login" && <Login gotoForgot={() => changeTypePage("forgot")} gotoVerify={() => changeTypePage("verify")} setUserId={setUserId} />}
+        {typePage == 'signup' && <Signup gotoVerify={() => changeTypePage("verify")} setUserId={setUserId} />}
+        {typePage == 'forgot' && <ForgotPassword gotoLogin={() => changeTypePage("login")} />}
+        {typePage == 'verify' && <VerifyAccount userId={userId} gotoLogin={() => changeTypePage("login")} />}
       </Box>
     </Box>
   );

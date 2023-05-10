@@ -10,7 +10,7 @@ import { Error } from "@/components/ui/Error";
 import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type FormValues = {
   fullname: string;
@@ -24,14 +24,16 @@ type FormValues = {
 };
 
 type Props = {
-  gotoLogin: () => void;
+  gotoVerify: () => any;
+  setUserId: (userId: number) => any;
 };
 
-export const Signup = ({ gotoLogin }: Props) => {
-  const [presentName, setPresentName] = useState<any>(null);
+export const Signup = ({ gotoVerify, setUserId }: Props) => {
   const router = useRouter();
+  const [presentName, setPresentName] = useState<any>(null);
+  const [requesting, setRequesting] = useState<boolean>(false);
 
-  let debounceTimeout: any = null;
+  const debounceTimeoutRef = useRef<any>(null);
 
   const {
     register,
@@ -42,23 +44,26 @@ export const Signup = ({ gotoLogin }: Props) => {
   } = useForm<FormValues>();
 
   const onSubmit = handleSubmit((data) => {
+    setRequesting(true);
     fetch
       .post("auth/register", data)
-      .then((response) => {
-        Alert.success(response["message"]);
-        gotoLogin();
+      .then((response: any) => {
+        setRequesting(false);
+        setUserId(response.user_id);
+        gotoVerify();
       })
-      .catch((error) => {
+      .catch((error: any) => {
+        setRequesting(false);
         if (typeof error.message == 'undefined') {
-          Alert.error(Object.values(error)[0]);
+          Alert.error(Object.values(error)[0] as string);
         } else {
           Alert.error(error.message);
         }
       });
   });
 
-  const getPresentName = (phone) => {
-    fetch.get('/present/name?phone=' + phone).then(result => {
+  const getPresentName = (phone: string) => {
+    fetch.get('/present/name?phone=' + phone).then((result: any) => {
       setPresentName(result.name);
     }).catch(() => {
       setPresentName(null);
@@ -71,21 +76,21 @@ export const Signup = ({ gotoLogin }: Props) => {
 
   useEffect(() => {
     if (hasAffilate) {
-      fetch.post('/__/____', { username: router.query.r }).then(result => {
+      fetch.post('/__/____', { username: router.query.r }).then((result: any) => {
         setValue('present_phone', result.phone);
         getPresentName(result.phone);
       }).catch(error => {
         Alert.error(error.message);
       })
     }
-  }, [hasAffilate]);
+  }, [hasAffilate, router.query, setValue]);
 
   useEffect(() => {
     const subscription = watch((value, { name }) => {
-      clearTimeout(debounceTimeout);
-      if (name != 'present_phone') return;
-      debounceTimeout = setTimeout(() => {
-        getPresentName(value.present_phone);
+      clearTimeout(debounceTimeoutRef.current);
+      if (name !== 'present_phone') return;
+      debounceTimeoutRef.current = setTimeout(() => {
+        getPresentName(value.present_phone ?? '');
       }, 300);
     });
     return () => subscription.unsubscribe();
@@ -97,7 +102,7 @@ export const Signup = ({ gotoLogin }: Props) => {
       sx={{
         margin: "auto",
         marginTop: "30px",
-        boxShadow: "0 0 4px 1px rgba(0, 0, 0, 0.2)",
+        boxShadow: "0 2px 4px 2px rgba(0, 0, 0, 0.2)",
         padding: "15px",
         borderRadius: "7px",
       }}
@@ -106,6 +111,18 @@ export const Signup = ({ gotoLogin }: Props) => {
         <Typography variant="subtitle1" fontWeight="bold" textAlign="center" marginBottom="1.25rem">
           Đăng Ký
         </Typography>
+        {!hasAffilate && (
+          <Typography
+            component="p"
+            mb={3}
+            textAlign="center"
+            color="#c0392b"
+            fontWeight="700"
+            fontStyle="italic"
+          >
+            Bạn chỉ có thể đăng ký khi truy cập bằng link giới thiệu!
+          </Typography>
+        )}
         <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
           <BadgeOutlinedIcon sx={{ width: "60px", color: "grey" }} />
           <TextField
@@ -114,6 +131,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="text"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("fullname", { required: "Họ và tên không được trống!" })}
           />
@@ -127,6 +147,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="text"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("username", { required: "Username không được trống!" })}
           />
@@ -140,6 +163,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="text"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("email", { required: "Email không được trống!" })}
           />
@@ -153,6 +179,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="text"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("cccd", { required: "Số CMT/CCCD là bắt buộc!" })}
           />
@@ -166,6 +195,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="number"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("phone", { required: "Số điện thoại không được trống!" })}
           />
@@ -179,6 +211,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="number"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("present_phone", { required: "Hãy nhập số điện thoại người giới thiệu!" })}
           />
@@ -193,6 +228,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="password"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("password", { required: "Hãy nhập mật khẩu!" })}
           />
@@ -206,6 +244,9 @@ export const Signup = ({ gotoLogin }: Props) => {
             variant="standard"
             sx={{ width: "calc(100% - 60px)" }}
             type="password"
+            InputProps={{
+              disabled: !hasAffilate
+            }}
             role="presentation"
             {...register("repassword", {
               required: "Hãy nhập lại mật khẩu!",
@@ -219,7 +260,7 @@ export const Signup = ({ gotoLogin }: Props) => {
           <ErrorMessage errors={errors} name="repassword" render={({ message }) => <Error mgs={message} />} />
         </Stack>
         <Box textAlign="center">
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" disabled={!hasAffilate || requesting}>
             Đăng Ký
           </Button>
         </Box>

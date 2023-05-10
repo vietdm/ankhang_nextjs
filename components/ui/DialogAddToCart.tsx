@@ -70,8 +70,8 @@ export const DialogAddToCart = ({ open, onSubmit, onClose, name, price, quantity
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
-          <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={() => onSubmit(quantity)}>Đồng ý</Button>
+          <Button variant="outlined" color="warning" onClick={handleClose}>Huỷ</Button>
+          <Button variant="contained" onClick={() => onSubmit(quantity)}>Đồng ý</Button>
         </DialogActions>
       </Dialog>
     </div>

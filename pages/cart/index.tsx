@@ -10,6 +10,7 @@ import { CartItem, Product } from "../../interfaces/product";
 import { Alert } from "@/libraries/alert";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
+
 const CartPage = ({ products }: { products: Product[] }) => {
   const [cart, setCart] = useState<CartItem[]>([])
   const router = useRouter()
@@ -17,6 +18,11 @@ const CartPage = ({ products }: { products: Product[] }) => {
   useEffect(() => {
     handleGetCart();
   }, []);
+
+  useEffect(() => {
+    if (cart.length == 0 || router.query?.redirect == '0') return;
+    router.push("/cart0/trade.html?" + buildUriCartTrade());
+  }, [cart]);
 
   const handleUpdate = ({ quantity, id }: CartItem) => {
     saveCart({ quantity, id: id });

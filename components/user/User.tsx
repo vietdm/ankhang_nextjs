@@ -16,6 +16,7 @@ export const UserComponent = () => {
   const [openWithdraw, setOpenWithdraw] = useState<boolean>(false);
   const [moneyCanWithdraw, setMoneyCanWithdraw] = useState<number>(0);
   const [requesting, setRequesting] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
 
   const Logout = () => {
     deleteCookie('_token');
@@ -29,7 +30,10 @@ export const UserComponent = () => {
     tempInput.select();
     document.execCommand("copy");
     document.body.removeChild(tempInput);
-    Alert.success('Đã sao chép');
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
   }
 
   const affilate = useMemo(() => {
@@ -98,6 +102,8 @@ export const UserComponent = () => {
             Link giới thiệu:
             <br />
             <span>{affilate}</span>
+            <br />
+            <Typography component="p" color={copied ? "#27ae60" : "#1976d2"} fontWeight="700">[{copied ? "Đã sao chép" : "Sao chép"}]</Typography>
           </Typography>
           <Link href='/user/tree' passHref>
             <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>

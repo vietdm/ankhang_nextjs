@@ -3,7 +3,7 @@ import { fetch } from '@/libraries/axios';
 import { youtubeParser } from '@/utils';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import YouTube from 'react-youtube';
+import YouTube, { YouTubeProps } from 'react-youtube';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, EffectCoverflow } from "swiper";
 import 'swiper/css';
@@ -19,7 +19,7 @@ export const MissionComponent = () => {
     const [calledMission, setCalledMission] = useState<boolean>(false);
 
     useEffect(() => {
-        fetch.get('/mission-list/video').then(async (result) => {
+        fetch.get('/mission-list/video').then(async (result: any) => {
             const idVideo = youtubeParser(result.mission[0].content.url);
             setLimit(result.limit);
             setVideoMission(idVideo);
@@ -40,11 +40,12 @@ export const MissionComponent = () => {
         });
     }, []);
 
-    const opts = {
+    const opts: YouTubeProps['opts'] = {
         width: String(window.innerWidth),
         height: String(window.innerWidth * 0.609375),
         playerVars: {
             autoplay: 1,
+            rel: 0
         },
     };
 
@@ -56,11 +57,11 @@ export const MissionComponent = () => {
         const playerState = event.target.getPlayerState();
 
         if (playerState === YouTube.PlayerState.ENDED && !calledMission) {
-            fetch.post('/mission/update', { mission_list_id: missionId }).then(result => {
+            fetch.post('/mission/update', { mission_list_id: missionId }).then((result: any) => {
                 Alert.success(result.message);
                 setLimit(result.limit);
                 setCalledMission(true);
-            }).catch(error => {
+            }).catch(() => {
                 setCalledMission(true);
             });
         }
@@ -75,7 +76,14 @@ export const MissionComponent = () => {
     return (
         <Box>
             <Typography variant="h6" textAlign="center" marginY={1}>Video nhiệm vụ</Typography>
-            {videoMission != null && <YouTube videoId={videoMission} opts={opts} onReady={onReady} onStateChange={onStateChange} onProgress={console.log} />}
+            {videoMission != null && (
+                <YouTube
+                    videoId={videoMission}
+                    opts={opts}
+                    onReady={onReady}
+                    onStateChange={onStateChange}
+                />
+            )}
             <Box marginTop={3}>
                 <Swiper
                     effect={"coverflow"}
