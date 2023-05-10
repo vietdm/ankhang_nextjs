@@ -2,13 +2,11 @@ import { fetch } from "@/libraries/axios";
 import { formatMoney } from "@/utils";
 import { Alert, Box, Stack, Typography } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { HrTag } from "@/components/ui/HrTag";
 import { SinglePage } from "@/components/ui/SinglePage";
 
 const WithdrawHistory = () => {
     const [histories, setHistories] = useState<any>(null);
-    const router = useRouter();
 
     useEffect(() => {
         fetch.post('/user/withdraw/history').then((result: any) => {
