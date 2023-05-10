@@ -1,10 +1,8 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { DialogAddToCart } from "@/components/ui/DialogAddToCart";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from 'next/router'
-import Link from "next/link";
 import { getQuantityOfProduct, saveCart } from "@/utils/helper/cart";
 import { fetch } from "@/libraries/axios";
 import { CartIcon } from "@/components/ui/CartIcon";
