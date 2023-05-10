@@ -35,7 +35,6 @@ const EditPage = () => {
     const [showFormNomal, setShowFormNomal] = useState<boolean>(false);
     const [showFormBank, setShowFormBank] = useState<boolean>(false);
     const [bankValueSelect, setBankValueSelect] = useState<string>('');
-    const [bankInfo, setBankInfo] = useState<any>(null);
     // const [nameBankUser, setNameBankUser] = useState<string>('');
 
     const formValueNomal = useForm<FormValueNomal>({ defaultValues: { fullname: 'loading..' } });
@@ -54,22 +53,12 @@ const EditPage = () => {
         });
         fetch.get('/user/bank').then((response: any) => {
             const bankInfo = response.bank_info;
-            setBankInfo(bankInfo);
             formValueBank.setValue('bin', bankInfo.bin);
             formValueBank.setValue('branch', bankInfo.branch);
             formValueBank.setValue('account_number', bankInfo.account_number);
+            setBankValueSelect(bankInfo.bank_name);
         });
     }, []);
-
-    useEffect(() => {
-        if (!bankInfo || banks.length == 0) return;
-        for (const bank of banks) {
-            if (bank.bin == bankInfo.bin) {
-                setBankValueSelect(`${bank.code}: ${bank.short_name} - ${bank.name}`);
-                return;
-            }
-        }
-    }, [bankInfo, banks]);
 
     useEffect(() => {
         if (!user) return;

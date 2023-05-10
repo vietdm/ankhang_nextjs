@@ -23,7 +23,7 @@ export const HomeComponent = () => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
         });
-        const timeEnd = new Date('2023-05-15 15:00:00');
+        const timeEnd = new Date('2023-05-20 15:00:00');
         setDateCount(timeEnd);
     }, []);
 

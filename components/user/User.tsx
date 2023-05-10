@@ -1,21 +1,15 @@
 import { useUser } from "@/hooks/useUser";
-import { Alert } from "@/libraries/alert";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Box, Typography, Stack, Button } from "@mui/material";
 import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
-import { DialogWithdraw } from "../ui/DialogWithdraw";
-import { fetch } from "@/libraries/axios";
+import { useMemo, useState } from "react";
 
 export const UserComponent = () => {
   const router = useRouter();
   const { user } = useUser();
-  const [openWithdraw, setOpenWithdraw] = useState<boolean>(false);
-  const [moneyCanWithdraw, setMoneyCanWithdraw] = useState<number>(0);
-  const [requesting, setRequesting] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
 
   const Logout = () => {
@@ -39,27 +33,6 @@ export const UserComponent = () => {
   const affilate = useMemo(() => {
     return window.location.origin + '/auth0/?r=' + (user?.username || '');
   }, [user]);
-
-  useEffect(() => {
-    if (openWithdraw) {
-      fetch.post('/user/get_money_can_withdraw').then((result: any) => {
-        const money = parseInt(result.money);
-        setMoneyCanWithdraw(money < 0 ? 0 : money);
-      });
-    }
-  }, [openWithdraw]);
-
-  const sendWithdrawRequest = (money: number) => {
-    setRequesting(true);
-    fetch.post('/user/withdraw', { money }).then((result: any) => {
-      Alert.success(result.message);
-      setOpenWithdraw(false);
-      setRequesting(false);
-    }).catch((error) => {
-      Alert.error(error.message);
-      setRequesting(false);
-    });
-  }
 
   return (
     <>
@@ -115,17 +88,11 @@ export const UserComponent = () => {
               Chỉnh sửa thông tin
             </Typography>
           </Link>
-          <Typography
-            component="p"
-            textAlign="center"
-            marginY={1}
-            sx={{ borderBottom: '1px solid #3333' }}
-            padding={1}
-            marginX={5}
-            onClick={() => setOpenWithdraw(true)}
-          >
-            Rút tiền
-          </Typography>
+          <Link href='/withdraw' passHref>
+            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+              Rút tiền
+            </Typography>
+          </Link>
           <Link href='/withdraw/history' passHref>
             <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
               Lịch sử rút tiền
@@ -151,13 +118,6 @@ export const UserComponent = () => {
       <Stack textAlign="center" sx={{ margin: '48px auto' }} maxWidth={250}>
         <Button variant="contained" onClick={() => Logout()}>Đăng xuất</Button>
       </Stack>
-      <DialogWithdraw
-        open={openWithdraw}
-        requesting={requesting}
-        moneyCanWithdraw={moneyCanWithdraw}
-        onSubmit={(money: number) => sendWithdrawRequest(money)}
-        onClose={() => setOpenWithdraw(false)}
-      />
     </>
   )
 }

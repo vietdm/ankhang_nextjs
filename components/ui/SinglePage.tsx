@@ -8,9 +8,10 @@ type Props = {
     children: ReactNode;
     title: string;
     hasHomeIcon?: boolean;
+    hasBackIcon?: boolean;
 }
 
-export const SinglePage = ({ children, title, hasHomeIcon = false }: Props) => {
+export const SinglePage = ({ children, title, hasHomeIcon = false, hasBackIcon = true }: Props) => {
     const router = useRouter();
 
     return (
@@ -23,9 +24,13 @@ export const SinglePage = ({ children, title, hasHomeIcon = false }: Props) => {
                 width="100%"
                 sx={{ background: "#0984e3" }}
             >
-                <Box padding={1} onClick={() => router.back()}>
-                    <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
-                </Box>
+                {hasBackIcon ? (
+                    <Box padding={1} onClick={() => router.back()}>
+                        <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
+                    </Box>
+                ) : (
+                    <Box></Box>
+                )}
                 <Typography component="h2" color="#fff">{title}</Typography>
                 {hasHomeIcon ? (
                     <Box padding={1} onClick={() => router.push('/')}>
@@ -35,7 +40,7 @@ export const SinglePage = ({ children, title, hasHomeIcon = false }: Props) => {
                     <Box></Box>
                 )}
             </Stack>
-            <Box height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto">
+            <Box height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto" paddingBottom={5}>
                 {children}
             </Box>
         </Box>
