@@ -2,7 +2,6 @@ import { fetch } from "@/libraries/axios";
 import { formatMoney } from "@/utils";
 import { Alert, Box, Stack, Typography } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useRouter } from "next/router";
 import { HrTag } from "@/components/ui/HrTag";
 import { SinglePage } from "@/components/ui/SinglePage";
