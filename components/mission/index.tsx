@@ -45,7 +45,8 @@ export const MissionComponent = () => {
         height: String(window.innerWidth * 0.609375),
         playerVars: {
             autoplay: 1,
-            rel: 0
+            rel: 0,
+            controls: 0,
         },
     };
 
