@@ -10,7 +10,7 @@ export interface UserInterface {
     present_phone: string;
     address: string;
     level: string;
-    akg_point: number;
+    cashback_point: number;
     package_joined: 'star' | 'vip';
 }
 
