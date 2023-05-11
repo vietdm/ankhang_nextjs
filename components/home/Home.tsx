@@ -13,12 +13,13 @@ import Countdown from "react-countdown";
 import Image from "next/image";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Alert } from "@/libraries/alert";
-let deferredPrompt;
+let deferredPrompt: any = null;
 
 export const HomeComponent = () => {
     const { user } = useUser();
     const [dateCount, setDateCount] = useState<any>(null);
     const [dashboardData, setDashboardData] = useState<any>(null);
+    const [installable, setInstallable] = useState(false);
 
     useEffect(() => {
         fetch.post('/user/dashboard').then((result: any) => {
@@ -28,13 +29,6 @@ export const HomeComponent = () => {
         setDateCount(timeEnd);
     }, []);
 
-    // const installAppToHomeScreen = () => {
-    //     Alert.error('Chức năng đang phát triển');
-    // }
-
-    //PWA
-    const [installable, setInstallable] = useState(false);
-
     useEffect(() => {
         window.addEventListener("beforeinstallprompt", (e) => {
             e.preventDefault();
@@ -43,20 +37,17 @@ export const HomeComponent = () => {
         });
 
         window.addEventListener('appinstalled', () => {
-            console.log('INSTALL: Success');
+            Alert.success('Cài đặt app thành công!');
         });
     }, []);
     const installAppToHomeScreen = () => {
         setInstallable(false);
-        /* @ts-ignore */
+        if (!deferredPrompt) {
+            return;
+        }
         deferredPrompt.prompt();
-        /* @ts-ignore */
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-            } else {
-                console.log('User dismissed the install prompt');
-            }
+        deferredPrompt.userChoice.then(() => {
+            //
         });
     };
 
