@@ -85,7 +85,7 @@ export const UserComponent = () => {
           </Link>
           <Link href='/user/edit' passHref>
             <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Chỉnh sửa thông tin
+              Thông tin cá nhân
             </Typography>
           </Link>
           <Link href='/withdraw' passHref>

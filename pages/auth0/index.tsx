@@ -1,114 +1,25 @@
-import { Box, Button } from "@mui/material";
-import Image from "next/image";
-import Logo from "@/public/logo.png";
-import { useEffect, useState } from "react";
-import SvgIcon from "@mui/material/SvgIcon";
-import { Login } from "@/components/auth0/login";
-import { Signup } from "@/components/auth0/signup";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { fetch } from "@/libraries/axios";
-import { ForgotPassword } from "@/components/auth0/forgot";
-import { VerifyAccount } from "@/components/auth0/verify";
-
-type TypePage = "login" | "signup" | "forgot" | "verify";
 
 const Index = () => {
-  const [typePage, setTypePage] = useState<TypePage>("login");
-  const [userId, setUserId] = useState<number>(0);
-  const route = useRouter();
-
-  const changeTypePage = (newTypePage: TypePage) => {
-    setTypePage(newTypePage);
-  };
+  const router = useRouter();
 
   useEffect(() => {
-    fetch.post('/auth/info').then((result) => {
-      console.log(result);
-
-      // route.push('/');
+    fetch.post('/auth/info').then(() => {
+      router.push('/');
     }).catch(() => {
-      //
+      router.push('/auth0/login');
     });
   }, []);
 
   useEffect(() => {
-    if (route.query?.r) {
-      setTypePage('signup');
+    if (router.query?.r) {
+      router.push('/auth0/signup?r=' + router.query.r);
     }
-  }, [route.query]);
+  }, [router.query]);
 
-  return (
-    <Box minHeight="100vh">
-      <Box
-        height="350px"
-        sx={{
-          background: "radial-gradient(#c1e3f3, #63c3f0)",
-          backgroundRepeat: "no-repeat",
-          position: "relative",
-        }}
-      >
-        <Box
-          width={200}
-          sx={{
-            position: "absolute",
-            top: "60px",
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <Image src={Logo} alt="logo" width={200} />
-        </Box>
-        <Box sx={{ position: "absolute", bottom: "40px", left: 0, width: "100%" }}>
-          <Button
-            variant="outlined"
-            onClick={() => changeTypePage("login")}
-            sx={{
-              width: "50%",
-              border: typePage == "login" ? undefined : "none",
-              color: "#000",
-              fontWeight: 600,
-            }}
-          >
-            Đăng nhập
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => changeTypePage("signup")}
-            sx={{
-              width: "50%",
-              border: typePage == "signup" ? undefined : "none",
-              color: "#000",
-              fontWeight: 600,
-            }}
-          >
-            Đăng ký
-          </Button>
-        </Box>
-        <Box
-          sx={{
-            position: "absolute",
-            left: typePage == "login" ? "25%" : typePage == 'signup' ? '75%' : "50%",
-            transform: "translateX(-50%)",
-            bottom: 0,
-            width: "50px",
-            height: "40px",
-            transition: "all .3s",
-            borderBottom: "1px solid #fff",
-          }}
-        >
-          <SvgIcon viewBox="0 0 50 40" sx={{ width: "50px", height: "40px", fill: "#fff" }}>
-            <polygon points="0,40 25,0 50,40" />
-          </SvgIcon>
-        </Box>
-      </Box>
-      <Box marginBottom="3rem">
-        {typePage == "login" && <Login gotoForgot={() => changeTypePage("forgot")} gotoVerify={() => changeTypePage("verify")} setUserId={setUserId} />}
-        {typePage == 'signup' && <Signup gotoVerify={() => changeTypePage("verify")} setUserId={setUserId} />}
-        {typePage == 'forgot' && <ForgotPassword gotoLogin={() => changeTypePage("login")} />}
-        {typePage == 'verify' && <VerifyAccount userId={userId} gotoLogin={() => changeTypePage("login")} />}
-      </Box>
-    </Box>
-  );
+  return <></>;
 };
 
 export default Index;
