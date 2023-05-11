@@ -2,7 +2,11 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { createTheme, ThemeProvider } from "@mui/material";
 import Head from "next/head";
-import Script from 'next/script'
+import Script from 'next/script';
+import { AnimatePresence } from 'framer-motion';
+import Router from "next/router";
+import { useEffect, useState } from "react";
+import { Loading } from "@/components/layout/Loading";
 
 const theme = createTheme({
   typography: {
@@ -18,6 +22,27 @@ const theme = createTheme({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const start = () => {
+    setLoading(true);
+  }
+
+  const end = () => {
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    Router.events.on("routeChangeStart", start)
+    Router.events.on("routeChangeComplete", end)
+    Router.events.on("routeChangeError", end)
+    return () => {
+      Router.events.off("routeChangeStart", start)
+      Router.events.off("routeChangeComplete", end)
+      Router.events.off("routeChangeError", end)
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -39,7 +64,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/logo.png" sizes="512x512" />
       </Head>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
+        <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
+          {loading ? <Loading /> : <Component {...pageProps} />}
+        </AnimatePresence>
       </ThemeProvider>
       <Script src="/flipdown.min.js"></Script>
     </>
