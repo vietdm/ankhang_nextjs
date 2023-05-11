@@ -119,6 +119,7 @@ async function init() {
   const carts = getCart();
   const cartSave = [];
   let products = await getProducts();
+  let totalPrice = 0;
 
   fillDefaultData(userInfo);
 
@@ -136,14 +137,59 @@ async function init() {
 
   $(".lists").empty();
   carts.map((cart) => {
+    const cartPrice = cart.quantity * cart.product.price;
+    totalPrice += cartPrice;
     $(".lists").append(
       renderList({
         img: cart.product.images[0],
         title: cart.product.title,
         quantity: cart.quantity,
-        price: formatMoney(cart.quantity * cart.product.price) + " đ",
+        price: formatMoney(cartPrice) + " đ",
       })
     );
+  });
+
+  let intervalCountdown = null;
+
+  $('#areaBankInfoModal').on('show.bs.modal', function () {
+    const timer = $('#areaBankInfoModal').find('[id="time"]');
+    timer.text('10:00');
+    let duration = 60 * 10;
+    let minutes, seconds;
+    intervalCountdown = setInterval(function () {
+      minutes = parseInt(duration / 60, 10);
+      seconds = parseInt(duration % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      timer.text(minutes + ":" + seconds);
+
+      if (--duration < 0) {
+        clearInterval(intervalCountdown);
+        $('#areaBankInfoModal').find('.modal-body').empty().append('<h5 class="text-center">Đơn hàng đã bị hủy</h5>');
+        $('#areaBankInfoModal').find('.btn-access').remove();
+        $('#areaBankInfoModal').find('.btn-go-home').removeClass('d-none');
+        localStorage.removeItem('cart');
+        Swal.fire({
+          title: 'Thất bại',
+          text: "Đơn hàng đã bị hủy!",
+          icon: 'error',
+        }).then(() => {
+          window.location.href = "/";
+        });
+      }
+    }, 1000);
+  });
+
+  $('#areaBankInfoModal').on('hide.bs.modal', function () {
+    clearInterval(intervalCountdown);
+  });
+
+  $('.btn-pay').on('click', function () {
+    const qrCode = `https://img.vietqr.io/image/mbbank-0918261368-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=Nguyen%20Thi%20Kim%20Thoa`;
+    $('#areaBankInfoModal').modal({ backdrop: 'static', keyboard: false });
+    $('#areaBankInfoModal').find('[id="QrCode"]').attr('src', qrCode);
   });
 
   $(".btn-trace-store").on("click", async function () {

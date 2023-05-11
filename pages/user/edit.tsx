@@ -16,6 +16,7 @@ import { fetch } from "@/libraries/axios";
 import { useUser } from "@/hooks/useUser";
 import { Alert } from "@/libraries/alert";
 import { HrTag } from "@/components/ui/HrTag";
+import { useRouter } from "next/router";
 // import axios from "axios";
 
 type FormValueNomal = {
@@ -32,10 +33,12 @@ const EditPage = () => {
     const [requesting, setRequesting] = useState<boolean>(false);
     const [banks, setBanks] = useState<any[]>([]);
     const { user } = useUser();
+    const router = useRouter();
     const [showFormNomal, setShowFormNomal] = useState<boolean>(false);
     const [showFormBank, setShowFormBank] = useState<boolean>(false);
     const [bankValueSelect, setBankValueSelect] = useState<string>('');
     // const [nameBankUser, setNameBankUser] = useState<string>('');
+    const [backHome, setBackHome] = useState<boolean>(false);
 
     const formValueNomal = useForm<FormValueNomal>({ defaultValues: { fullname: 'loading..' } });
     const formValueBank = useForm<FormValueBank>({
@@ -53,11 +56,14 @@ const EditPage = () => {
         });
         fetch.get('/user/bank').then((response: any) => {
             const bankInfo = response.bank_info;
-            formValueBank.setValue('bin', bankInfo.bin);
-            formValueBank.setValue('branch', bankInfo.branch);
-            formValueBank.setValue('account_number', bankInfo.account_number);
-            setBankValueSelect(bankInfo.bank_name);
+            formValueBank.setValue('bin', bankInfo?.bin ?? '');
+            formValueBank.setValue('branch', bankInfo?.branch ?? '');
+            formValueBank.setValue('account_number', bankInfo?.account_number ?? '');
+            setBankValueSelect(bankInfo?.bank_name ?? '');
         });
+        if (router.query?.backhome == '1') {
+            setBackHome(true);
+        }
     }, []);
 
     useEffect(() => {
@@ -126,7 +132,7 @@ const EditPage = () => {
     });
 
     return (
-        <SinglePage title="Cập nhật thông tin">
+        <SinglePage title="Cập nhật thông tin" hasBackIcon={!backHome} hasHomeIcon={backHome}>
             <Box paddingY={1}></Box>
             <Box>
                 <Stack onClick={() => setShowFormNomal(!showFormNomal)} sx={{

@@ -60,7 +60,7 @@
         <hr />
     </div>
 
-    <div class="m-auto" style="width: 350px">
+    <!-- <div class="m-auto" style="width: 350px">
         <h5 class="text-center mb-3" style="font-weight: bold;">Thông tin Thanh toán</h5>
         <div class="img-qr" style="width: 250px; margin: auto;">
             <img src="https://api.ankhang.asia/images/qr_code.jpeg" alt="QR Code" class="w-100">
@@ -69,10 +69,34 @@
                 class="text-primary font-weight-bold">0918261368</span> (bấm vào đây để sao chép)</div>
         <div>Chủ tài khoản: Nguyễn Thị Kim Thoa</div>
         <div>Chi nhánh: Ngân hàng MBBank, Xuân Thủy, Cầu Giấy, Hà Nội</div>
-    </div>
+    </div> -->
 
     <div class="text-center mt-3 mb-5">
-        <button class="btn btn-primary btn-trace-store">Đặt hàng</button>
+        <button class="btn btn-primary btn-pay">Thanh toán</button>
+    </div>
+
+    <div class="modal fade" id="areaBankInfoModal" tabindex="-1" role="dialog" aria-labelledby="areaBankInfoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="text-center">
+                        Quý khách vui lòng quét mã và thanh toán trong vòng 10 phút.
+                        <br>
+                        Sau 10 phút, mã sẽ tự động bị hủy.
+                    </h5>
+                    <div class="text-center">Thời gian thanh toán: <b id="time">10:00</b>!</div>
+                    <div style="overflow: hidden;" class="d-flex justify-content-center">
+                        <img src="" id="QrCode" alt="QrCode" style="width: calc(100% + 100px); transform: scale(1.05);">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-access btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-access btn-trace-store btn-primary">Đã thanh toán</button>
+                    <button type="button" class="btn btn-go-home btn-primary d-none">Về trang chủ</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>

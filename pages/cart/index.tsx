@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 import { Box, Button, Stack, Typography } from "@mui/material"
 import CartItemComponent from "@/components/ui/CartItemComponent"
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import { useRouter } from 'next/router'
 import { getProductsList } from "../api/products";
 import { deleteProductFromCart, saveCart, getCartDetail, getCart } from "@/utils/helper/cart";
@@ -10,6 +8,7 @@ import { CartItem, Product } from "../../interfaces/product";
 import { Alert } from "@/libraries/alert";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
+import { SinglePage } from "@/components/ui/SinglePage";
 
 const CartPage = ({ products }: { products: Product[] }) => {
   const [cart, setCart] = useState<CartItem[]>([])
@@ -39,10 +38,6 @@ const CartPage = ({ products }: { products: Product[] }) => {
     setCart(data);
   }
 
-  const handleBack = () => {
-    router.back();
-  }
-
   const buildUriCartTrade = () => {
     const token = getCookie('_token');
     const cart = getCart();
@@ -50,25 +45,7 @@ const CartPage = ({ products }: { products: Product[] }) => {
   }
 
   return (
-    <Box height="100vh" maxHeight="100vh" minHeight="100vh" >
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="center"
-        height="50px"
-        width="100%"
-        sx={{ background: "#0984e3" }}
-      >
-        <Box padding={1} onClick={handleBack}>
-          <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
-        </Box>
-        <Typography component="h2" color="#fff">
-          Giỏ Hàng
-        </Typography>
-        <Box padding={1} onClick={() => router.push('/')}>
-          <HomeOutlinedIcon sx={{ color: "#fff" }} />
-        </Box>
-      </Stack>
+    <SinglePage title="Giỏ hàng" hasHomeIcon={true}>
       <Box height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto">
         <Box>
           {cart?.map(item =>
@@ -84,7 +61,7 @@ const CartPage = ({ products }: { products: Product[] }) => {
           </Link>
         </Stack>}
       </Box>
-    </Box>
+    </SinglePage>
   )
 }
 

@@ -9,6 +9,7 @@ import BusinessOutlinedIcon from '@mui/icons-material/BusinessOutlined';
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const WithdrawPage = () => {
     const [moneyCanWithdraw, setMoneyCanWithdraw] = useState<number>(0);
@@ -54,12 +55,31 @@ const WithdrawPage = () => {
         fetch.get('/user/bank').then((response: any) => {
             const bankInfo = response.bank_info;
             setBankInfo(bankInfo);
+            if (bankInfo == null) {
+                setRequesting(true);
+            }
         });
     }, []);
 
     return (
         <SinglePage title="Rút tiền">
             <Stack marginTop={3}>
+                {bankInfo == null && (
+                    <Box marginBottom={4}>
+                        <Typography
+                            component="h4"
+                            textAlign="center"
+                            fontSize="16px"
+                            color="#e74c3c"
+                            fontStyle="italic"
+                        >
+                            Bạn cần vào cập nhật <b>Thông tin Ngân hàng</b> trong phần <b>Cập nhật thông tin cá nhân</b> mới có thể rút tiền
+                        </Typography>
+                        <Link passHref href="/user/edit?backhome=1">
+                            <Typography textAlign="center" paddingTop={1} color="#3498db">Bấm vào đây để đến cập nhật thông tin</Typography>
+                        </Link>
+                    </Box>
+                )}
                 <TextField
                     id="quantity"
                     label="Nhập số tiền rút"
@@ -67,6 +87,9 @@ const WithdrawPage = () => {
                     value={money}
                     onChange={(e: any) => {
                         setMoney(e.target.value);
+                    }}
+                    InputProps={{
+                        readOnly: requesting
                     }}
                 />
                 <HrTag p={2} />
@@ -96,7 +119,7 @@ const WithdrawPage = () => {
                     <TextField
                         id="branch"
                         label="Ngân hàng"
-                        value={bankInfo?.bank_name}
+                        value={bankInfo?.bank_name ?? ''}
                         variant="standard"
                         sx={{ width: "calc(100% - 60px)" }}
                         type="text"
@@ -110,7 +133,7 @@ const WithdrawPage = () => {
                     <TextField
                         id="branch"
                         label="Số tài khoản"
-                        value={bankInfo?.account_number}
+                        value={bankInfo?.account_number ?? ''}
                         variant="standard"
                         sx={{ width: "calc(100% - 60px)" }}
                         type="text"
@@ -124,7 +147,7 @@ const WithdrawPage = () => {
                     <TextField
                         id="branch"
                         label="Chi nhánh"
-                        value={bankInfo?.branch}
+                        value={bankInfo?.branch ?? ''}
                         variant="standard"
                         sx={{ width: "calc(100% - 60px)" }}
                         type="text"
@@ -146,6 +169,9 @@ const WithdrawPage = () => {
                     autoComplete="aaaaa"
                     onChange={(e) => {
                         setOtpCode(e.target.value)
+                    }}
+                    InputProps={{
+                        readOnly: requesting
                     }}
                 />
                 <Button variant="contained" disabled={requesting} onClick={() => sendOtp()}>Lấy mã OTP</Button>

@@ -4,7 +4,7 @@ import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { BoxMenu } from "./BoxMenu";
+import { BoxMenu, BoxMenuLink } from "./BoxMenu";
 import { useUser } from "@/hooks/useUser";
 import { formatMoney, userLevel } from "@/utils";
 import { useEffect, useState } from "react";
@@ -114,10 +114,10 @@ export const HomeComponent = () => {
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Hoa hồng ngày</Typography>
                     <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.money_bonus_day ?? 0)}</Typography>
                 </BoxMenu>
-                <BoxMenu>
+                <BoxMenuLink link='/user/tree'>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng thành viên</Typography>
                     <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.total_child}</Typography>
-                </BoxMenu>
+                </BoxMenuLink>
             </Stack>
         </Box>
     )
