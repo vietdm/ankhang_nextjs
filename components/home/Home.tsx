@@ -13,6 +13,7 @@ import Countdown from "react-countdown";
 import Image from "next/image";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Alert } from "@/libraries/alert";
+let deferredPrompt;
 
 export const HomeComponent = () => {
     const { user } = useUser();
@@ -26,6 +27,38 @@ export const HomeComponent = () => {
         const timeEnd = new Date('2023-05-20 15:00:00');
         setDateCount(timeEnd);
     }, []);
+
+    // const installAppToHomeScreen = () => {
+    //     Alert.error('Chức năng đang phát triển');
+    // }
+
+    //PWA
+    const [installable, setInstallable] = useState(false);
+
+    useEffect(() => {
+        window.addEventListener("beforeinstallprompt", (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            setInstallable(true);
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('INSTALL: Success');
+        });
+    }, []);
+    const installAppToHomeScreen = () => {
+        setInstallable(false);
+        /* @ts-ignore */
+        deferredPrompt.prompt();
+        /* @ts-ignore */
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+        });
+    };
 
     return (
         <Box paddingBottom="50px">
@@ -90,9 +123,18 @@ export const HomeComponent = () => {
                     {dateCount && <Countdown date={dateCount} />}
                 </Stack>
             </Box>
-            <Box marginY={3} textAlign="center">
-                <Button variant="contained" onClick={() => Alert.error('Chức năng đang phát triển')}>Cài đặt App ra màn hình chính</Button>
-            </Box>
+
+            {/* start button install app */}
+            {installable &&
+                <Box marginY={3} textAlign="center">
+                    <Button variant="contained" onClick={() => installAppToHomeScreen()}>
+                        Cài đặt App ra màn hình chính
+                    </Button>
+                </Box>
+            }
+
+            {/* end button install app */}
+
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Điểm Thưởng</Typography>
