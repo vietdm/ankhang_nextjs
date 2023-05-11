@@ -59,6 +59,10 @@ const SignupPage = () => {
     });
 
     const getPresentName = (code: string) => {
+        if (code == '' || code == 'loading..') {
+            setPresentName(null);
+            return;
+        }
         fetch.get('/present/name?code=' + code).then((result: any) => {
             setPresentName(result.name);
         }).catch(() => {
@@ -74,9 +78,8 @@ const SignupPage = () => {
         if (hasAffilate) {
             const username = router.query.r as string;
             setValue('present_code', username);
-            getPresentName(username);
         }
-    }, [hasAffilate, router.query, setValue]);
+    }, [hasAffilate]);
 
     useEffect(() => {
         const subscription = watch((value, { name }) => {
@@ -93,18 +96,6 @@ const SignupPage = () => {
         <AuthLayout title="Đăng ký tài khoản">
             <Box paddingY="15px">
                 <form action="" autoComplete="none" onSubmit={onSubmit}>
-                    {/* {!hasAffilate && (
-                        <Typography
-                            component="p"
-                            mb={3}
-                            textAlign="center"
-                            color="#c0392b"
-                            fontWeight="700"
-                            fontStyle="italic"
-                        >
-                            Bạn chỉ có thể đăng ký khi truy cập bằng link giới thiệu!
-                        </Typography>
-                    )} */}
                     <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                         <BadgeOutlinedIcon sx={{ width: "60px", color: "grey" }} />
                         <TextField
@@ -113,9 +104,6 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="text"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
                             role="presentation"
                             {...register("fullname", { required: "Họ và tên không được trống!" })}
                         />
@@ -129,9 +117,6 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="text"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
                             role="presentation"
                             {...register("username", { required: "Username không được trống!" })}
                         />
@@ -145,9 +130,6 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="text"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
                             role="presentation"
                             {...register("email", { required: "Email không được trống!" })}
                         />
@@ -161,9 +143,6 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="number"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
                             role="presentation"
                             {...register("phone", { required: "Số điện thoại không được trống!" })}
                         />
@@ -177,11 +156,12 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="text"
+                            InputLabelProps={hasAffilate ? { shrink: true } : {}}
                             InputProps={{
                                 disabled: hasAffilate
                             }}
                             role="presentation"
-                            {...register("present_code", { required: "Hãy nhập số điện thoại người giới thiệu!" })}
+                            {...register("present_code", { required: "Hãy nhập mã giới thiệu!" })}
                         />
                         {presentName && <Box width="100%" marginTop={1} paddingLeft="60px">{presentName}</Box>}
                         <ErrorMessage errors={errors} name="present_code" render={({ message }) => <Error mgs={message} />} />
@@ -194,9 +174,6 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="password"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
                             role="presentation"
                             {...register("password", { required: "Hãy nhập mật khẩu!" })}
                         />
@@ -210,9 +187,6 @@ const SignupPage = () => {
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
                             type="password"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
                             role="presentation"
                             {...register("repassword", {
                                 required: "Hãy nhập lại mật khẩu!",
