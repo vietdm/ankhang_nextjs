@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 import { CartIcon } from "../ui/CartIcon";
 
-export const StoreComponent = () => {
+export const StoreComponent = ({ active = false }: { active?: boolean }) => {
   const [products, setProducts] = useState<any>([]);
 
   useEffect(() => {
@@ -23,6 +23,7 @@ export const StoreComponent = () => {
       minHeight="calc(100% - 50px)"
       width="100vw"
       overflow="auto"
+      display={active ? 'block' : 'none'}
     >
       <Stack
         direction="row"

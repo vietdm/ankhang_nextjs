@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { StoreComponent } from "@/components/store/Store";
 import { UserComponent } from "@/components/user/User";
@@ -29,9 +29,9 @@ const Home = () => {
     <Layout>
       <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
         <Box height="calc(100vh - 50px)" overflow="auto">
-          {menuActive == 'store' && <StoreComponent />}
-          {menuActive == 'user' && <UserComponent />}
-          {menuActive == 'mission' && <MissionComponent />}
+          <StoreComponent active={menuActive == 'store'} />
+          <UserComponent active={menuActive == 'user'} />
+          <MissionComponent active={menuActive == 'mission'} />
           {menuActive == 'gift' && <LuckyWheel />}
           {menuActive == 'main' && <HomeComponent />}
         </Box>
@@ -46,6 +46,13 @@ const Home = () => {
                   <div className="icon">
                     <StoreOutlinedIcon />
                   </div>
+                  <Typography
+                    component="span"
+                    fontSize="12px"
+                    fontWeight={500}
+                  >
+                    Trang chủ
+                  </Typography>
                 </a>
               </li>
               <li className={'Menu__list--item ' + (menuActive == 'mission' ? 'active' : '')}>
@@ -56,6 +63,13 @@ const Home = () => {
                   <div className="icon">
                     <AssignmentTurnedInOutlinedIcon />
                   </div>
+                  <Typography
+                    component="span"
+                    fontSize="12px"
+                    fontWeight={500}
+                  >
+                    Nhiệm vụ
+                  </Typography>
                 </a>
               </li>
               <li className={'Menu__list--item main ' + (menuActive == 'main' ? 'active' : '')}>
@@ -68,7 +82,7 @@ const Home = () => {
                   </div>
                 </a>
               </li>
-
+              <li className='Menu__list--item'></li>
               <li className={'Menu__list--item ' + (menuActive == 'gift' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
@@ -77,6 +91,13 @@ const Home = () => {
                   <div className="icon">
                     <CardGiftcardOutlinedIcon />
                   </div>
+                  <Typography
+                    component="span"
+                    fontSize="12px"
+                    fontWeight={500}
+                  >
+                    May mắn
+                  </Typography>
                 </a>
               </li>
               <li className={'Menu__list--item ' + (menuActive == 'user' ? 'active' : '')}>
@@ -87,6 +108,13 @@ const Home = () => {
                   <div className="icon">
                     <PersonOutlineOutlinedIcon />
                   </div>
+                  <Typography
+                    component="span"
+                    fontSize="12px"
+                    fontWeight={500}
+                  >
+                    Tài khoản
+                  </Typography>
                 </a>
               </li>
             </ul>

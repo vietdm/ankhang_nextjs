@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 
-export const UserComponent = () => {
+export const UserComponent = ({ active = false }: { active?: boolean }) => {
   const router = useRouter();
   const { user } = useUser();
   const [copied, setCopied] = useState<boolean>(false);
@@ -36,7 +36,7 @@ export const UserComponent = () => {
   }, [user]);
 
   return (
-    <>
+    <Box display={active ? 'block' : 'none'}>
       <Stack direction="row" width="90%" margin="1.5rem auto 0 auto" sx={{
         backgroundColor: '#e3e3e3',
         padding: '14px',
@@ -125,6 +125,6 @@ export const UserComponent = () => {
       <Stack textAlign="center" sx={{ margin: '10px auto 80px auto' }} maxWidth={250}>
         <Button variant="contained" onClick={() => Logout()}>Đăng xuất</Button>
       </Stack>
-    </>
+    </Box>
   )
 }

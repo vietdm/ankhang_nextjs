@@ -25,7 +25,7 @@ a {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 55px;
+    height: 74px;
     background-color: #ffffff;
     border-top: 2px solid rgb(0, 183, 255);
     font-family: "Raleway", sans-serif;
@@ -41,7 +41,7 @@ a {
 #Menu .Menu__list ul {
     position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
     list-style: none;
@@ -52,8 +52,6 @@ a {
 #Menu .Menu__list ul .Menu__list--item {
     position: relative;
     cursor: pointer;
-    border-radius: 4px;
-    padding: 0 4px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -66,19 +64,21 @@ a {
 }
 
 #Menu .Menu__list ul .Menu__list--item.main {
-    position: relative;
+    position: absolute;
     bottom: 40px;
-    width: 90px;
-    height: 90px;
+    width: 87px;
+    height: 87px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #ffffff;
-    transform: rotate(45deg);
+    transform: translateX(-50%) rotate(45deg);
     border-top-left-radius: 100%;
     border: 2px solid rgb(0, 183, 255);
     z-index: 2;
     overflow: hidden;
+    left: 50%;
+    bottom: 28px;
 }
 
 #Menu .Menu__list ul .Menu__list--item.main.active {
@@ -105,10 +105,12 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
     text-transform: capitalize;
     color: #333;
+    width: 100%;
+    height: 100%;
+    padding: 4px 0;
 }
 
 #Menu .Menu__list ul .Menu__list--item a .icon {

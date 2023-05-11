@@ -11,12 +11,13 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import axios from "axios";
 
-export const MissionComponent = () => {
+export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     const [limit, setLimit] = useState<number>(0);
     const [videoMission, setVideoMission] = useState<string | null>(null);
     const [listVideoMission, setListVideoMission] = useState<any>({});
     const [missionId, setMissionId] = useState<number>(0);
     const [calledMission, setCalledMission] = useState<boolean>(false);
+    const [player, setPlayer] = useState<any>(null);
 
     useEffect(() => {
         fetch.get('/mission-list/video').then(async (result: any) => {
@@ -51,6 +52,7 @@ export const MissionComponent = () => {
     };
 
     const onReady = (event: any) => {
+        setPlayer(event.target);
         event.target.pauseVideo();
     }
 
@@ -74,16 +76,42 @@ export const MissionComponent = () => {
         setCalledMission(false);
     }
 
+    const togglePlayVideo = () => {
+        if (!player) return;
+        if (player.getPlayerState() == YouTube.PlayerState.PLAYING) {
+            player.pauseVideo();
+        } else {
+            player.playVideo();
+        }
+    }
+
+    useEffect(() => {
+        if (!active && player) {
+            player.pauseVideo();
+        }
+    }, [active]);
+
     return (
-        <Box>
+        <Box display={active ? 'block' : 'none'}>
             <Typography variant="h6" textAlign="center" marginY={1}>Video nhiệm vụ</Typography>
             {videoMission != null && (
-                <YouTube
-                    videoId={videoMission}
-                    opts={opts}
-                    onReady={onReady}
-                    onStateChange={onStateChange}
-                />
+                <Box position="relative">
+                    <YouTube
+                        videoId={videoMission}
+                        opts={opts}
+                        onReady={onReady}
+                        onStateChange={onStateChange}
+                    />
+                    <Box
+                        position="absolute"
+                        top="0"
+                        left="0"
+                        width="100%"
+                        height={opts.height + 'px'}
+                        zIndex={9999}
+                        onClick={() => togglePlayVideo()}
+                    ></Box>
+                </Box>
             )}
             <Box marginTop={3}>
                 <Swiper
