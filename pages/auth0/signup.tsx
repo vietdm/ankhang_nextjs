@@ -17,10 +17,9 @@ import Link from "next/link";
 type FormValues = {
     fullname: string;
     email: string;
-    cccd: string;
     username: string;
     phone: string;
-    present_phone: string;
+    present_code: string;
     password: string;
     repassword: string;
 };
@@ -46,6 +45,7 @@ const SignupPage = () => {
             .post("auth/register", data)
             .then((response: any) => {
                 setRequesting(false);
+                Alert.success('Đăng ký tài khoản thành công. Hãy kiểm tra Email để lấy mã xác nhận!');
                 router.push('/auth0/verify?is_signup=1&user_id=' + response.user_id);
             })
             .catch((error: any) => {
@@ -58,8 +58,8 @@ const SignupPage = () => {
             });
     });
 
-    const getPresentName = (phone: string) => {
-        fetch.get('/present/name?phone=' + phone).then((result: any) => {
+    const getPresentName = (code: string) => {
+        fetch.get('/present/name?code=' + code).then((result: any) => {
             setPresentName(result.name);
         }).catch(() => {
             setPresentName(null);
@@ -72,21 +72,18 @@ const SignupPage = () => {
 
     useEffect(() => {
         if (hasAffilate) {
-            fetch.post('/__/____', { username: router.query.r }).then((result: any) => {
-                setValue('present_phone', result.phone);
-                getPresentName(result.phone);
-            }).catch(error => {
-                Alert.error(error.message);
-            });
+            const username = router.query.r as string;
+            setValue('present_code', username);
+            getPresentName(username);
         }
     }, [hasAffilate, router.query, setValue]);
 
     useEffect(() => {
         const subscription = watch((value, { name }) => {
             clearTimeout(debounceTimeoutRef.current);
-            if (name !== 'present_phone') return;
+            if (name !== 'present_code') return;
             debounceTimeoutRef.current = setTimeout(() => {
-                getPresentName(value.present_phone ?? '');
+                getPresentName(value.present_code ?? '');
             }, 300);
         });
         return () => subscription.unsubscribe();
@@ -157,22 +154,6 @@ const SignupPage = () => {
                         <ErrorMessage errors={errors} name="email" render={({ message }) => <Error mgs={message} />} />
                     </Stack>
                     <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
-                        <BadgeOutlinedIcon sx={{ width: "60px", color: "grey" }} />
-                        <TextField
-                            id="cccd"
-                            label="Số CMT/CCCD"
-                            variant="standard"
-                            sx={{ width: "calc(100% - 60px)" }}
-                            type="text"
-                            // InputProps={{
-                            //     disabled: !hasAffilate
-                            // }}
-                            role="presentation"
-                            {...register("cccd", { required: "Số CMT/CCCD là bắt buộc!" })}
-                        />
-                        <ErrorMessage errors={errors} name="cccd" render={({ message }) => <Error mgs={message} />} />
-                    </Stack>
-                    <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                         <PhoneAndroidOutlinedIcon sx={{ width: "60px", color: "grey" }} />
                         <TextField
                             id="phone"
@@ -191,19 +172,19 @@ const SignupPage = () => {
                     <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                         <PhoneAndroidOutlinedIcon sx={{ width: "60px", color: "grey" }} />
                         <TextField
-                            id="present_phone"
-                            label="Số điện thoại người giới thiệu"
+                            id="present_code"
+                            label="Mã giới thiệu"
                             variant="standard"
                             sx={{ width: "calc(100% - 60px)" }}
-                            type="number"
+                            type="text"
                             InputProps={{
                                 disabled: hasAffilate
                             }}
                             role="presentation"
-                            {...register("present_phone", { required: "Hãy nhập số điện thoại người giới thiệu!" })}
+                            {...register("present_code", { required: "Hãy nhập số điện thoại người giới thiệu!" })}
                         />
                         {presentName && <Box width="100%" marginTop={1} paddingLeft="60px">{presentName}</Box>}
-                        <ErrorMessage errors={errors} name="present_phone" render={({ message }) => <Error mgs={message} />} />
+                        <ErrorMessage errors={errors} name="present_code" render={({ message }) => <Error mgs={message} />} />
                     </Stack>
                     <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                         <PasswordOutlinedIcon sx={{ width: "60px", color: "grey" }} />

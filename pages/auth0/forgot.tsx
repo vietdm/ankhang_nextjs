@@ -117,6 +117,16 @@ const ForgotPage = () => {
                             />
                         </Stack>
                         <Box textAlign="center">
+                            <Button
+                                disabled={requesting}
+                                variant="outlined"
+                                type="submit"
+                                sx={{ marginRight: '10px' }}
+                                onClick={() => gotoLogin()}
+                                color="error"
+                            >
+                                Hủy
+                            </Button>
                             <Button disabled={requesting} variant="contained" type="submit" onClick={submitConfirmToken}>
                                 Xác nhận
                             </Button>
