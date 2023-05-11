@@ -76,7 +76,15 @@ export const UserComponent = () => {
           <br />
           <span>{affilate}</span>
           <br />
-          <Typography component="p" color={copied ? "#27ae60" : "#1976d2"} fontWeight="700">[{copied ? "Đã sao chép" : "Sao chép"}]</Typography>
+          {affilate != '' && (
+            <Typography
+              component="p"
+              color={copied ? "#27ae60" : "#1976d2"}
+              fontWeight="700"
+            >
+              [{copied ? "Đã sao chép" : "Sao chép"}]
+            </Typography>
+          )}
         </Typography>
         <Link href='/user/tree' passHref>
           <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
