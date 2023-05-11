@@ -81,7 +81,7 @@ const SignupPage = () => {
     useEffect(() => {
         const subscription = watch((value, { name }) => {
             clearTimeout(debounceTimeoutRef.current);
-            if (name !== 'present_code') return;
+            if (name !== 'present_code' || hasAffilate) return;
             debounceTimeoutRef.current = setTimeout(() => {
                 getPresentName(value.present_code ?? '');
             }, 300);
