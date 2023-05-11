@@ -59,10 +59,6 @@ const SignupPage = () => {
     });
 
     const getPresentName = (code: string) => {
-        if (code == '' || code == 'loading..') {
-            setPresentName(null);
-            return;
-        }
         fetch.get('/present/name?code=' + code).then((result: any) => {
             setPresentName(result.name);
         }).catch(() => {
@@ -78,6 +74,7 @@ const SignupPage = () => {
         if (hasAffilate) {
             const username = router.query.r as string;
             setValue('present_code', username);
+            getPresentName(username);
         }
     }, [hasAffilate]);
 
