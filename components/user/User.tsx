@@ -61,61 +61,59 @@ export const UserComponent = () => {
         </Box>
       </Stack>
 
-      <Box marginBottom={4}>
-        <Box marginY={5}>
-          <Typography
-            component="p"
-            textAlign="center"
-            marginY={1}
-            sx={{ borderBottom: '1px solid #3333' }}
-            padding={1}
-            marginX={5}
-            onClick={() => copyAffilate(affilate)}
-          >
-            Link giới thiệu:
-            <br />
-            <span>{affilate}</span>
-            <br />
-            <Typography component="p" color={copied ? "#27ae60" : "#1976d2"} fontWeight="700">[{copied ? "Đã sao chép" : "Sao chép"}]</Typography>
+      <Box marginTop={2}>
+        <Typography
+          component="p"
+          textAlign="center"
+          marginY={1}
+          sx={{ borderBottom: '1px solid #3333' }}
+          padding={1}
+          marginX={5}
+          onClick={() => copyAffilate(affilate)}
+        >
+          Link giới thiệu:
+          <br />
+          <span>{affilate}</span>
+          <br />
+          <Typography component="p" color={copied ? "#27ae60" : "#1976d2"} fontWeight="700">[{copied ? "Đã sao chép" : "Sao chép"}]</Typography>
+        </Typography>
+        <Link href='/user/tree' passHref>
+          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+            Xem đội nhóm
           </Typography>
-          <Link href='/user/tree' passHref>
-            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Xem đội nhóm
-            </Typography>
-          </Link>
-          <Link href='/user/edit' passHref>
-            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Thông tin cá nhân
-            </Typography>
-          </Link>
-          <Link href='/withdraw' passHref>
-            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Rút tiền
-            </Typography>
-          </Link>
-          <Link href='/withdraw/history' passHref>
-            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Lịch sử rút tiền
-            </Typography>
-          </Link>
-          <Link href='/order/history' passHref>
-            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Lịch sử mua hàng
-            </Typography>
-          </Link>
-          <Link href='/' passHref>
-            <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-              Đổi mật khẩu
-            </Typography>
-          </Link>
-          <Link href='/' passHref>
-            <Typography component="p" textAlign="center" marginY={1} padding={1} marginX={5}>
-              Chính sách pháp lý
-            </Typography>
-          </Link>
-        </Box>
+        </Link>
+        <Link href='/user/edit' passHref>
+          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+            Thông tin cá nhân
+          </Typography>
+        </Link>
+        <Link href='/withdraw' passHref>
+          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+            Rút tiền
+          </Typography>
+        </Link>
+        <Link href='/withdraw/history' passHref>
+          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+            Lịch sử rút tiền
+          </Typography>
+        </Link>
+        <Link href='/order/history' passHref>
+          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+            Lịch sử mua hàng
+          </Typography>
+        </Link>
+        <Link href='/' passHref>
+          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
+            Đổi mật khẩu
+          </Typography>
+        </Link>
+        <Link href='/' passHref>
+          <Typography component="p" textAlign="center" marginY={1} padding={1} marginX={5}>
+            Chính sách pháp lý
+          </Typography>
+        </Link>
       </Box>
-      <Stack textAlign="center" sx={{ margin: '48px auto' }} maxWidth={250}>
+      <Stack textAlign="center" sx={{ margin: '10px auto 80px auto' }} maxWidth={250}>
         <Button variant="contained" onClick={() => Logout()}>Đăng xuất</Button>
       </Stack>
     </>
