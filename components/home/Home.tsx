@@ -15,7 +15,7 @@ import { UserHelper } from "@/utils/helper/UserHelper";
 import { Alert } from "@/libraries/alert";
 let deferredPrompt: any = null;
 
-export const HomeComponent = () => {
+export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const { user } = useUser();
     const [dateCount, setDateCount] = useState<any>(null);
     const [dashboardData, setDashboardData] = useState<any>(null);
@@ -52,7 +52,7 @@ export const HomeComponent = () => {
     };
 
     return (
-        <Box paddingBottom="50px">
+        <Box paddingBottom="50px" display={active ? 'block' : 'none'}>
             <Swiper
                 pagination={true}
                 modules={[Pagination, Autoplay]}

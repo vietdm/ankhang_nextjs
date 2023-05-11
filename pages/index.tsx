@@ -18,6 +18,7 @@ type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
 const Home = () => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("main");
   const [ready, setReady] = useState<boolean>(false);
+  const [loadedMission, setLoadedMission] = useState<boolean>(false);
 
   useEffect(() => {
     withAuth(() => {
@@ -25,15 +26,21 @@ const Home = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (menuActive == 'mission') {
+      setLoadedMission(true);
+    }
+  }, [menuActive]);
+
   return (
     <Layout>
       <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
         <Box height="calc(100vh - 50px)" overflow="auto">
           <StoreComponent active={menuActive == 'store'} />
           <UserComponent active={menuActive == 'user'} />
-          <MissionComponent active={menuActive == 'mission'} />
-          {menuActive == 'gift' && <LuckyWheel />}
-          {menuActive == 'main' && <HomeComponent />}
+          {loadedMission && <MissionComponent active={menuActive == 'mission'} />}
+          <LuckyWheel active={menuActive == 'gift'} />
+          <HomeComponent active={menuActive == 'main'} />
         </Box>
         <div id="Menu">
           <div className="Menu__list">

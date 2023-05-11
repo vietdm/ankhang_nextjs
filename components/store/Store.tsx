@@ -18,9 +18,9 @@ export const StoreComponent = ({ active = false }: { active?: boolean }) => {
       position="absolute"
       top={0}
       left={0}
-      height="calc(100% - 50px)"
-      maxHeight="calc(100% - 50px)"
-      minHeight="calc(100% - 50px)"
+      height="calc(100% - 74px)"
+      maxHeight="calc(100% - 74px)"
+      minHeight="calc(100% - 74px)"
       width="100vw"
       overflow="auto"
       display={active ? 'block' : 'none'}

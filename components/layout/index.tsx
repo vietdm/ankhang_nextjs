@@ -5,6 +5,7 @@ export const Layout = ({ children }: { children: any }) => (
     initial={{ x: 300, opacity: 0 }}
     animate={{ x: 0, opacity: 1 }}
     exit={{ x: 300, opacity: 0 }}
+    layout
     transition={{
       type: "spring",
       stiffness: 260,

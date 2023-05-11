@@ -3,13 +3,15 @@ import { fetch } from '@/libraries/axios';
 import { youtubeParser } from '@/utils';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import YouTube, { YouTubeProps } from 'react-youtube';
+import YouTube from 'react-youtube';
+import { Options } from 'youtube-player/dist/types';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, EffectCoverflow } from "swiper";
 import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import axios from "axios";
+import { Loading } from '../layout/Loading';
 
 export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     const [limit, setLimit] = useState<number>(0);
@@ -18,6 +20,15 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     const [missionId, setMissionId] = useState<number>(0);
     const [calledMission, setCalledMission] = useState<boolean>(false);
     const [player, setPlayer] = useState<any>(null);
+    const [opts, setOpts] = useState<Options>({
+        width: 0,
+        height: 0,
+        playerVars: {
+            autoplay: 1,
+            rel: 0,
+            controls: 0,
+        },
+    });
 
     useEffect(() => {
         fetch.get('/mission-list/video').then(async (result: any) => {
@@ -40,16 +51,6 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
             setListVideoMission(listMission);
         });
     }, []);
-
-    const opts: YouTubeProps['opts'] = {
-        width: String(window.innerWidth),
-        height: String(window.innerWidth * 0.609375),
-        playerVars: {
-            autoplay: 1,
-            rel: 0,
-            controls: 0,
-        },
-    };
 
     const onReady = (event: any) => {
         setPlayer(event.target);
@@ -86,13 +87,16 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     }
 
     useEffect(() => {
-        if (!active && player) {
-            player.pauseVideo();
-        }
-    }, [active]);
+        setOpts({
+            ...opts,
+            width: String(window.innerWidth),
+            height: String(window.innerWidth * 0.609375)
+        });
+    }, []);
 
     return (
         <Box display={active ? 'block' : 'none'}>
+            {!player && <Loading height="calc(100% - 74px)" />}
             <Typography variant="h6" textAlign="center" marginY={1}>Video nhiệm vụ</Typography>
             {videoMission != null && (
                 <Box position="relative">

@@ -1,26 +1,30 @@
 import { Box, Stack } from "@mui/material";
 
-export const Loading = () => {
+export const Loading = ({ height = '100vh' }: { height?: string }) => {
     return (
         <Stack
             justifyContent="center"
             alignItems="center"
-            minHeight="100vh"
-            maxHeight='100vh'
-            height="100vh"
+            minHeight={height}
+            maxHeight={height}
+            height={height}
             overflow="hidden"
+            position='fixed'
+            top={0}
+            left={0}
+            width="100vw"
         >
             <Box sx={{
                 position: 'fixed',
                 top: 0,
                 left: 0,
                 width: '100vw',
-                height: '100vh',
+                height: height,
                 zIndex: -1,
                 background: 'url("/imgs/bg_down_page.jpg")',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'center'
+                backgroundPosition: 'center',
             }}></Box>
             <svg className="loading_screen" viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
                 <defs>
