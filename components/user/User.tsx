@@ -31,6 +31,7 @@ export const UserComponent = () => {
   }
 
   const affilate = useMemo(() => {
+    if (!user) return '';
     return window.location.origin + '/r/' + (user?.username || '');
   }, [user]);
 
