@@ -37,7 +37,7 @@ export const HomeComponent = () => {
         });
 
         window.addEventListener('appinstalled', () => {
-            Alert.success('Cài đặt app thành công!');
+            Alert.success('Cài đặt app thành công! Có thể sẽ mất từ 1 - 2 phút để hiển thị ở màn hình chính!');
         });
     }, []);
     const installAppToHomeScreen = () => {
