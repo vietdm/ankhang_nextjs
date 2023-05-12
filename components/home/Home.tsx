@@ -97,8 +97,8 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     </Box>
                 </Stack>
                 <Box width="calc(100% - 80px)">
-                    <Typography component="h4" textAlign="center" sx={{ fontSize: '22px' }} fontWeight="600">
-                        {user?.fullname}
+                    <Typography component="h6" textAlign="center" sx={{ fontSize: '20px' }} fontWeight="400">
+                        Xin chào, <b>{user?.fullname}</b>
                     </Typography>
                     <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
                         Mã KH: <b>{user?.username}</b>
@@ -109,7 +109,14 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 </Box>
             </Stack>
             <Box marginY={3}>
-                <Typography variant="h5" textAlign="center">Count Down...</Typography>
+                <Typography
+                    variant="h5"
+                    textAlign="center"
+                    textTransform="uppercase"
+                    color="#0578bf"
+                >
+                    Khởi động CashBack
+                </Typography>
                 <Stack justifyContent="center" alignItems="center" fontSize="34px">
                     {dateCount && <Countdown date={dateCount} />}
                 </Stack>
