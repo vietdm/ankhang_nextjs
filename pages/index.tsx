@@ -103,7 +103,7 @@ const Home = () => {
                     fontSize="12px"
                     fontWeight={500}
                   >
-                    May mắn
+                    Vòng quay
                   </Typography>
                 </a>
               </li>
