@@ -6,12 +6,12 @@ import { ReactNode } from 'react';
 
 type Props = {
     children: ReactNode;
-    title: string;
+    title?: string;
     hasHomeIcon?: boolean;
     hasBackIcon?: boolean;
 }
 
-export const SinglePage = ({ children, title, hasHomeIcon = false, hasBackIcon = true }: Props) => {
+export const SinglePage = ({ children, title = '', hasHomeIcon = false, hasBackIcon = true }: Props) => {
     const router = useRouter();
 
     return (

@@ -13,10 +13,14 @@ import Countdown from "react-countdown";
 import Image from "next/image";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Alert } from "@/libraries/alert";
+import Link from "next/link";
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+
 let deferredPrompt: any = null;
 
 export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const { user } = useUser();
+    const [products, setProducts] = useState<any>([]);
     const [dateCount, setDateCount] = useState<any>(null);
     const [dashboardData, setDashboardData] = useState<any>(null);
     const [installable, setInstallable] = useState(false);
@@ -24,6 +28,9 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     useEffect(() => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
+        });
+        fetch.get('/products').then((result: any) => {
+            setProducts(result.products);
         });
         const timeEnd = new Date('2023-05-20 15:00:00');
         setDateCount(timeEnd);
@@ -130,8 +137,27 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     </Button>
                 </Box>
             }
-
             {/* end button install app */}
+            <Link passHref href="/store">
+                <Stack direction="row" paddingX="15px" alignItems="center" color="#0578bf" justifyContent="end">
+                    <Typography component="h4" fontSize="20px" fontWeight={500}>Cửa hàng</Typography>
+                    <ArrowCircleRightOutlinedIcon sx={{ marginLeft: "10px" }} />
+                </Stack>
+            </Link>
+            <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
+                {products.map((product: any) => (
+                    <Box width="50%" padding="16px" key={product.id}>
+                        <Link passHref href="/store">
+                            <Box position="relative" width="100%">
+                                <img alt={product.title} src={product.images[0]} style={{ width: '100%' }} />
+                            </Box>
+                            <Typography component="p" textAlign="center" fontSize="16px">
+                                {product.title}
+                            </Typography>
+                        </Link>
+                    </Box>
+                ))}
+            </Stack>
 
             <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
                 <BoxMenu>
