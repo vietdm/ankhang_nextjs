@@ -10,7 +10,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
+// import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 import { Layout } from "@/components/layout";
 
 type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
@@ -45,13 +45,13 @@ const Home = () => {
         <div id="Menu">
           <div className="Menu__list">
             <ul>
-              <li className={'Menu__list--item ' + (menuActive == 'store' ? 'active' : '')}>
+              <li className={'Menu__list--item ' + (menuActive == 'main' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  setMenuActive('store');
+                  setMenuActive('main');
                 }}>
                   <div className="icon">
-                    <StoreOutlinedIcon />
+                    <HomeOutlinedIcon />
                   </div>
                   <Typography
                     component="span"
@@ -79,7 +79,7 @@ const Home = () => {
                   </Typography>
                 </a>
               </li>
-              <li className={'Menu__list--item main ' + (menuActive == 'main' ? 'active' : '')}>
+              {/* <li className={'Menu__list--item main ' + (menuActive == 'main' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
                   setMenuActive('main');
@@ -89,7 +89,7 @@ const Home = () => {
                   </div>
                 </a>
               </li>
-              <li className='Menu__list--item'></li>
+              <li className='Menu__list--item'></li> */}
               <li className={'Menu__list--item ' + (menuActive == 'gift' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();

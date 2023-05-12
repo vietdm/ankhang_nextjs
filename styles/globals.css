@@ -56,7 +56,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(100% / 6);
+    width: calc(100% / 4);
 }
 
 #Menu .Menu__list ul .Menu__list--item.active {
