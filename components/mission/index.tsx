@@ -94,6 +94,12 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
         });
     }, []);
 
+    useEffect(() => {
+        if (!active && player) {
+            player.pauseVideo();
+        }
+    }, [active]);
+
     return (
         <Box display={active ? 'block' : 'none'}>
             {!player && <Loading height="calc(100% - 74px)" />}
