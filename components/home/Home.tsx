@@ -30,7 +30,11 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             setDashboardData(result);
         });
         fetch.get('/products').then((result: any) => {
-            setProducts(result.products);
+            let listProduct = result.products;
+            if (listProduct.length > 4) {
+                listProduct = [listProduct[0], listProduct[1], listProduct[2], listProduct[3]];
+            }
+            setProducts(listProduct);
         });
         const timeEnd = new Date('2023-05-20 15:00:00');
         setDateCount(timeEnd);
