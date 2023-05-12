@@ -29,6 +29,7 @@ const StorePage = () => {
                 <Box padding={1} onClick={() => router.push('/')}>
                     <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
                 </Box>
+                <Typography component="h2" color="#fff" fontWeight={500} fontSize="20px">Cửa hàng</Typography>
                 <CartIcon />
             </Stack>
             <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
