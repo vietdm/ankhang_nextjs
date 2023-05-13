@@ -1,10 +1,7 @@
 const url = new URL(window.location.href);
-// const url = new URL(
-//   "http://app.ankhang.asia/cart/index.html?carts=%5B%7B%22product_id%22:1,%22quantity%22:1%7D%5D&token=eyJhbGciOiJTSEEyNTYiLCJ0eXAiOiJKV1QifQ.eyJpZCI6MTAsImV4cCI6MTY4Mjk3OTMwNX0.9rb3564Z04TLfI7H13HYnuzMRQ1ycCAm0ROb8gAFHP0"
-// );
 
 const params = new URLSearchParams(url.search);
-const api = "https://api.ankhang.asia/api/";
+const api = "https://api.ankhangmilk.com/api/";
 
 function copyText(textToCopy) {
   const tempInput = document.createElement("input");
