@@ -25,11 +25,15 @@ const WithdrawHistory = () => {
                     <Fragment key={index}>
                         <Box padding="15px" borderRadius="7px">
                             <Typography component="h5">Ngày yêu cầu: {history.date}</Typography>
-                            <Box paddingY={2}>
+                            <Box paddingY={1}>
                                 <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
                             </Box>
                             <Typography component="h5">Số tiền: {formatMoney(history.money)}</Typography>
-                            <Box paddingY={2}>
+                            <Box paddingY={1}>
+                                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+                            </Box>
+                            <Typography component="h5">Số tiền thực nhận: {formatMoney(history.money_real)}</Typography>
+                            <Box paddingY={1}>
                                 <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
                             </Box>
                             <Stack direction="row" justifyContent="center">
@@ -43,7 +47,7 @@ const WithdrawHistory = () => {
                                     {history.status === 2 && (
                                         <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="success">Rút thành công!</Alert>
                                     )}
-                                    {history.status === 2 && (
+                                    {history.status === 3 && (
                                         <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="error">Từ chối!</Alert>
                                     )}
                                 </Box>
