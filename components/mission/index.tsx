@@ -102,7 +102,7 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
 
     return (
         <Box display={active ? 'block' : 'none'}>
-            {!player && <Loading height="calc(100% - 74px)" />}
+            {!player && <Loading height="calc(100% - 90px)" />}
             <Typography variant="h6" textAlign="center" marginY={1}>Video nhiệm vụ</Typography>
             {videoMission != null && (
                 <Box position="relative">

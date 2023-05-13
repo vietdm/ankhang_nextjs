@@ -46,7 +46,7 @@ const CartPage = ({ products }: { products: Product[] }) => {
 
   return (
     <SinglePage title="Giỏ hàng" hasHomeIcon={true}>
-      <Box height="calc(100% - 74px)" overflow="auto" width="90%" margin="auto">
+      <Box height="calc(100% - 90px)" overflow="auto" width="90%" margin="auto">
         <Box>
           {cart?.map(item =>
             (<CartItemComponent key={item?.id} id={item?.id} product={item?.product} quantity={item?.quantity} onDelete={handleDelete} onUpdate={handleUpdate} />)
