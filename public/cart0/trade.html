@@ -86,14 +86,39 @@
                         Sau 10 phút, mã sẽ tự động bị hủy.
                     </h5>
                     <div class="text-center">Thời gian thanh toán: <b id="time">10:00</b>!</div>
-                    <div style="overflow: hidden;" class="d-flex justify-content-center">
-                        <img src="" id="QrCode" alt="QrCode" style="width: calc(100% + 100px); transform: scale(1.05);">
+                    <div class="d-flex justify-content-center box-qr-code">
+                        <img src="" id="QrCode" alt="QrCode" class="qr-code">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-access btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-access btn-trace-store btn-primary">Đã thanh toán</button>
+                    <button type="button" class="btn btn-access btn-confirm-trace btn-primary">
+                        Xác nhận thanh toán
+                    </button>
                     <button type="button" class="btn btn-go-home btn-primary d-none">Về trang chủ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="areaUploadBankResult" tabindex="-1" role="dialog"
+        aria-labelledby="areaUploadBankResultLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="text-center mb-3 font-weight-bold">Tải lên hình ảnh thanh toán</h4>
+                    <div class="area-upload">
+                        <label for="fileBankResult" class="w-100 mb-0">Chọn hình ảnh trên máy</label>
+                        <input type="file" class="form-control h-100" id="fileBankResult"
+                            accept="image/png, image/gif, image/jpeg, image/jpg" />
+                        <div class="img-preview text-center mt-3"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-access btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-access btn-trace-store btn-primary">
+                        Đặt hàng
+                    </button>
                 </div>
             </div>
         </div>

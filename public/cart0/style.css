@@ -21,3 +21,16 @@ body {
 .cart-list .list .content {
     width: calc(100% - 120px);
 }
+
+.box-qr-code {
+    position: relative;
+    overflow: hidden;
+    height: 500px;
+}
+
+.box-qr-code .qr-code {
+    position: absolute;
+    width: calc(100% + 100px);
+    transform: scale(1.05);
+    top: -65px;
+}

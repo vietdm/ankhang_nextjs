@@ -186,6 +186,11 @@ async function init() {
     clearInterval(intervalCountdown);
   });
 
+  $('#areaUploadBankResult').on('hide.bs.modal', function () {
+    $('#areaUploadBankResult').find('.img-preview').empty();
+    $('#fileBankResult').val('');
+  });
+
   $('.btn-pay').on('click', function () {
     const qrCode = `https://img.vietqr.io/image/mbbank-0918261368-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=Nguyen%20Thi%20Kim%20Thoa`;
     $('#areaBankInfoModal').modal({ backdrop: 'static', keyboard: false });
@@ -193,21 +198,38 @@ async function init() {
   });
 
   $(".btn-trace-store").on("click", async function () {
+    const file = $('#fileBankResult')[0].files;
+    if (file.length == 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Cần chọn ảnh xác nhận thanh toán trước khi Đặt Hàng!'
+      });
+      return;
+    }
+
     $(this).prop('disabled', true);
+
+    const formData = new FormData;
+    formData.append('image', file[0]);
+    formData.append('order', JSON.stringify(cartSave));
+    formData.append('user_id', userInfo.id);
+    formData.append('name', $('[name="fullname"]').val());
+    formData.append('phone', $('[name="phone"]').val());
+    formData.append('address', $('[name="address"]').val());
+    formData.append('note', $('[name="note"]').val());
+
+    console.log(formData);
+
     $.ajax({
       url: api + "order",
       type: 'post',
-      data: {
-        order: cartSave,
-        user_id: userInfo.id,
-        name: $('[name="fullname"]').val(),
-        phone: $('[name="phone"]').val(),
-        address: $('[name="address"]').val(),
-        note: $('[name="note"]').val(),
-      },
+      data: formData,
       headers: {
         Authorization: 'Bearer ' + getCookie('_token')
       },
+      processData: false,
+      contentType: false,
       dataType: 'json',
       success: () => {
         localStorage.removeItem('cart');
@@ -227,6 +249,42 @@ async function init() {
         $(this).prop('disabled', false);
       }
     });
+  });
+
+  $('#fileBankResult').on('change', function () {
+    const $modal = $('#areaUploadBankResult');
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg'];
+
+    $modal.find('.img-preview').empty();
+    if (this.files.length == 0) {
+      return;
+    }
+
+    if (!validImageTypes.includes(this.files[0]['type'])) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'File đã chọn không phải 1 ảnh!'
+      });
+      return;
+    }
+
+    const reader = new FileReader();
+
+    const newImg = $('<img />');
+    newImg.css('width', '250px');
+
+    reader.onload = function (e) {
+      newImg.attr('src', e.target.result);
+      $modal.find('.img-preview').append(newImg);
+    }
+
+    reader.readAsDataURL(this.files[0]);
+  });
+
+  $('.btn-confirm-trace').on('click', function () {
+    $('#areaBankInfoModal').modal('hide');
+    $('#areaUploadBankResult').modal({ backdrop: 'static', keyboard: false });
   });
 }
 
