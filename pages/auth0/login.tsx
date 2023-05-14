@@ -2,7 +2,6 @@ import { AuthLayout } from "@/components/auth0/layout";
 import { Alert } from "@/libraries/alert";
 import { fetch } from "@/libraries/axios";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { setCookies } from "cookies-next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -11,6 +10,7 @@ import PasswordOutlinedIcon from "@mui/icons-material/PasswordOutlined";
 import { ErrorMessage } from "@hookform/error-message";
 import { Error } from "@/components/ui/Error";
 import Link from "next/link";
+import { Storage } from "@/libraries/storage";
 
 type FormValues = {
     phone: string;
@@ -34,7 +34,7 @@ const LoginPage = () => {
             .post("auth/login", data)
             .then((response: any) => {
                 Alert.success(response.message);
-                setCookies('_token', response.token);
+                Storage.set('_token', response.token);
                 if (response.verified == '1') {
                     router.push('/');
                 } else {

@@ -6,9 +6,9 @@ import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
 import { Error } from "@/components/ui/Error";
 import { ErrorMessage } from "@hookform/error-message";
-import { setCookies } from "cookies-next";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { Storage } from "@/libraries/storage";
 
 type FormValues = {
   phone: string;
@@ -37,7 +37,7 @@ export const Login = ({ gotoForgot, gotoVerify, setUserId }: Props) => {
       .post("auth/login", data)
       .then((response: any) => {
         Alert.success(response.message);
-        setCookies('_token', response.token);
+        Storage.set('_token', response.token);
         if (response.verified == '1') {
           router.push('/');
         } else {

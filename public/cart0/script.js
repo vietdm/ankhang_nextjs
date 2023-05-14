@@ -13,21 +13,6 @@ function copyText(textToCopy) {
   alert("Đã sao chép!");
 }
 
-function getCookie(cname) {
-  let name = cname + "=";
-  let ca = document.cookie.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
-
 function getCart() {
   let _cart = params.get("carts");
   if (_cart == null) return [];
@@ -50,7 +35,7 @@ async function getUserInfo() {
     type: 'post',
     data: { token },
     headers: {
-      Authorization: 'Bearer ' + getCookie('_token')
+      Authorization: 'Bearer ' + token
     },
     dataType: 'json',
   })).user;
@@ -216,14 +201,12 @@ async function init() {
     formData.append('address', $('[name="address"]').val());
     formData.append('note', $('[name="note"]').val());
 
-    console.log(formData);
-
     $.ajax({
       url: api + "order",
       type: 'post',
       data: formData,
       headers: {
-        Authorization: 'Bearer ' + getCookie('_token')
+        Authorization: 'Bearer ' + params.get("token")
       },
       processData: false,
       contentType: false,

@@ -2,13 +2,13 @@ import { AuthLayout } from "@/components/auth0/layout";
 import { Alert } from "@/libraries/alert";
 import { fetch } from "@/libraries/axios";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
-import { deleteCookie, hasCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import PasswordOutlinedIcon from "@mui/icons-material/PasswordOutlined";
 import { ErrorMessage } from "@hookform/error-message";
 import { Error } from "@/components/ui/Error";
+import { Storage } from "@/libraries/storage";
 
 type FormValues = {
     otp_code: string;
@@ -49,7 +49,7 @@ const VerifyPage = () => {
     }, [userId, setValue]);
 
     useEffect(() => {
-        setLogined(hasCookie('_token'));
+        setLogined(Storage.has('_token'));
     }, []);
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const VerifyPage = () => {
     }, [countdown]);
 
     const Logout = () => {
-        deleteCookie('_token');
+        Storage.delete('_token');
         Alert.success('Đăng xuất thành công!');
         router.push('/auth0/login');
     }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
+import { Storage } from "./storage";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_URL_API,
@@ -9,7 +9,7 @@ instance.interceptors.request.use(
   async (config) => {
     // Implement function to get token
     const token = {
-      accessToken: getCookie('_token'),
+      accessToken: Storage.get('_token'),
       refreshToken: "",
     };
 

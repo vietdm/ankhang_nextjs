@@ -1,7 +1,7 @@
 import { useUser } from "@/hooks/useUser";
+import { Storage } from "@/libraries/storage";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Box, Typography, Stack, Button } from "@mui/material";
-import { deleteCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,7 +13,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
   const [copied, setCopied] = useState<boolean>(false);
 
   const Logout = () => {
-    deleteCookie('_token');
+    Storage.delete('_token');
     router.push('/auth0');
   }
 

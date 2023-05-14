@@ -1,13 +1,13 @@
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import PasswordOutlinedIcon from "@mui/icons-material/PasswordOutlined";
 import { useRouter } from "next/router";
-import { deleteCookie, hasCookie } from "cookies-next";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 import { ErrorMessage } from "@hookform/error-message";
 import { Error } from "../ui/Error";
 import { Alert } from "@/libraries/alert";
+import { Storage } from "@/libraries/storage";
 
 type Props = {
   gotoLogin: () => any;
@@ -37,7 +37,7 @@ export const VerifyAccount = ({ gotoLogin, userId }: Props) => {
   }, [userId, setValue]);
 
   useEffect(() => {
-    setLogined(hasCookie('_token'));
+    setLogined(Storage.has('_token'));
   }, []);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const VerifyAccount = ({ gotoLogin, userId }: Props) => {
   }, [countdown]);
 
   const Logout = () => {
-    deleteCookie('_token');
+    Storage.delete('_token');
     Alert.success('Đăng xuất thành công!');
     gotoLogin();
   }

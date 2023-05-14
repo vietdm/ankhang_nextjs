@@ -40,7 +40,7 @@ export const DialogAddToCart = ({ open, onSubmit, onClose, name, price, quantity
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { paddingBottom: '15px' } }}>
         <DialogTitle textAlign="center">{name}</DialogTitle>
         <DialogContent sx={{ overflowY: "initial" }}>
           <Stack direction="row">

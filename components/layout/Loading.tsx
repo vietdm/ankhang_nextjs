@@ -37,8 +37,8 @@ export const Loading = ({ height = '100vh' }: { height?: string }) => {
                         <stop offset="100%" stop-color="hsl(223,90%,55%)" />
                     </linearGradient>
                 </defs>
-                <circle className="loading_screen__ring" cx="100" cy="100" r="82" fill="none" stroke="url(#loading_screen-grad1)" stroke-width="36" stroke-dasharray="0 257 1 257" stroke-dashoffset="0.01" stroke-linecap="round" transform="rotate(-90,100,100)" />
-                <line className="loading_screen__ball" stroke="url(#loading_screen-grad2)" x1="100" y1="18" x2="100.01" y2="182" stroke-width="36" stroke-dasharray="1 165" stroke-linecap="round" />
+                <circle className="loading_screen__ring" cx="100" cy="100" r="82" fill="none" stroke="url(#loading_screen-grad1)" stroke-width="36" stroke-dasharray="0 257 1 257" strokeDashoffset="0.01" strokeLinecap="round" transform="rotate(-90,100,100)" />
+                <line className="loading_screen__ball" stroke="url(#loading_screen-grad2)" x1="100" y1="18" x2="100.01" y2="182" stroke-width="36" stroke-dasharray="1 165" strokeLinecap="round" />
             </svg>
         </Stack>
     );
