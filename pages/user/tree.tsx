@@ -96,7 +96,7 @@ const UserTree = () => {
                                 onClick={() => backTreeBefore()}
                             >
                                 <ArrowCircleLeftOutlinedIcon />
-                                <Typography component="p" marginLeft={1}>Quay lại danh sách trước</Typography>
+                                <Typography component="p" marginLeft={1} sx={{ userSelect: 'none' }}>Quay lại danh sách trước</Typography>
                             </Stack>
                         </motion.div>
                     )}
@@ -176,7 +176,7 @@ const UserTree = () => {
                                                 onClick={() => backTreeBefore()}
                                             >
                                                 <ArrowCircleLeftOutlinedIcon />
-                                                <Typography component="p" marginLeft={1}>Quay lại danh sách trước</Typography>
+                                                <Typography component="p" marginLeft={1} sx={{ userSelect: 'none' }}>Quay lại danh sách trước</Typography>
                                             </Stack>
                                         </motion.div>
                                     )}
