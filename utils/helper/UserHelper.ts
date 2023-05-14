@@ -23,5 +23,16 @@ export const UserHelper = {
         if (package_joined == 'star') return 'Star';
         if (package_joined == 'vip') return 'VIP';
         return 'Chưa tham gia gói';
+    },
+    getPositionName(position: string) {
+        switch (position) {
+            case 'nomal': return 'Người dùng';
+            case 'chuyen_vien': return 'Chuyên viên';
+            case 'truong_phong': return 'Trưởng phòng';
+            case 'pho_giam_doc': return 'Phó giám đốc';
+            case 'giam_doc': return 'Giám đốc';
+            case 'giam_doc_cap_cao': return 'Giám đốc cấp cao';
+            default: return 'Không rõ';
+        }
     }
 }
