@@ -12,6 +12,7 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 // import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 import { Layout } from "@/components/layout";
+import { useRouter } from "next/router";
 
 type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
 
@@ -19,12 +20,24 @@ const Home = () => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("main");
   const [ready, setReady] = useState<boolean>(false);
   const [loadedMission, setLoadedMission] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     withAuth(() => {
       setReady(true);
     });
   }, []);
+
+  useEffect(() => {
+    if (!router.query?.t) {
+      return;
+    }
+    const tab = router.query.t as string;
+    if (!["store", "mission", "main", "gift", "user"].includes(tab)) {
+      return;
+    }
+    setMenuActive(tab as BottomMenu);
+  }, [router.query]);
 
   useEffect(() => {
     if (menuActive == 'mission') {
@@ -35,7 +48,7 @@ const Home = () => {
   return (
     <Layout>
       <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
-        <Box height="calc(100vh - 50px)" overflow="auto">
+        <Box height="calc(100vh - 90px)" overflow="auto">
           <StoreComponent active={menuActive == 'store'} />
           <UserComponent active={menuActive == 'user'} />
           {loadedMission && <MissionComponent active={menuActive == 'mission'} />}

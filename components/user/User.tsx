@@ -1,11 +1,20 @@
 import { useUser } from "@/hooks/useUser";
 import { Storage } from "@/libraries/storage";
 import { UserHelper } from "@/utils/helper/UserHelper";
-import { Box, Typography, Stack, Button } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
+import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
+import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
+import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 export const UserComponent = ({ active = false }: { active?: boolean }) => {
   const router = useRouter();
@@ -37,7 +46,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
 
   return (
     <Box display={active ? 'block' : 'none'}>
-      <Stack direction="row" width="90%" margin="1.5rem auto 0 auto" sx={{
+      <Stack direction="row" width="90%" margin="1rem auto 0 auto" sx={{
         backgroundColor: '#e3e3e3',
         padding: '14px',
         borderRadius: '14px',
@@ -63,68 +72,93 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
       </Stack>
 
       <Box marginTop={2}>
-        <Typography
-          component="p"
-          textAlign="center"
-          marginY={1}
-          sx={{ borderBottom: '1px solid #3333' }}
-          padding={1}
-          marginX={5}
-          onClick={() => copyAffilate(affilate)}
-        >
-          Link giới thiệu:
-          <br />
-          <span>{affilate}</span>
-          <br />
-          {affilate != '' && (
-            <Typography
-              component="p"
-              color={copied ? "#27ae60" : "#1976d2"}
-              fontWeight="700"
-            >
-              [{copied ? "Đã sao chép" : "Sao chép"}]
-            </Typography>
-          )}
-        </Typography>
-        <Link href='/user/tree' passHref>
-          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-            Xem đội nhóm
+        <Box marginY={1}>
+          <Typography component="p" textAlign="center" padding={1} marginX={5} onClick={() => copyAffilate(affilate)}>
+            Link giới thiệu:
+            <br />
+            <span>{affilate}</span>
+            <br />
+            {affilate != '' && (
+              <Typography
+                component="span"
+                color={copied ? "#27ae60" : "#1976d2"}
+                fontWeight="700"
+              >
+                [{copied ? "Đã sao chép" : "Sao chép"}]
+              </Typography>
+            )}
           </Typography>
-        </Link>
+        </Box>
         <Link href='/user/edit' passHref>
-          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-            Thông tin cá nhân
-          </Typography>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <AccountCircleOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Thông tin cá nhân</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
+        </Link>
+        <Link href='/user/tree' passHref>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <GroupOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Quản lý đội nhóm</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
+        </Link>
+        <Link href='/' passHref>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <QueryStatsOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Điểm AKG</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
         </Link>
         <Link href='/withdraw' passHref>
-          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-            Rút tiền
-          </Typography>
-        </Link>
-        <Link href='/withdraw/history' passHref>
-          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-            Lịch sử rút tiền
-          </Typography>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <MonetizationOnOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Rút tiền</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
         </Link>
         <Link href='/order/history' passHref>
-          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-            Lịch sử mua hàng
-          </Typography>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <HistoryEduOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Lịch sử mua hàng</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
+        </Link>
+        <Link href='/withdraw/history' passHref>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <RequestQuoteOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Lịch sử rút tiền</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
         </Link>
         <Link href='/' passHref>
-          <Typography component="p" textAlign="center" marginY={1} sx={{ borderBottom: '1px solid #3333' }} padding={1} marginX={5}>
-            Đổi mật khẩu
-          </Typography>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+            <Stack direction="row">
+              <HelpOutlineOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Câu hỏi thường gặp</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
+          </Stack>
         </Link>
-        <Link href='/' passHref>
-          <Typography component="p" textAlign="center" marginY={1} padding={1} marginX={5}>
-            Chính sách pháp lý
-          </Typography>
-        </Link>
+        <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} onClick={() => Logout()}>
+          <Stack direction="row">
+            <LogoutOutlinedIcon sx={{ fill: "#5eaddb", transform: 'rotate(180deg)' }} />
+            <Typography component="p" marginLeft={1} fontWeight="500">Đăng xuất</Typography>
+          </Stack>
+        </Stack>
       </Box>
-      <Stack textAlign="center" sx={{ margin: '10px auto 80px auto' }} maxWidth={250}>
-        <Button variant="contained" onClick={() => Logout()}>Đăng xuất</Button>
-      </Stack>
-    </Box>
+    </Box >
   )
 }
