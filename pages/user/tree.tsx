@@ -181,7 +181,7 @@ const UserTree = () => {
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
-                                <Typography variant="h6">Danh sách F1 ({userTree.trees.length})</Typography>
+                                <Typography variant="h6">Danh sách ({userTree.trees.length})</Typography>
                                 {userTree.trees.map((tree: any) => (
                                     <Stack direction="row" key={tree.id} sx={{
                                         boxShadow: '1px 2px 4px 1px rgba(0, 0, 0, 0.2)',
@@ -200,7 +200,7 @@ const UserTree = () => {
                                                 <Typography component="span" fontSize="15px">({UserHelper.getPositionName(tree.level)})</Typography>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
-                                                Số ĐT: <b>{tree.phone}</b>
+                                                Họ và tên: <b>{tree.fullname}</b>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
                                                 Doanh số: <b>{formatMoney(tree.total_buy)}</b>
