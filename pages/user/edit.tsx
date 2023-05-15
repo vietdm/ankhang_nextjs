@@ -17,10 +17,11 @@ import { useUser } from "@/hooks/useUser";
 import { Alert } from "@/libraries/alert";
 import { HrTag } from "@/components/ui/HrTag";
 import { useRouter } from "next/router";
-// import axios from "axios";
+import { WindowRounded } from "@mui/icons-material";
 
 type FormValueNomal = {
     fullname: string;
+    cccd: string;
 };
 
 type FormValueBank = {
@@ -34,10 +35,9 @@ const EditPage = () => {
     const [banks, setBanks] = useState<any[]>([]);
     const { user } = useUser();
     const router = useRouter();
-    const [showFormNomal, setShowFormNomal] = useState<boolean>(false);
+    const [showFormNomal, setShowFormNomal] = useState<boolean>(true);
     const [showFormBank, setShowFormBank] = useState<boolean>(false);
     const [bankValueSelect, setBankValueSelect] = useState<string>('');
-    // const [nameBankUser, setNameBankUser] = useState<string>('');
     const [backHome, setBackHome] = useState<boolean>(false);
 
     const formValueNomal = useForm<FormValueNomal>({ defaultValues: { fullname: 'loading..' } });
@@ -71,32 +71,6 @@ const EditPage = () => {
         formValueNomal.setValue('fullname', user.fullname);
     }, [user]);
 
-    // let timeoutGetNameBankUser: any = null;
-    // useEffect(() => {
-    //     const subscription = formValueBank.watch((value, { name }) => {
-    //         if (name != 'account_number' || value.bin == '') return;
-    //         clearTimeout(timeoutGetNameBankUser);
-    //         timeoutGetNameBankUser = setTimeout(() => {
-    //             setNameBankUser('');
-    //             axios.post('https://api.vietqr.io/v2/lookup', {
-    //                 bin: value.bin,
-    //                 accountNumber: value.account_number
-    //             }, {
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'x-client-id': '6eb52503-8074-4f3c-9c71-da67edde0bdb',
-    //                     'x-api-key': 'c8edfc78-4034-4a7e-9948-a514644721bb'
-    //                 }
-    //             }).then((response: any) => {
-    //                 setNameBankUser(response.data.data?.accountName ?? '');
-    //             }).catch((error: any) => {
-    //                 Alert.error(error.message);
-    //             })
-    //         }, 1000);
-    //     });
-    //     return () => subscription.unsubscribe();
-    // }, [formValueBank.watch]);
-
     const onUpdateNomalInfo = formValueNomal.handleSubmit((data) => {
         setRequesting(true);
         fetch
@@ -104,6 +78,9 @@ const EditPage = () => {
             .then((response: any) => {
                 setRequesting(false);
                 Alert.success(response.message);
+                setTimeout(() => {
+                    router.replace(router.asPath);
+                }, 100);
             })
             .catch((error: any) => {
                 setRequesting(false);
@@ -149,7 +126,7 @@ const EditPage = () => {
                         <ArrowRightOutlinedIcon sx={{ position: 'absolute', right: '4px', top: '50%', transform: 'translateY(-50%)' }} />
                     )}
                 </Stack>
-                {showFormNomal && (
+                {(showFormNomal && user) && (
                     <form action="" onSubmit={onUpdateNomalInfo}>
                         <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                             <BadgeOutlinedIcon sx={{ width: "60px", color: "grey" }} />
@@ -172,7 +149,7 @@ const EditPage = () => {
                                 variant="standard"
                                 sx={{ width: "calc(100% - 60px)" }}
                                 type="text"
-                                value={user?.username ?? 'loading...'}
+                                value={user.username}
                                 InputProps={{
                                     disabled: true
                                 }}
@@ -186,7 +163,7 @@ const EditPage = () => {
                                 variant="standard"
                                 sx={{ width: "calc(100% - 60px)" }}
                                 type="text"
-                                value={user?.email ?? 'loading...'}
+                                value={user.email}
                                 InputProps={{
                                     disabled: true
                                 }}
@@ -194,17 +171,31 @@ const EditPage = () => {
                         </Stack>
                         <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                             <BadgeOutlinedIcon sx={{ width: "60px", color: "grey" }} />
-                            <TextField
-                                id="cccd"
-                                label="Số CMT/CCCD"
-                                variant="standard"
-                                sx={{ width: "calc(100% - 60px)" }}
-                                type="text"
-                                InputProps={{
-                                    disabled: true
-                                }}
-                                value={user?.cccd ?? 'loading...'}
-                            />
+                            {user.cccd ? (
+                                <TextField
+                                    id="cccd"
+                                    label="Số CMT/CCCD"
+                                    variant="standard"
+                                    sx={{ width: "calc(100% - 60px)" }}
+                                    type="text"
+                                    InputProps={{
+                                        disabled: true
+                                    }}
+                                    value={user.cccd}
+                                />
+                            ) : (
+                                <>
+                                    <TextField
+                                        id="cccd"
+                                        label="Số CMT/CCCD"
+                                        variant="standard"
+                                        sx={{ width: "calc(100% - 60px)" }}
+                                        type="text"
+                                        {...formValueNomal.register("cccd", { required: "CCCD không được trống!" })}
+                                    />
+                                    <ErrorMessage errors={formValueNomal.formState.errors} name="cccd" render={({ message }) => <Error mgs={message} />} />
+                                </>
+                            )}
                         </Stack>
                         <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
                             <PhoneAndroidOutlinedIcon sx={{ width: "60px", color: "grey" }} />
@@ -217,7 +208,7 @@ const EditPage = () => {
                                 InputProps={{
                                     disabled: true
                                 }}
-                                value={user?.phone ?? 'loading...'}
+                                value={user.phone}
                             />
                         </Stack>
                         <Box textAlign="right">
@@ -309,21 +300,6 @@ const EditPage = () => {
                             />
                             <ErrorMessage errors={formValueBank.formState.errors} name="branch" render={({ message }) => <Error mgs={message} />} />
                         </Stack>
-                        {/* <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
-                            <BadgeOutlinedIcon sx={{ width: "60px", color: "grey" }} />
-                            <TextField
-                                label="Tên chủ tài khoản"
-                                value={nameBankUser}
-                                variant="standard"
-                                sx={{ width: "calc(100% - 60px)" }}
-                                type="text"
-                                role="presentation"
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                            <ErrorMessage errors={formValueBank.formState.errors} name="account_number" render={({ message }) => <Error mgs={message} />} />
-                        </Stack> */}
                         <Box textAlign="right">
                             <Button variant="contained" type="submit" disabled={requesting}>Cập nhật</Button>
                         </Box>
