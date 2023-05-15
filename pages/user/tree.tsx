@@ -203,10 +203,10 @@ const UserTree = () => {
                                                 Họ và tên: <b>{tree.fullname}</b>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
-                                                Doanh số: <b>{formatMoney(tree.total_buy)}</b>
+                                                Tổng doanh số: <b>{formatMoney(tree.total_sale)}</b>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
-                                                Đơn hàng: <b>{tree.total_order}</b>
+                                                Tổng đơn hàng: <b>{tree.total_child_order}</b>
                                             </Typography>
                                         </Box>
                                         {tree.has_child && !requesting ? (
