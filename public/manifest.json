@@ -1,14 +1,14 @@
 {
-    "name": "An khang",
-    "short_name": "An khang",
+    "name": "An Khang Group",
+    "short_name": "An Khang Group",
     "icons": [
         {
-            "src": "logo.png",
+            "src": "/imgs/logo_ak.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "logo.png",
+            "src": "/imgs/logo_ak.png",
             "sizes": "512x512",
             "type": "image/png"
         }
