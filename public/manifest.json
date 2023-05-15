@@ -3,12 +3,12 @@
     "short_name": "An Khang Group",
     "icons": [
         {
-            "src": "/imgs/logo_ak.png",
+            "src": "/logo192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/imgs/logo_ak.png",
+            "src": "/logo192.png",
             "sizes": "512x512",
             "type": "image/png"
         }
