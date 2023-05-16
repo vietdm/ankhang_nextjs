@@ -26,7 +26,7 @@ export const UserHelper = {
     },
     getPositionName(position: string) {
         switch (position) {
-            case 'nomal': return 'Người dùng';
+            case 'nomal': return 'Khách hàng';
             case 'chuyen_vien': return 'Chuyên viên';
             case 'truong_phong': return 'Trưởng phòng';
             case 'pho_giam_doc': return 'Phó giám đốc';

@@ -11,6 +11,9 @@ import { HrTag } from '@/components/ui/HrTag';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { formatMoney } from '@/utils';
+import { Loading } from '@/components/layout/Loading';
+import { Color } from '@/libraries/color';
+import { SinglePage } from '@/components/ui/SinglePage';
 
 const UserTree = () => {
     const { user } = useUser();
@@ -51,6 +54,10 @@ const UserTree = () => {
         setQueryUsername([...queryUsername]);
     }
 
+    const isNewUser = (user) => {
+        return user.total_sale == 0 && user.total_buy == 0;
+    }
+
     useEffect(() => {
         if (!user) return;
         setQueryUsername([user.username]);
@@ -62,25 +69,13 @@ const UserTree = () => {
         }
     }, [queryUsername]);
 
+    if (!userTree) {
+        return <Loading />;
+    }
+
     return (
-        <Box height="100vh" maxHeight="100vh" minHeight="100vh" overflow="auto">
-            <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                height="50px"
-                width="100%"
-                sx={{ background: "#0984e3" }}
-            >
-                <Box padding={1} onClick={() => router.back()}>
-                    <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
-                </Box>
-                <Typography component="h2" color="#fff">
-                    Đội nhóm
-                </Typography>
-                <Box></Box>
-            </Stack>
-            <Box padding="15px" width="100%" overflow="hidden">
+        <SinglePage title="Đội nhóm">
+            <Box paddingY="15px" width="100%" overflow="hidden">
                 <AnimatePresence>
                     {queryUsername.length > 1 && !requesting && (
                         <motion.div
@@ -189,24 +184,41 @@ const UserTree = () => {
                                         padding: '6px',
                                         marginBottom: '15px'
                                     }} >
-                                        <Stack width="40px" direction="row" justifyContent="center" alignItems="flex-start">
-                                            <Box position="relative" textAlign="center" height={40} width={40}>
-                                                <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
+                                        <Stack width="60px" direction="row" justifyContent="center" alignItems="flex-start">
+                                            <Box position="relative" textAlign="center" height={60} width={60}>
+                                                <Box
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        backgroundImage: 'url("/user.png")',
+                                                        backgroundSize: 'cover',
+                                                        backgroundRepeat: 'no-repeat',
+                                                        backgroundPosition: 'center',
+                                                        borderRadius: '50%',
+                                                        top: '50%',
+                                                        left: '50%',
+                                                        transform: 'translate(-50%, -50%)',
+                                                        border: '7px solid ' + (isNewUser(tree) ? Color.new : Color[tree.level])
+                                                    }}
+                                                />
                                             </Box>
                                         </Stack>
-                                        <Box width="calc(100% - 80px)" paddingLeft="15px">
+                                        <Box width="calc(100% - 100px)" paddingLeft="15px">
                                             <Typography component="h4" fontWeight="600">
                                                 {tree.username}&nbsp;
-                                                <Typography component="span" fontSize="15px">({UserHelper.getPositionName(tree.level)})</Typography>
+                                                <Typography component="span" fontSize="15px">
+                                                    ({isNewUser(tree) ? 'Người mới' : UserHelper.getPositionName(tree.level)})
+                                                </Typography>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
-                                                Họ và tên: <b>{tree.fullname}</b>
+                                                Họ tên: <b>{tree.fullname}</b>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
-                                                Tổng doanh số: <b>{formatMoney(tree.total_sale)}</b>
+                                                Tổng DS: <b>{formatMoney(tree.total_sale)}</b>
                                             </Typography>
                                             <Typography component="h6" fontWeight="400">
-                                                Tổng đơn hàng: <b>{tree.total_child_order}</b>
+                                                Tổng ĐH: <b>{tree.total_child_order}</b>
                                             </Typography>
                                         </Box>
                                         {tree.has_child && !requesting ? (
@@ -228,7 +240,7 @@ const UserTree = () => {
                     </AnimatePresence>
                 </Box>
             </Box>
-        </Box >
+        </SinglePage>
     );
 }
 

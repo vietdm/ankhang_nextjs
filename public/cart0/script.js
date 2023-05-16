@@ -95,6 +95,12 @@ async function init() {
 
   fillDefaultData(userInfo);
 
+  $('.loadingggg').fadeOut(200);
+  setTimeout(() => {
+    $('.loadingggg').hide();
+    $('.loadingggg .loading-bg').remove();
+  }, 210);
+
   for (const index in carts) {
     const productIndex = products.findIndex(
       (p) => p.id == carts[index].id
@@ -191,6 +197,11 @@ async function init() {
     formData.append('address', $('[name="address"]').val());
     formData.append('note', $('[name="note"]').val());
 
+    $('.loadingggg').show();
+    setTimeout(() => {
+      $('.loadingggg').fadeIn(200);
+    }, 10);
+
     $.ajax({
       url: api + "order",
       type: 'post',
@@ -203,6 +214,10 @@ async function init() {
       dataType: 'json',
       success: () => {
         localStorage.removeItem('cart');
+        $('.loadingggg').fadeOut(200);
+        setTimeout(() => {
+          $('.loadingggg').hide();
+        }, 210);
         Swal.fire({
           title: 'Thành công',
           text: "Đơn hàng đã được đặt thành công!",
@@ -217,6 +232,10 @@ async function init() {
           text: Object.values(err.responseJSON)[0]
         });
         $(this).prop('disabled', false);
+        $('.loadingggg').fadeOut(200);
+        setTimeout(() => {
+          $('.loadingggg').hide();
+        }, 210);
       }
     });
   });
