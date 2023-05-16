@@ -40,7 +40,7 @@ export const SinglePage = ({ children, title = '', hasHomeIcon = false, hasBackI
                     <Box></Box>
                 )}
             </Stack>
-            <Box height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto" paddingBottom={5}>
+            <Box height="calc(100% - 50px)" overflow="auto" width="100%" paddingX="15px" margin="auto" paddingBottom={5}>
                 {children}
             </Box>
         </Box>

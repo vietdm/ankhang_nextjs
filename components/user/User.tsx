@@ -134,11 +134,11 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
             <ArrowCircleRightOutlinedIcon />
           </Stack>
         </Link>
-        <Link href='/withdraw/history' passHref>
+        <Link href='/money/history' passHref>
           <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
             <Stack direction="row">
               <RequestQuoteOutlinedIcon sx={{ fill: "#5eaddb" }} />
-              <Typography component="p" marginLeft={1}>Lịch sử rút tiền</Typography>
+              <Typography component="p" marginLeft={1}>Lịch sử giao dịch</Typography>
             </Stack>
             <ArrowCircleRightOutlinedIcon />
           </Stack>

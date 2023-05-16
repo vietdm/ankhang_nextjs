@@ -158,7 +158,7 @@ const WithdrawPage = () => {
                 </Stack>
             </Stack>
             <HrTag p={2} />
-            <Stack direction="row" alignItems="center" justifyContent="space-between" marginBottom="1.25rem" flexWrap="wrap">
+            <Stack direction="row" alignItems="center" justifyContent="space-between" flexWrap="wrap">
                 <TextField
                     id="branch"
                     label="Nhập mã OTP"
