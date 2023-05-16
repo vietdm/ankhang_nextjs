@@ -1,42 +1,23 @@
 import { fetch } from "@/libraries/axios";
-import { Box, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { useRouter } from "next/router";
+import { SinglePage } from "@/components/ui/SinglePage";
 
 const HistoryOrderPage = () => {
     const [histories, setHistories] = useState<any>([]);
-    const router = useRouter();
 
     useEffect(() => {
-        fetch.post('/order/history').then(result => {
+        fetch.post('/order/history').then((result: any) => {
             setHistories(result.history);
-        })
+        });
     }, []);
 
     return (
-        <Box height="100vh" maxHeight="100vh" minHeight="100vh" >
-            <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                height="50px"
-                width="100%"
-                sx={{ background: "#0984e3" }}
-            >
-                <Box padding={1} onClick={() => router.back()}>
-                    <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
-                </Box>
-                <Typography component="h2" color="#fff">
-                    Lịch sử mua hàng
-                </Typography>
-                <Box padding={1} onClick={() => router.push('/')}>
-                    <HomeOutlinedIcon sx={{ color: "#fff" }} />
-                </Box>
-            </Stack>
-            <Box height="calc(100% - 50px)" overflow="auto" width="90%" margin="auto">
-                <Box>
+        <SinglePage title="Lịch sử mua hàng">
+            {histories.length == 0 ? (
+                <Typography textAlign="center" component="p" marginTop={2}>Không có lịch sử</Typography>
+            ) : (
+                <Box overflow="auto">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
@@ -81,11 +62,8 @@ const HistoryOrderPage = () => {
                         </Table>
                     </TableContainer>
                 </Box>
-                <Box>
-                    {histories.length == 0 && <Typography textAlign="center" component="p" marginTop={2}>Không có lịch sử</Typography>}
-                </Box>
-            </Box>
-        </Box >
+            )}
+        </SinglePage>
     )
 }
 

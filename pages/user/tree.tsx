@@ -1,7 +1,5 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import { useRouter } from 'next/router';
 import { fetch } from '@/libraries/axios';
 import { useUser } from '@/hooks/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -17,7 +15,6 @@ import { SinglePage } from '@/components/ui/SinglePage';
 
 const UserTree = () => {
     const { user } = useUser();
-    const router = useRouter();
     const [userTree, setUserTree] = useState<any>(null);
     const [requesting, setRequesting] = useState<boolean>(false);
     const [queryUsername, setQueryUsername] = useState<string[]>([]);
@@ -54,7 +51,7 @@ const UserTree = () => {
         setQueryUsername([...queryUsername]);
     }
 
-    const isNewUser = (user) => {
+    const isNewUser = (user: any) => {
         return user.total_sale == 0 && user.total_buy == 0;
     }
 
