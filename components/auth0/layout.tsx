@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { Layout } from "../layout";
 
@@ -22,12 +22,9 @@ export const AuthLayout = ({ children, title = '' }: { children: any, title?: st
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center'
                 }}></Box>
-                <Stack direction="row" justifyContent="center" paddingTop={5}>
-                    <img src={logoHead} alt="Logo" style={{
-                        width: '250px',
-                        maxWidth: '70vw'
-                    }} />
-                </Stack>
+                <Box paddingTop={5} textAlign="center">
+                    <img src={logoHead} alt="Logo" style={{ width: '250px', maxWidth: '70vw' }} />
+                </Box>
                 {title != '' && (
                     <Typography variant="h6" fontWeight="bold" textAlign="center" marginBottom="1.25rem">
                         {title}

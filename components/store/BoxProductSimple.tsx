@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 export const BoxProductSimple = ({ product }: { product: any }) => {
     const [quantity, setQuantity] = useState<number>(1);
     const [priceTemp, setPriceTemp] = useState<number>(product.price);
+    const [itemProductInRow, setItemProductInRow] = useState<number>(2);
     const router = useRouter();
 
     const minusQuantity = () => {
@@ -29,8 +30,15 @@ export const BoxProductSimple = ({ product }: { product: any }) => {
         setPriceTemp(product.price * quantity);
     }, [quantity]);
 
+    useEffect(() => {
+        const windowWidth = window.innerWidth;
+        if (windowWidth <= 576) return setItemProductInRow(2);
+        if (windowWidth <= 768) return setItemProductInRow(3);
+        return setItemProductInRow(4);
+    }, []);
+
     return (
-        <Box width="50%" padding="5px" marginBottom={2}>
+        <Box width={`calc(100% / ${itemProductInRow})`} padding="5px" marginBottom={2}>
             <Link passHref href={`/product/${product.id}`}>
                 <Box position="relative" width="100%">
                     <img alt={product.title} src={product.images[0]} style={{ width: '100%' }} />

@@ -24,6 +24,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const [dateCount, setDateCount] = useState<any>(null);
     const [dashboardData, setDashboardData] = useState<any>(null);
     const [installable, setInstallable] = useState(false);
+    const [itemProductInRow, setItemProductInRow] = useState<number>(2);
 
     useEffect(() => {
         fetch.post('/user/dashboard').then((result: any) => {
@@ -40,7 +41,17 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         setDateCount(timeEnd);
     }, []);
 
+    const getItemProductWithWidth = () => {
+        const windowWidth = window.innerWidth;
+        if (windowWidth <= 576) return setItemProductInRow(2);
+        if (windowWidth <= 768) return setItemProductInRow(3);
+        if (windowWidth <= 992) return setItemProductInRow(4);
+        return setItemProductInRow(5);
+    }
+
     useEffect(() => {
+        getItemProductWithWidth();
+
         window.addEventListener("beforeinstallprompt", (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -50,7 +61,12 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         window.addEventListener('appinstalled', () => {
             Alert.success('Cài đặt app thành công! Có thể sẽ mất từ 1 - 2 phút để hiển thị ở màn hình chính!');
         });
+
+        window.addEventListener('resize', function () {
+            getItemProductWithWidth();
+        });
     }, []);
+
     const installAppToHomeScreen = () => {
         setInstallable(false);
         if (!deferredPrompt) {
@@ -95,7 +111,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     </Box>
                 </SwiperSlide>
             </Swiper>
-            <Stack direction="row" width="90%" margin="1.5rem auto 0 auto" sx={{
+            <Stack direction="row" width="90%" maxWidth="650px" margin="1.5rem auto 0 auto" sx={{
                 backgroundColor: '#e3e3e3',
                 padding: '14px',
                 borderRadius: '14px',
@@ -108,15 +124,19 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     </Box>
                 </Stack>
                 <Box width="calc(100% - 80px)">
-                    <Typography component="h6" textAlign="center" sx={{ fontSize: '20px' }} fontWeight="400">
-                        Xin chào, <b>{user?.fullname}</b>
-                    </Typography>
-                    <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                        Mã KH: <b>{user?.username}</b>
-                    </Typography>
-                    <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                        Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{user?.package_joined && UserHelper.getPackageName(user.package_joined)}</b>
-                    </Typography>
+                    {user && (
+                        <>
+                            <Typography component="h6" textAlign="center" sx={{ fontSize: '20px' }} fontWeight="400">
+                                Xin chào, <b>{user.fullname}</b>
+                            </Typography>
+                            <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                                Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
+                            </Typography>
+                            <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                                Điểm CASHBACK: <b>{formatMoney(user.reward_point)}</b>
+                            </Typography>
+                        </>
+                    )}
                 </Box>
             </Stack>
             <Box marginY={3}>
@@ -148,9 +168,9 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     <ArrowCircleRightOutlinedIcon sx={{ marginLeft: "10px" }} />
                 </Stack>
             </Link>
-            <Stack direction="row" flexWrap="wrap" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
+            <Stack direction="row" flexWrap="wrap" justifyContent="center" maxHeight="calc(100% - 50px)" overflow="auto" marginTop={0}>
                 {products.map((product: any) => (
-                    <Box width="50%" padding="16px" key={product.id}>
+                    <Box width={`calc(100% / ${itemProductInRow})`} padding="16px" key={product.id}>
                         <Link passHref href="/store">
                             <Box position="relative" width="100%">
                                 <img alt={product.title} src={product.images[0]} style={{ width: '100%' }} />
@@ -163,7 +183,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 ))}
             </Stack>
 
-            <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
+            <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2} maxWidth="650px" marginX="auto">
                 <BoxMenu>
                     <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Điểm Thưởng</Typography>
                     <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(user?.reward_point)}</Typography>

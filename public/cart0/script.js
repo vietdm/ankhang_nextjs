@@ -3,16 +3,6 @@ const url = new URL(window.location.href);
 const params = new URLSearchParams(url.search);
 const api = "https://api.ankhangmilk.com/api/";
 
-function copyText(textToCopy) {
-  const tempInput = document.createElement("input");
-  tempInput.value = textToCopy;
-  document.body.appendChild(tempInput);
-  tempInput.select();
-  document.execCommand("copy");
-  document.body.removeChild(tempInput);
-  alert("Đã sao chép!");
-}
-
 function getCart() {
   let _cart = params.get("carts");
   if (_cart == null) return [];
