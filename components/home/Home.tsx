@@ -10,11 +10,11 @@ import { formatMoney, userLevel } from "@/utils";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 import Countdown from "react-countdown";
-import Image from "next/image";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Alert } from "@/libraries/alert";
 import Link from "next/link";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import { Color } from "@/libraries/color";
 
 let deferredPrompt: any = null;
 
@@ -33,7 +33,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         fetch.get('/products').then((result: any) => {
             let listProduct = result.products;
             if (listProduct.length > 4) {
-                listProduct = [listProduct[0], listProduct[1], listProduct[2], listProduct[3]];
+                listProduct = [listProduct[0], listProduct[1]];
             }
             setProducts(listProduct);
         });
@@ -111,34 +111,65 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     </Box>
                 </SwiperSlide>
             </Swiper>
-            <Stack direction="row" width="90%" maxWidth="650px" margin="1.5rem auto 0 auto" sx={{
-                backgroundColor: '#e3e3e3',
-                padding: '14px',
-                borderRadius: '14px',
-                background: "radial-gradient(#f4f9fd, #bae4f4)",
-                boxShadow: '0 4px 4px 1px rgba(0, 0, 0, 0.2)'
-            }}>
-                <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
-                    <Box position="relative" textAlign="center" height={80} width={80}>
-                        <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
+            {user && (
+                <Stack direction="row" width="90%" maxWidth="650px" margin="1.5rem auto 0 auto" sx={{
+                    backgroundColor: '#e3e3e3',
+                    padding: '14px',
+                    borderRadius: '14px',
+                    background: "radial-gradient(#f4f9fd, #bae4f4)",
+                    boxShadow: '0 4px 4px 1px rgba(0, 0, 0, 0.2)'
+                }}>
+                    <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
+                        <Box position="relative" textAlign="center" height={80} width={80}>
+                            {user.level == 'nomal' ? (
+                                <Box sx={{
+                                    position: 'absolute',
+                                    width: '100%',
+                                    height: '100%',
+                                    top: 0,
+                                    left: 0,
+                                    backgroundImage: 'url("/user.png")',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                    overflow: 'hidden',
+                                    borderRadius: '50%',
+                                    zIndex: 8,
+                                    border: '7px solid ' + (user.total_buy == 0 ? Color.new : Color[user.level])
+                                }} />
+                            ) : (
+                                <Box>
+                                    <img src={`/imgs/capbac/${user.level}_1.png`} alt="" style={{
+                                        position: 'absolute',
+                                        width: '100%',
+                                        height: '100%',
+                                        top: 0,
+                                        left: 0,
+                                        overflow: 'hidden',
+                                        borderRadius: '50%',
+                                        zIndex: 9,
+                                    }} />
+                                </Box>
+                            )}
+                        </Box>
+                    </Stack>
+                    <Box width="calc(100% - 80px)">
+                        {user && (
+                            <>
+                                <Typography component="h6" textAlign="center" sx={{ fontSize: '20px' }} fontWeight="400">
+                                    Xin chào, <b>{user.fullname}</b>
+                                </Typography>
+                                <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                                    Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
+                                </Typography>
+                                {/* <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                                    Điểm CASHBACK: <b>{formatMoney(user.reward_point)}</b>
+                                </Typography> */}
+                            </>
+                        )}
                     </Box>
                 </Stack>
-                <Box width="calc(100% - 80px)">
-                    {user && (
-                        <>
-                            <Typography component="h6" textAlign="center" sx={{ fontSize: '20px' }} fontWeight="400">
-                                Xin chào, <b>{user.fullname}</b>
-                            </Typography>
-                            <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                                Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
-                            </Typography>
-                            <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                                Điểm CASHBACK: <b>{formatMoney(user.reward_point)}</b>
-                            </Typography>
-                        </>
-                    )}
-                </Box>
-            </Stack>
+            )}
             <Box marginY={3}>
                 <Typography
                     variant="h5"
@@ -162,6 +193,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 </Box>
             }
             {/* end button install app */}
+
             <Link passHref href="/store">
                 <Stack direction="row" paddingX="15px" alignItems="center" color="#0578bf" justifyContent="end">
                     <Typography component="h4" fontSize="20px" fontWeight={500}>Cửa hàng</Typography>

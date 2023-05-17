@@ -8,6 +8,7 @@ export interface UserInterface {
     phone: string;
     fullname: string;
     present_phone: string;
+    total_buy: number;
     address: string;
     level: string;
     reward_point: number;

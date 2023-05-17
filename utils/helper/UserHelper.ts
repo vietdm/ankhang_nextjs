@@ -22,7 +22,7 @@ export const UserHelper = {
     getPackageName(package_joined: any) {
         if (package_joined == 'star') return 'Star';
         if (package_joined == 'vip') return 'VIP';
-        return 'Chưa tham gia gói';
+        return 'Chưa tham gia';
     },
     getPositionName(position: string) {
         switch (position) {

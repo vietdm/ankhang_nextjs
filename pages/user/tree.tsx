@@ -111,7 +111,36 @@ const UserTree = () => {
                                 <Stack direction="row">
                                     <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
                                         <Box position="relative" textAlign="center" height={80} width={80}>
-                                            <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
+                                            {userTree.level == 'nomal' ? (
+                                                <Box sx={{
+                                                    position: 'absolute',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    top: 0,
+                                                    left: 0,
+                                                    backgroundImage: 'url("/user.png")',
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center',
+                                                    backgroundRepeat: 'no-repeat',
+                                                    overflow: 'hidden',
+                                                    borderRadius: '50%',
+                                                    zIndex: 8,
+                                                    border: '7px solid ' + (userTree.total_buy == 0 ? Color.new : Color[userTree.level])
+                                                }} />
+                                            ) : (
+                                                <Box>
+                                                    <img src={`/imgs/capbac/${userTree.level}_1.png`} alt="" style={{
+                                                        position: 'absolute',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        top: 0,
+                                                        left: 0,
+                                                        overflow: 'hidden',
+                                                        borderRadius: '50%',
+                                                        zIndex: 9,
+                                                    }} />
+                                                </Box>
+                                            )}
                                         </Box>
                                     </Stack>
                                     <Box width="calc(100% - 80px)" paddingLeft="15px">
@@ -183,22 +212,36 @@ const UserTree = () => {
                                     }} >
                                         <Stack width="60px" direction="row" justifyContent="center" alignItems="flex-start">
                                             <Box position="relative" textAlign="center" height={60} width={60}>
-                                                <Box
-                                                    sx={{
+                                                {tree.level == 'nomal' ? (
+                                                    <Box sx={{
                                                         position: 'absolute',
                                                         width: '100%',
                                                         height: '100%',
+                                                        top: 0,
+                                                        left: 0,
                                                         backgroundImage: 'url("/user.png")',
                                                         backgroundSize: 'cover',
-                                                        backgroundRepeat: 'no-repeat',
                                                         backgroundPosition: 'center',
+                                                        backgroundRepeat: 'no-repeat',
+                                                        overflow: 'hidden',
                                                         borderRadius: '50%',
-                                                        top: '50%',
-                                                        left: '50%',
-                                                        transform: 'translate(-50%, -50%)',
-                                                        border: '7px solid ' + (isNewUser(tree) ? Color.new : Color[tree.level])
-                                                    }}
-                                                />
+                                                        zIndex: 8,
+                                                        border: '7px solid ' + (tree.total_buy == 0 ? Color.new : Color[tree.level])
+                                                    }} />
+                                                ) : (
+                                                    <Box>
+                                                        <img src={`/imgs/capbac/${tree.level}_1.png`} alt="" style={{
+                                                            position: 'absolute',
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            top: 0,
+                                                            left: 0,
+                                                            overflow: 'hidden',
+                                                            borderRadius: '50%',
+                                                            zIndex: 9,
+                                                        }} />
+                                                    </Box>
+                                                )}
                                             </Box>
                                         </Stack>
                                         <Box width="calc(100% - 100px)" paddingLeft="15px">
