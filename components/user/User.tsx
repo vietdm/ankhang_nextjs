@@ -2,7 +2,6 @@ import { useUser } from "@/hooks/useUser";
 import { Storage } from "@/libraries/storage";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Box, Typography, Stack } from "@mui/material";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
