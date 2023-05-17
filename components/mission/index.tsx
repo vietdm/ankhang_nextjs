@@ -95,8 +95,12 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     }, []);
 
     useEffect(() => {
-        if (!active && player) {
-            player.pauseVideo();
+        try {
+            if (!active && player) {
+                player.pauseVideo();
+            }
+        } catch (e) {
+            //
         }
     }, [active]);
 

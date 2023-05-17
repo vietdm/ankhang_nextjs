@@ -11,7 +11,7 @@ type Props = {
     hasBackIcon?: boolean;
 }
 
-export const SinglePage = ({ children, title = '', hasHomeIcon = false, hasBackIcon = true }: Props) => {
+export const SinglePage = ({ children, title = '', hasHomeIcon = true, hasBackIcon = true }: Props) => {
     const router = useRouter();
 
     return (

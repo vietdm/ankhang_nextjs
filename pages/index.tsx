@@ -22,6 +22,10 @@ const Home = () => {
   const [loadedMission, setLoadedMission] = useState<boolean>(false);
   const router = useRouter();
 
+  const changeTab = (tab: BottomMenu) => {
+    router.push('/?t=' + tab);
+  }
+
   useEffect(() => {
     withAuth(() => {
       setReady(true);
@@ -61,7 +65,7 @@ const Home = () => {
               <li className={'Menu__list--item ' + (menuActive == 'main' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  setMenuActive('main');
+                  changeTab('main');
                 }}>
                   <div className="icon">
                     <HomeOutlinedIcon />
@@ -78,7 +82,7 @@ const Home = () => {
               <li className={'Menu__list--item ' + (menuActive == 'mission' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  setMenuActive('mission');
+                  changeTab('mission');
                 }}>
                   <div className="icon">
                     <AssignmentTurnedInOutlinedIcon />
@@ -95,7 +99,7 @@ const Home = () => {
               {/* <li className={'Menu__list--item main ' + (menuActive == 'main' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  setMenuActive('main');
+                  changeTab('main');
                 }}>
                   <div className="icon">
                     <HomeOutlinedIcon />
@@ -106,7 +110,7 @@ const Home = () => {
               <li className={'Menu__list--item ' + (menuActive == 'gift' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  setMenuActive('gift');
+                  changeTab('gift');
                 }}>
                   <div className="icon">
                     <CardGiftcardOutlinedIcon />
@@ -123,7 +127,7 @@ const Home = () => {
               <li className={'Menu__list--item ' + (menuActive == 'user' ? 'active' : '')}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  setMenuActive('user');
+                  changeTab('user');
                 }}>
                   <div className="icon">
                     <PersonOutlineOutlinedIcon />
