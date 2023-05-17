@@ -12,6 +12,7 @@ export interface UserInterface {
     address: string;
     level: string;
     reward_point: number;
+    akg_point: number;
     package_joined: 'star' | 'vip';
 }
 

@@ -81,7 +81,7 @@ const WithdrawPage = () => {
                     </Box>
                 )}
                 <TextField
-                    id="quantity"
+                    id="money"
                     label="Nhập số tiền rút"
                     type="number"
                     value={money}

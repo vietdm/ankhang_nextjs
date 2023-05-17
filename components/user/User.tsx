@@ -15,6 +15,7 @@ import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlin
 import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { Color } from "@/libraries/color";
 
 export const UserComponent = ({ active = false }: { active?: boolean }) => {
   const router = useRouter();
@@ -54,16 +55,44 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
         boxShadow: '0 4px 4px 1px rgba(0, 0, 0, 0.2)'
       }}>
         <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
-          <Box position="relative" textAlign="center" height={80} width={80}>
-            <Image fill alt={'avatar'} src="/user.png" style={{ borderRadius: '50%', margin: '0 auto' }} />
-          </Box>
+          {user && (
+            <Box position="relative" textAlign="center" height={80} width={80}>
+              {user.level == 'nomal' ? (
+                <Box sx={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: 0,
+                  left: 0,
+                  backgroundImage: 'url("/user.png")',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  overflow: 'hidden',
+                  borderRadius: '50%',
+                  zIndex: 8,
+                  border: '7px solid ' + (user.total_buy == 0 ? Color.new : Color[user.level])
+                }} />
+              ) : (
+                <Box>
+                  <img src={`/imgs/capbac/${user.level}_1.png`} alt="" style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
+                    overflow: 'hidden',
+                    borderRadius: '50%',
+                    zIndex: 9,
+                  }} />
+                </Box>
+              )}
+            </Box>
+          )}
         </Stack>
         <Box width="calc(100% - 80px)">
           <Typography component="h4" textAlign="center" sx={{ fontSize: '22px' }} fontWeight="600">
             {user?.fullname}
-          </Typography>
-          <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-            Mã KH: <b>{user?.username}</b>
           </Typography>
           <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
             Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{user?.package_joined && UserHelper.getPackageName(user.package_joined)}</b>
@@ -107,7 +136,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
             <ArrowCircleRightOutlinedIcon />
           </Stack>
         </Link>
-        <Link href='/' passHref>
+        <Link href='/akg' passHref>
           <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
             <Stack direction="row">
               <QueryStatsOutlinedIcon sx={{ fill: "#5eaddb" }} />
