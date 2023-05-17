@@ -16,10 +16,7 @@ export function getCartDetail(products: Product[]): CartItem[] {
 }
 
 export function saveCart(data: CartItem) {
-  const cartData = getCart() as CartItem[];
-  let index = cartData.findIndex(item => item.id === data.id);
-  if (index > -1) cartData[index] = data;
-  else cartData.push(data);
+  const cartData = [data];
   localStorage.removeItem("cart");
   localStorage.setItem("cart", JSON.stringify(cartData));
 }
