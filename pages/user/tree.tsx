@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { fetch } from '@/libraries/axios';
 import { useUser } from '@/hooks/useUser';
 import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import { UserHelper } from '@/utils/helper/UserHelper';
 import { HrTag } from '@/components/ui/HrTag';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
