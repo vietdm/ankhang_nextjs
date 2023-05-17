@@ -5,7 +5,7 @@ export const BoxHistoryWithdraw = ({ histories }: { histories: any }) => {
     return (
         <>
             {histories.map((history: any, index: number) => (
-                <Box padding="15px" borderRadius="7px" border="5px solid red" key={index}>
+                <Box padding="15px" marginBottom={1} borderRadius="7px" border="5px solid red" key={index}>
                     <Typography component="h5">Mã GD: {history.id}</Typography>
                     <Box paddingY={1}>
                         <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
