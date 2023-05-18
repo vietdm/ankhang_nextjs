@@ -44,7 +44,10 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
 
     const getStatusJoinedCashback = () => {
         fetch.get('/user/get-status-join-cashback').then((result: any) => {
-            if (statusJoinCashback == StatusJoinCashback.joined && result.status == StatusJoinCashback.cashbacked) {
+            if (
+                statusJoinCashback == StatusJoinCashback.joined &&
+                result.status == StatusJoinCashback.cashbacked
+            ) {
                 loadDashboardData();
             }
             setStatusJoinCashback(result.status);
