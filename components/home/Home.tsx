@@ -38,6 +38,25 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
 
     let fakeStatusJoinCashback = '';
 
+    const getDatetimeCountdown = () => {
+        const _i = (str: string) => {
+            return parseInt(str);
+        }
+        fetch.post('/datetime-countdown').then((result: any) => {
+            if (result.datetime == '0') return;
+            const datetime = result.datetime.split('_');
+            setDateCount(new Date(
+                _i(datetime[0]),
+                _i(datetime[1]),
+                _i(datetime[2]),
+                _i(datetime[3]),
+                _i(datetime[4]),
+                _i(datetime[5]),
+                _i(datetime[6])
+            ));
+        });
+    }
+
     const loadDashboardData = () => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
@@ -68,6 +87,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     }
 
     useEffect(() => {
+        getDatetimeCountdown();
         loadDashboardData();
         getStatusJoinedCashback();
         fetch.get('/value-of-akg').then((result: any) => {
@@ -80,7 +100,6 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-        setDateCount(new Date(2023, 5, 19, 4, 27, 0));
 
         const interval = setInterval(() => {
             if (fakeStatusJoinCashback == StatusJoinCashback.cashbacked) return;
