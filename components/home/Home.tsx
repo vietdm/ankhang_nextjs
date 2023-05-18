@@ -51,8 +51,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 _i(datetime[2]),
                 _i(datetime[3]),
                 _i(datetime[4]),
-                _i(datetime[5]),
-                _i(datetime[6])
+                _i(datetime[5])
             ));
         });
     }
