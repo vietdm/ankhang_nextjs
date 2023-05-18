@@ -7,7 +7,6 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { useUser } from "@/hooks/useUser";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
-import Countdown from "react-countdown";
 import { UserHelper } from "@/utils/helper/UserHelper";
 import { Alert } from "@/libraries/alert";
 import Link from "next/link";
@@ -15,6 +14,7 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import { Color } from "@/libraries/color";
 import { BoxMenu, BoxMenuLink } from "./BoxMenu";
 import { formatMoney, userLevel } from "@/utils";
+import { HomeCountdown } from "./Countdown";
 
 let deferredPrompt: any = null;
 
@@ -37,8 +37,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-        const timeEnd = Date.parse('2023-05-20 20:00:00');
-        setDateCount(timeEnd);
+        setDateCount(new Date('2023-05-20 20:00:00'));
     }, []);
 
     const getItemProductWithWidth = () => {
@@ -153,17 +152,20 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                             )}
                         </Box>
                     </Stack>
-                    <Box width="calc(100% - 80px)">
+                    <Box width="calc(100% - 80px)" paddingLeft={2}>
                         {user && (
                             <>
-                                <Typography component="h6" textAlign="center" sx={{ fontSize: '20px' }} fontWeight="400">
+                                <Typography component="h6" sx={{ fontSize: '20px' }} fontWeight="400">
                                     Xin chào, <b>{user.fullname}</b>
                                 </Typography>
-                                <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
+                                <Typography component="h6" sx={{ fontSize: '20px' }} fontWeight="400">
+                                    Chức vụ: <b>{userLevel(user.level)}</b>
+                                </Typography>
+                                <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
                                     Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
                                 </Typography>
-                                {/* <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-                                    Điểm CASHBACK: <b>{formatMoney(user.reward_point)}</b>
+                                {/* <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
+                                    Điểm CASHBACK: <b>{formatMoney(user.cashback_point)}</b>
                                 </Typography> */}
                             </>
                         )}
@@ -179,9 +181,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 >
                     Khởi động CashBack
                 </Typography>
-                <Stack justifyContent="center" alignItems="center" fontSize="34px">
-                    {dateCount && <Countdown date={dateCount} />}
-                </Stack>
+                <HomeCountdown date={dateCount}></HomeCountdown>
             </Box>
 
             {/* start button install app */}

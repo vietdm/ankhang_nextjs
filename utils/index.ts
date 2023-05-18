@@ -6,7 +6,7 @@ export const youtubeParser = (url: string) => {
 
 export const userLevel = (level: string | undefined) => {
     switch (level) {
-        case 'nomal': return 'Người dùng';
+        case 'nomal': return 'Khách hàng';
         case 'chuyen_vien': return 'Chuyên viên';
         case 'truong_phong': return 'Trưởng phòng';
         case 'pho_giam_doc': return 'Phó giám đốc';
@@ -16,7 +16,7 @@ export const userLevel = (level: string | undefined) => {
     }
 }
 
-export const formatMoney = (amount, decimalCount = 0, decimal = ".", thousands = ",") => {
+export const formatMoney = (amount: any, decimalCount = 0, decimal = ".", thousands = ",") => {
     try {
         decimalCount = Math.abs(decimalCount);
         decimalCount = isNaN(decimalCount) ? 2 : decimalCount;
