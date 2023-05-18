@@ -36,6 +36,8 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const [onDoneCountdown, setOnDoneCountdown] = useState<boolean>(false);
     const [statusJoinCashback, setStatusJoinCashback] = useState<string>('');
 
+    let fakeStatusJoinCashback = '';
+
     const loadDashboardData = () => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
@@ -48,12 +50,13 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             console.log('result.status', result.status);
 
             if (
-                statusJoinCashback == StatusJoinCashback.joined &&
+                fakeStatusJoinCashback == StatusJoinCashback.joined &&
                 result.status == StatusJoinCashback.cashbacked
             ) {
                 loadDashboardData();
             }
             setStatusJoinCashback(result.status);
+            fakeStatusJoinCashback = result.status;
         });
     }
 
@@ -80,7 +83,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         setDateCount(new Date(2023, 5, 17, 20, 0, 0));
 
         const interval = setInterval(() => {
-            if (statusJoinCashback == StatusJoinCashback.cashbacked) return;
+            if (fakeStatusJoinCashback == StatusJoinCashback.cashbacked) return;
             getStatusJoinedCashback();
         }, 2000);
 
