@@ -10,6 +10,7 @@ import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useUser } from "@/hooks/useUser";
 
 const WithdrawPage = () => {
     const [moneyCanWithdraw, setMoneyCanWithdraw] = useState<number>(0);
@@ -22,6 +23,7 @@ const WithdrawPage = () => {
     });
     const [otpCode, setOtpCode] = useState<string>('');
     const router = useRouter();
+    const { user } = useUser();
 
     const sendWithdrawRequest = () => {
         if (!money) return;
@@ -49,8 +51,8 @@ const WithdrawPage = () => {
 
     useEffect(() => {
         fetch.post('/user/get_money_can_withdraw').then((result: any) => {
-            const money = parseInt(result.money);
-            setMoneyCanWithdraw(money < 0 ? 0 : money);
+            const moneyResult = parseInt(result.money);
+            setMoneyCanWithdraw(moneyResult < 0 ? 0 : moneyResult);
         });
         fetch.get('/user/bank').then((response: any) => {
             const bankInfo = response.bank_info;
@@ -92,6 +94,11 @@ const WithdrawPage = () => {
                         readOnly: requesting
                     }}
                 />
+                <HrTag p={2} />
+                <Box>
+                    <Typography component="p">Số tiền đang có:</Typography>
+                    <Typography component="p" textAlign="right"><b>{formatMoney(user?.money_bonus)} đ</b></Typography>
+                </Box>
                 <HrTag p={2} />
                 <Box>
                     <Typography component="p">Số tiền có thể rút:</Typography>

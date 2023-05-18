@@ -13,6 +13,7 @@ export interface UserInterface {
     level: string;
     reward_point: number;
     cashback_point: number;
+    money_bonus: number;
     akg_point: number;
     package_joined: 'star' | 'vip';
 }
