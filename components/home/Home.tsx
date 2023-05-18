@@ -37,7 +37,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-        setDateCount(new Date('2023-05-20 20:00:00'));
+        setDateCount(new Date(2023, 5, 20, 20, 0, 0));
     }, []);
 
     const getItemProductWithWidth = () => {

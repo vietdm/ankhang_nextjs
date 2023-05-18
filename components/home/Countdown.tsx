@@ -13,8 +13,17 @@ export const HomeCountdown = ({ date, onDone = null }: { date: Date | null, onDo
         const timeNowString = new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
         const timeNowSplit = timeNowString.split(' ');
         const dateNow = timeNowSplit[1].split('/');
+        const timeNow = timeNowSplit[0].split(':');
         const dateNowString = `${dateNow[2]}/${dateNow[1]}/${dateNow[0]}`;
-        return new Date(`${dateNowString} ${timeNowSplit[0]}`);
+        const _i = (str: string) => parseInt(str);
+        return new Date(
+            _i(dateNow[2]),
+            _i(dateNow[1]),
+            _i(dateNow[0]),
+            _i(timeNow[0]),
+            _i(timeNow[1]),
+            _i(timeNow[2]),
+        );
     }
 
     useEffect(() => {
