@@ -1,7 +1,7 @@
 const url = new URL(window.location.href);
 
 const params = new URLSearchParams(url.search);
-const api = "https://apidev.ankhangmilk.com/api/";
+const api = "https://api.ankhangmilk.com/api/";
 
 function getCart() {
   let _cart = params.get("carts");
