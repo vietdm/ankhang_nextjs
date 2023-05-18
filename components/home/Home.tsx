@@ -15,6 +15,7 @@ import { Color } from "@/libraries/color";
 import { BoxMenu, BoxMenuLink } from "./BoxMenu";
 import { formatMoney, userLevel } from "@/utils";
 import { HomeCountdown } from "./Countdown";
+import { HrTag } from "../ui/HrTag";
 
 let deferredPrompt: any = null;
 
@@ -25,10 +26,14 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const [installable, setInstallable] = useState(false);
     const [dashboardData, setDashboardData] = useState<any>(null);
     const [itemProductInRow, setItemProductInRow] = useState<number>(2);
+    const [valueOfAkg, setValueOfAkg] = useState<number>(0);
 
     useEffect(() => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
+        });
+        fetch.get('/value-of-akg').then((result: any) => {
+            setValueOfAkg(result.value);
         });
         fetch.get('/products').then((result: any) => {
             let listProduct = result.products;
@@ -193,6 +198,13 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 </Box>
             }
             {/* end button install app */}
+
+            <Box paddingX='15px' marginBottom={1}>
+                <HrTag p={2} />
+                <Typography component="h3" fontSize="20px" color="#0578bf" fontWeight="700">Điểm AKG</Typography>
+                <Typography component="p">Giá trị điểm AKG hiện tại: <b>{formatMoney(valueOfAkg)}</b></Typography>
+                <HrTag p={2} />
+            </Box>
 
             <Link passHref href="/store">
                 <Stack direction="row" paddingX="15px" alignItems="center" color="#0578bf" justifyContent="end">
