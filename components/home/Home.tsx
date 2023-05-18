@@ -13,6 +13,8 @@ import { Alert } from "@/libraries/alert";
 import Link from "next/link";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Color } from "@/libraries/color";
+import { BoxMenu, BoxMenuLink } from "./BoxMenu";
+import { formatMoney, userLevel } from "@/utils";
 
 let deferredPrompt: any = null;
 
@@ -21,9 +23,13 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const [products, setProducts] = useState<any>([]);
     const [dateCount, setDateCount] = useState<any>(null);
     const [installable, setInstallable] = useState(false);
+    const [dashboardData, setDashboardData] = useState<any>(null);
     const [itemProductInRow, setItemProductInRow] = useState<number>(2);
 
     useEffect(() => {
+        fetch.post('/user/dashboard').then((result: any) => {
+            setDashboardData(result);
+        });
         fetch.get('/products').then((result: any) => {
             let listProduct = result.products;
             if (listProduct.length > 4) {
@@ -207,6 +213,32 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                         </Link>
                     </Box>
                 ))}
+            </Stack>
+            <Stack direction="row" flexWrap="wrap" padding="5px" marginTop={2}>
+                <BoxMenu>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Điểm Thưởng</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(user?.reward_point)}</Typography>
+                </BoxMenu>
+                <BoxMenu>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Chức vụ</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{userLevel(user?.level)}</Typography>
+                </BoxMenu>
+                <BoxMenu>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng doanh số</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.total_sale ?? 0)}</Typography>
+                </BoxMenu>
+                <BoxMenu>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng hoa hồng</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.money_bonus ?? 0)}</Typography>
+                </BoxMenu>
+                <BoxMenu>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Hoa hồng ngày</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{formatMoney(dashboardData?.money_bonus_day ?? 0)}</Typography>
+                </BoxMenu>
+                <BoxMenuLink link='/user/tree'>
+                    <Typography color="#0049a5" fontWeight="700" component="h4" fontSize={17}>Tổng thành viên</Typography>
+                    <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.total_child}</Typography>
+                </BoxMenuLink>
             </Stack>
         </Box>
     )
