@@ -102,7 +102,10 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         });
 
         const interval = setInterval(() => {
-            if (fakeStatusJoinCashback == StatusJoinCashback.cashbacked) return;
+            if (
+                fakeStatusJoinCashback == StatusJoinCashback.cashbacked ||
+                !onDoneCountdown
+            ) return;
             getStatusJoinedCashback();
         }, 2000);
 
@@ -145,10 +148,6 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             //
         });
     };
-
-    useEffect(() => {
-        if (!onDoneCountdown) return;
-    }, [onDoneCountdown]);
 
     return (
         <Box paddingBottom="50px" display={active ? 'block' : 'none'}>
