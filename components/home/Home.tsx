@@ -80,7 +80,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-        setDateCount(new Date(2023, 5, 17, 20, 0, 0));
+        setDateCount(new Date(2023, 5, 19, 04, 27, 0));
 
         const interval = setInterval(() => {
             if (fakeStatusJoinCashback == StatusJoinCashback.cashbacked) return;
