@@ -60,21 +60,13 @@ export const HomeCountdown = ({ date, onDone = null }: { date: Date | null, onDo
         <Stack direction="row" justifyContent="center">
             {!doneCountdown && date && (
                 <>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{days}</span>
-                    </Typography>
+                    <Typography component="span" fontSize='32px'>{days}</Typography>
                     <Typography component="span" fontSize='32px'>:</Typography>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{hours}</span>
-                    </Typography>
+                    <Typography component="span" fontSize='32px'>{hours}</Typography>
                     <Typography component="span" fontSize='32px'>:</Typography>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{minutes}</span>
-                    </Typography>
+                    <Typography component="span" fontSize='32px'>{minutes}</Typography>
                     <Typography component="span" fontSize='32px'>:</Typography>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{seconds}</span>
-                    </Typography>
+                    <Typography component="span" fontSize='32px'>{seconds}</Typography>
                 </>
             )}
         </Stack>
