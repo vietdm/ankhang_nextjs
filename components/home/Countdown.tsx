@@ -7,6 +7,7 @@ export const HomeCountdown = ({ date, onDone = null }: { date: Date | null, onDo
     const [hours, setHours] = useState<any>('0');
     const [minutes, setMinutes] = useState<any>('0');
     const [seconds, setSeconds] = useState<any>('0');
+    const [difference, setDifference] = useState<any>('0');
 
     const getTimeNow = () => {
         const timeNowString = new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
@@ -22,6 +23,7 @@ export const HomeCountdown = ({ date, onDone = null }: { date: Date | null, onDo
             const now = getTimeNow();
 
             const difference = date.getTime() - now.getTime();
+            setDifference(difference);
 
             const d = Math.floor(difference / (1000 * 60 * 60 * 24));
             setDays(d < 10 ? '0' + d : d);
@@ -49,26 +51,29 @@ export const HomeCountdown = ({ date, onDone = null }: { date: Date | null, onDo
     }, [date]);
 
     return (
-        <Stack direction="row" justifyContent="center">
-            {!doneCountdown && date && (
-                <>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{days}</span>
-                    </Typography>
-                    <Typography component="span" fontSize='32px'>:</Typography>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{hours}</span>
-                    </Typography>
-                    <Typography component="span" fontSize='32px'>:</Typography>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{minutes}</span>
-                    </Typography>
-                    <Typography component="span" fontSize='32px'>:</Typography>
-                    <Typography component="span" fontSize='32px'>
-                        <span className="time">{seconds}</span>
-                    </Typography>
-                </>
-            )}
-        </Stack>
+        <>
+            <Stack direction="row" justifyContent="center">
+                {!doneCountdown && date && (
+                    <>
+                        <Typography component="span" fontSize='32px'>
+                            <span className="time">{days}</span>
+                        </Typography>
+                        <Typography component="span" fontSize='32px'>:</Typography>
+                        <Typography component="span" fontSize='32px'>
+                            <span className="time">{hours}</span>
+                        </Typography>
+                        <Typography component="span" fontSize='32px'>:</Typography>
+                        <Typography component="span" fontSize='32px'>
+                            <span className="time">{minutes}</span>
+                        </Typography>
+                        <Typography component="span" fontSize='32px'>:</Typography>
+                        <Typography component="span" fontSize='32px'>
+                            <span className="time">{seconds}</span>
+                        </Typography>
+                    </>
+                )}
+            </Stack>
+            <span>{difference}</span>
+        </>
     );
 }
