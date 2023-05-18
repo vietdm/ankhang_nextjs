@@ -19,6 +19,12 @@ import { HrTag } from "../ui/HrTag";
 
 let deferredPrompt: any = null;
 
+enum StatusJoinCashback {
+    notJoin = 'not_join',
+    cashbacked = 'cashbacked',
+    joined = 'joined'
+}
+
 export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const { user } = useUser();
     const [products, setProducts] = useState<any>([]);
@@ -27,11 +33,33 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const [dashboardData, setDashboardData] = useState<any>(null);
     const [itemProductInRow, setItemProductInRow] = useState<number>(2);
     const [valueOfAkg, setValueOfAkg] = useState<number>(0);
+    const [onDoneCountdown, setOnDoneCountdown] = useState<boolean>(false);
+    const [statusJoinCashback, setStatusJoinCashback] = useState<string>('');
 
-    useEffect(() => {
+    const loadDashboardData = () => {
         fetch.post('/user/dashboard').then((result: any) => {
             setDashboardData(result);
         });
+    }
+
+    const getStatusJoinedCashback = () => {
+        fetch.get('/user/get-status-join-cashback').then((result: any) => {
+            if (statusJoinCashback == StatusJoinCashback.joined && result.status == StatusJoinCashback.cashbacked) {
+                loadDashboardData();
+            }
+            setStatusJoinCashback(result.status);
+        });
+    }
+
+    const joinCashbackEvent = () => {
+        fetch.post('/event/cashback/join').then((result: any) => {
+            Alert.success(result.message);
+        });
+    }
+
+    useEffect(() => {
+        loadDashboardData();
+        getStatusJoinedCashback();
         fetch.get('/value-of-akg').then((result: any) => {
             setValueOfAkg(result.value);
         });
@@ -42,7 +70,14 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-        setDateCount(new Date(2023, 5, 20, 20, 0, 0));
+        setDateCount(new Date(2023, 5, 17, 20, 0, 0));
+
+        const interval = setInterval(() => {
+            if (statusJoinCashback == StatusJoinCashback.cashbacked) return;
+            getStatusJoinedCashback();
+        }, 2000);
+
+        return () => clearInterval(interval);
     }, []);
 
     const getItemProductWithWidth = () => {
@@ -81,6 +116,10 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             //
         });
     };
+
+    useEffect(() => {
+        if (!onDoneCountdown) return;
+    }, [onDoneCountdown]);
 
     return (
         <Box paddingBottom="50px" display={active ? 'block' : 'none'}>
@@ -169,24 +208,66 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                                 <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
                                     Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
                                 </Typography>
-                                {/* <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
+                                <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
                                     Điểm CASHBACK: <b>{formatMoney(user.cashback_point)}</b>
-                                </Typography> */}
+                                </Typography>
                             </>
                         )}
                     </Box>
                 </Stack>
             )}
-            <Box marginY={3}>
-                <Typography
-                    variant="h5"
-                    textAlign="center"
-                    textTransform="uppercase"
-                    color="#0578bf"
-                >
-                    Khởi động CashBack
-                </Typography>
-                <HomeCountdown date={dateCount}></HomeCountdown>
+            <Box marginTop={3}>
+                {!onDoneCountdown ? (
+                    <>
+                        <Typography
+                            variant="h5"
+                            textAlign="center"
+                            textTransform="uppercase"
+                            color="#0578bf"
+                        >
+                            Khởi động CashBack
+                        </Typography>
+                        <HomeCountdown
+                            date={dateCount}
+                            onDone={() => {
+                                setOnDoneCountdown(true);
+                            }}
+                        />
+                    </>
+                ) : (
+                    <>
+                        {statusJoinCashback == StatusJoinCashback.notJoin && (
+                            <Stack>
+                                <Box textAlign="center">
+                                    <Button variant="contained" color="error" onClick={() => joinCashbackEvent()}>Đăng ký ngay</Button>
+                                </Box>
+                                <Stack alignItems="center" marginTop={2}>
+                                    <Typography component="p" textAlign="center" textTransform="uppercase" width="310px" fontSize="17px">
+                                        <span>Nhanh tay bấm&nbsp;</span>
+                                        <span style={{ color: '#b60811', fontWeight: 600 }}>Đăng Ký Ngay</span>
+                                        <span>&nbsp;để được nhận&nbsp;</span>
+                                        <span style={{ color: '#febc12', fontWeight: 600 }}>Cashback</span>
+                                        <span>&nbsp;về ví nào</span>
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        )}
+                        {statusJoinCashback == StatusJoinCashback.joined && (
+                            <Stack>
+                                <Box textAlign="center">
+                                    <Button variant="contained" sx={{ background: '#2699da' }}>Đang xử lý ...</Button>
+                                </Box>
+                            </Stack>
+                        )}
+                        {statusJoinCashback == StatusJoinCashback.cashbacked && (
+                            <Stack>
+                                <Box textAlign="center">
+                                    <Button variant="contained" sx={{ background: '#5e85fb' }}>Đã nhận điểm cashback</Button>
+                                </Box>
+                            </Stack>
+                        )}
+                    </>
+                )}
             </Box>
 
             {/* start button install app */}
