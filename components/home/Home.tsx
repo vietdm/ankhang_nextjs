@@ -31,7 +31,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-        const timeEnd = new Date('2023-05-20 15:00:00');
+        const timeEnd = Date.parse('2023-05-20 20:00:00');
         setDateCount(timeEnd);
     }, []);
 
