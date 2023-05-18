@@ -42,7 +42,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         const _i = (str: string) => {
             return parseInt(str);
         }
-        fetch.post('/datetime-countdown').then((result: any) => {
+        fetch.get('/datetime-countdown').then((result: any) => {
             if (result.datetime == '0') return;
             const datetime = result.datetime.split('_');
             setDateCount(new Date(
