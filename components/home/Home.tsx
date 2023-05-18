@@ -19,10 +19,10 @@ import { HrTag } from "../ui/HrTag";
 
 let deferredPrompt: any = null;
 
-enum StatusJoinCashback {
-    notJoin = 'not_join',
-    cashbacked = 'cashbacked',
-    joined = 'joined'
+const StatusJoinCashback = {
+    notJoin: 'not_join',
+    cashbacked: 'cashbacked',
+    joined: 'joined'
 }
 
 export const HomeComponent = ({ active = false }: { active?: boolean }) => {
