@@ -14,6 +14,7 @@ export interface UserInterface {
     reward_point: number;
     cashback_point: number;
     money_bonus: number;
+    akg_money: number;
     akg_point: number;
     package_joined: 'star' | 'vip';
 }

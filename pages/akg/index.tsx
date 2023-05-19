@@ -116,6 +116,9 @@ const AkgPage = () => {
                             Điểm AKG: <b>{formatMoney(user.akg_point)}</b>
                         </Typography>
                         <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
+                            Tổng giá trị: <b>{formatMoney(user.akg_money)}</b>
+                        </Typography>
+                        <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
                             Trạng thái:&nbsp;
                             {user.total_buy >= 3000000 ? (
                                 <b style={{ color: '#6ab04c' }}>Đã đủ điều kiện nhận điểm AKG</b>
@@ -176,13 +179,13 @@ const AkgPage = () => {
                         }}
                     />
                     {pendingOtp === 0 ? (
-                        <Button variant="contained" disabled={requesting} onClick={() => sendOtp()}>Lấy mã OTP</Button>
+                        <Button variant="contained" disabled={true} onClick={() => sendOtp()}>Lấy mã OTP</Button>
                     ) : (
                         <Typography component="span">{pendingOtp}s</Typography>
                     )}
                 </Stack>
                 <Box textAlign="center" marginTop={3}>
-                    <Button variant="contained" color="primary" disabled={requesting} onClick={() => submitTransfer()}>Xác nhận</Button>
+                    <Button variant="contained" color="primary" disabled={true} onClick={() => submitTransfer()}>Xác nhận</Button>
                 </Box>
             </Stack>
             <Box paddingY={3}>
