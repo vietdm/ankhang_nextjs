@@ -170,7 +170,7 @@ async function init() {
   });
 
   $('.btn-pay').on('click', function () {
-    const qrCode = `https://img.vietqr.io/image/mbbank-0918261368-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=Nguyen%20Thi%20Kim%20Thoa`;
+    const qrCode = `https://img.vietqr.io/image/mbbank-866682826666-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=CTCP%20TM%20VA%20DV%20AN%20KHANG%20GROUP`;
     $('#areaBankInfoModal').modal({ backdrop: 'static', keyboard: false });
     $('#areaBankInfoModal').find('[id="QrCode"]').attr('src', qrCode);
   });
