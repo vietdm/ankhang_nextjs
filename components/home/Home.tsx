@@ -76,6 +76,8 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         fetch.post('/event/cashback/join').then((result: any) => {
             setStatusJoinCashback(StatusJoinCashback.joined);
             Alert.success(result.message);
+        }).catch((error: any) => {
+            Alert.success(error.message);
         });
     }
 
