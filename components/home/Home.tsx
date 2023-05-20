@@ -14,47 +14,17 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import { Color } from "@/libraries/color";
 import { BoxMenu, BoxMenuLink } from "./BoxMenu";
 import { formatMoney, userLevel } from "@/utils";
-import { HomeCountdown } from "./Countdown";
 import { HrTag } from "../ui/HrTag";
 
 let deferredPrompt: any = null;
 
-const StatusJoinCashback = {
-    notJoin: 'not_join',
-    cashbacked: 'cashbacked',
-    joined: 'joined'
-}
-
 export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     const { user } = useUser();
     const [products, setProducts] = useState<any>([]);
-    const [dateCount, setDateCount] = useState<any>(null);
     const [installable, setInstallable] = useState(false);
     const [dashboardData, setDashboardData] = useState<any>(null);
     const [itemProductInRow, setItemProductInRow] = useState<number>(2);
     const [valueOfAkg, setValueOfAkg] = useState<number>(0);
-    const [onDoneCountdown, setOnDoneCountdown] = useState<boolean>(false);
-    const [statusJoinCashback, setStatusJoinCashback] = useState<string>('');
-
-    let fakeStatusJoinCashback = '';
-
-    const getDatetimeCountdown = () => {
-        const _i = (str: string) => {
-            return parseInt(str);
-        }
-        fetch.get('/datetime-countdown').then((result: any) => {
-            if (result.datetime == '0') return;
-            const datetime = result.datetime.split('_');
-            setDateCount(new Date(
-                _i(datetime[0]),
-                _i(datetime[1]),
-                _i(datetime[2]),
-                _i(datetime[3]),
-                _i(datetime[4]),
-                _i(datetime[5])
-            ));
-        });
-    }
 
     const loadDashboardData = () => {
         fetch.post('/user/dashboard').then((result: any) => {
@@ -62,29 +32,8 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         });
     }
 
-    const getStatusJoinedCashback = () => {
-        fetch.get('/user/get-status-join-cashback').then((result: any) => {
-            if (fakeStatusJoinCashback == StatusJoinCashback.joined && result.status == StatusJoinCashback.cashbacked) {
-                loadDashboardData();
-            }
-            setStatusJoinCashback(result.status);
-            fakeStatusJoinCashback = result.status;
-        });
-    }
-
-    const joinCashbackEvent = () => {
-        fetch.post('/event/cashback/join').then((result: any) => {
-            setStatusJoinCashback(StatusJoinCashback.joined);
-            Alert.success(result.message);
-        }).catch((error: any) => {
-            Alert.error(error.message);
-        });
-    }
-
     useEffect(() => {
-        getDatetimeCountdown();
         loadDashboardData();
-        getStatusJoinedCashback();
 
         fetch.get('/value-of-akg').then((result: any) => {
             setValueOfAkg(result.value);
@@ -97,14 +46,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             }
             setProducts(listProduct);
         });
-
-        const interval = setInterval(() => {
-            if (fakeStatusJoinCashback == StatusJoinCashback.cashbacked || !onDoneCountdown) return;
-            getStatusJoinedCashback();
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, [onDoneCountdown]);
+    }, []);
 
     const getItemProductWithWidth = () => {
         const windowWidth = window.innerWidth;
@@ -238,59 +180,6 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     </Box>
                 </Stack>
             )}
-            <Box marginTop={3}>
-                {!onDoneCountdown ? (
-                    <>
-                        <Typography
-                            variant="h5"
-                            textAlign="center"
-                            textTransform="uppercase"
-                            color="#0578bf"
-                        >
-                            Khởi động CashBack
-                        </Typography>
-                        <HomeCountdown
-                            date={dateCount}
-                            onDone={() => {
-                                setOnDoneCountdown(true);
-                            }}
-                        />
-                    </>
-                ) : (
-                    <>
-                        {statusJoinCashback == StatusJoinCashback.notJoin && (
-                            <Stack>
-                                <Box textAlign="center">
-                                    <Button variant="contained" color="error" onClick={() => joinCashbackEvent()}>Đăng ký ngay</Button>
-                                </Box>
-                                <Stack alignItems="center" marginTop={2}>
-                                    <Typography component="p" textAlign="center" textTransform="uppercase" width="310px" fontSize="17px">
-                                        <span>Nhanh tay bấm&nbsp;</span>
-                                        <span style={{ color: '#b60811', fontWeight: 600 }}>Đăng Ký Ngay</span>
-                                        <span>&nbsp;để được nhận&nbsp;</span>
-                                        <span style={{ color: '#febc12', fontWeight: 600 }}>Cashback</span>
-                                        <span>&nbsp;về ví nào</span>
-                                    </Typography>
-                                </Stack>
-                            </Stack>
-                        )}
-                        {statusJoinCashback == StatusJoinCashback.joined && (
-                            <Stack>
-                                <Box textAlign="center">
-                                    <Button variant="contained" sx={{ background: '#2699da' }}>Đang xử lý ...</Button>
-                                </Box>
-                            </Stack>
-                        )}
-                        {statusJoinCashback == StatusJoinCashback.cashbacked && (
-                            <Stack>
-                                <Box textAlign="center">
-                                    <Button variant="contained" sx={{ background: '#5e85fb' }}>Đã nhận điểm cashback</Button>
-                                </Box>
-                            </Stack>
-                        )}
-                    </>
-                )}
-            </Box>
 
             {/* start button install app */}
             {installable &&
