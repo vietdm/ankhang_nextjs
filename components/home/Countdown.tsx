@@ -31,6 +31,15 @@ export const HomeCountdown = ({ date, onDone = null }: { date: Date | null, onDo
 
             const difference = date.getTime() - now.getTime();
 
+            if (difference <= 0) {
+                setDoneCountdown(true);
+                clearInterval(interval);
+                if (typeof onDone == 'function') {
+                    onDone();
+                };
+                return;
+            }
+
             const d = Math.floor(difference / (1000 * 60 * 60 * 24));
             setDays(d < 10 ? '0' + d : d);
 

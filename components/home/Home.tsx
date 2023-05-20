@@ -64,14 +64,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
 
     const getStatusJoinedCashback = () => {
         fetch.get('/user/get-status-join-cashback').then((result: any) => {
-            console.log("statusJoinCashback", fakeStatusJoinCashback);
-            console.log('result.status', result.status);
-
-            if (
-                fakeStatusJoinCashback == '' ||
-                (fakeStatusJoinCashback == StatusJoinCashback.joined &&
-                    result.status == StatusJoinCashback.cashbacked)
-            ) {
+            if (fakeStatusJoinCashback == StatusJoinCashback.joined && result.status == StatusJoinCashback.cashbacked) {
                 loadDashboardData();
             }
             setStatusJoinCashback(result.status);
@@ -90,9 +83,11 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         getDatetimeCountdown();
         loadDashboardData();
         getStatusJoinedCashback();
+
         fetch.get('/value-of-akg').then((result: any) => {
             setValueOfAkg(result.value);
         });
+
         fetch.get('/products').then((result: any) => {
             let listProduct = result.products;
             if (listProduct.length > 4) {
@@ -102,15 +97,12 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         });
 
         const interval = setInterval(() => {
-            if (
-                fakeStatusJoinCashback == StatusJoinCashback.cashbacked ||
-                !onDoneCountdown
-            ) return;
+            if (fakeStatusJoinCashback == StatusJoinCashback.cashbacked || !onDoneCountdown) return;
             getStatusJoinedCashback();
         }, 2000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [onDoneCountdown]);
 
     const getItemProductWithWidth = () => {
         const windowWidth = window.innerWidth;
