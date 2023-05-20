@@ -77,7 +77,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             setStatusJoinCashback(StatusJoinCashback.joined);
             Alert.success(result.message);
         }).catch((error: any) => {
-            Alert.success(error.message);
+            Alert.error(error.message);
         });
     }
 
