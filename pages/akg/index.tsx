@@ -21,6 +21,8 @@ const AkgPage = () => {
     const [pointTransfer, setPointTransfer] = useState<number | null>(null);
     const [username, setUsername] = useState<string>('');
 
+    const [canTransfer, setCanTransfer] = useState<boolean>(false);
+
     const sendOtp = () => {
         setRequesting(true);
         fetch.post('/user/otp/tranfer-akg').then((result: any) => {
@@ -54,6 +56,9 @@ const AkgPage = () => {
     useEffect(() => {
         fetch.post('/user/history/transfer/akg').then((result: any) => {
             setHistories(result.histories);
+        });
+        fetch.post('/user/can/transfer-akg').then((result: any) => {
+            setCanTransfer(result.can == '1');
         });
     }, []);
 
@@ -179,13 +184,13 @@ const AkgPage = () => {
                         }}
                     />
                     {pendingOtp === 0 ? (
-                        <Button variant="contained" disabled={true} onClick={() => sendOtp()}>Lấy mã OTP</Button>
+                        <Button variant="contained" disabled={requesting || !canTransfer} onClick={() => sendOtp()}>Lấy mã OTP</Button>
                     ) : (
                         <Typography component="span">{pendingOtp}s</Typography>
                     )}
                 </Stack>
                 <Box textAlign="center" marginTop={3}>
-                    <Button variant="contained" color="primary" disabled={true} onClick={() => submitTransfer()}>Xác nhận</Button>
+                    <Button variant="contained" color="primary" disabled={requesting || !canTransfer} onClick={() => submitTransfer()}>Xác nhận</Button>
                 </Box>
             </Stack>
             <Box paddingY={3}>
