@@ -68,8 +68,9 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
             console.log('result.status', result.status);
 
             if (
-                fakeStatusJoinCashback == StatusJoinCashback.joined &&
-                result.status == StatusJoinCashback.cashbacked
+                fakeStatusJoinCashback == '' ||
+                (fakeStatusJoinCashback == StatusJoinCashback.joined &&
+                    result.status == StatusJoinCashback.cashbacked)
             ) {
                 loadDashboardData();
             }

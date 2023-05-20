@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { saveCart } from "@/utils/helper/cart";
 import { useRouter } from "next/router";
 
-export const BoxProductSimple = ({ product }: { product: any }) => {
+export const BoxProductSimple = ({ product, menuActive, onChangeQuantity }: { product: any, menuActive: string, onChangeQuantity: any }) => {
     const [quantity, setQuantity] = useState<number>(1);
     const [priceTemp, setPriceTemp] = useState<number>(product.price);
     const [itemProductInRow, setItemProductInRow] = useState<number>(2);
@@ -28,6 +28,7 @@ export const BoxProductSimple = ({ product }: { product: any }) => {
 
     useEffect(() => {
         setPriceTemp(product.price * quantity);
+        onChangeQuantity(quantity, product.id);
     }, [quantity]);
 
     useEffect(() => {
@@ -73,9 +74,11 @@ export const BoxProductSimple = ({ product }: { product: any }) => {
                     <AddCircleOutlineOutlinedIcon sx={{ height: '100%', fill: 'grey', marginLeft: '5px' }} />
                 </Stack>
             </Stack>
-            <Box sx={{ textAlign: 'center' }}>
-                <Button variant="outlined" color='info' onClick={() => onAddToCart()}>Mua ngay</Button>
-            </Box>
+            {menuActive != 'option' && (
+                <Box sx={{ textAlign: 'center', marginTop: '4px' }}>
+                    <Button variant="contained" color='info' onClick={() => onAddToCart()}>Mua ngay</Button>
+                </Box>
+            )}
         </Box>
     );
 }
