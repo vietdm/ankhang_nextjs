@@ -20,14 +20,6 @@ const StorePage = () => {
         });
 
         setProductShow(productActive);
-
-        if (menuActive == 'option') {
-            let cart: any = {};
-            for (const product of productActive) {
-                cart[product.id] = 1;
-            }
-            setCarts(cart);
-        }
     }
 
     const onChangeQuantity = (quantity: number, productId: number) => {
@@ -46,6 +38,17 @@ const StorePage = () => {
     }, [products, menuActive]);
 
     useEffect(() => {
+        setTimeout(() => {
+            let cart: any = {};
+            for (let p of productShow) {
+                cart[p.id] = 1;
+            }
+            setCarts(cart);
+        }, 10);
+    }, [productShow]);
+
+    useEffect(() => {
+        if (menuActive != 'option') return;
         let total = 0;
         for (const productId of Object.keys(carts)) {
             const product = productShow.find((p: any) => p.id == productId);

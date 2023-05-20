@@ -51,8 +51,8 @@
         <div class="lists"></div>
     </div>
 
-    <div class="p-2">
-        <hr />
+    <div class="px-3 py-1">
+        <hr class="my-1" />
     </div>
 
     <div class="px-2">
@@ -60,11 +60,11 @@
         <form action="" style="display: block; width: 350px; margin: auto;">
             <div class="form-group">
                 <label for="">Họ và tên</label>
-                <input type="text" class="form-control" name="fullname" placeholder="Nguyễn Văn A">
+                <input type="text" class="form-control" name="fullname" placeholder="Nguyễn Văn A" readonly>
             </div>
             <div class="form-group">
                 <label for="">Số điện thoại</label>
-                <input type="text" class="form-control" name="phone" placeholder="0987654321">
+                <input type="text" class="form-control" name="phone" placeholder="0987654321" readonly>
             </div>
             <div class="form-group">
                 <label for="">Địa chỉ nhận hàng</label>
@@ -72,17 +72,62 @@
             </div>
             <div class="form-group">
                 <label for="">Ghi chú</label>
-                <input type="text" class="form-control" name="note">
+                <textarea rows="3" class="form-control" name="note"></textarea>
             </div>
         </form>
     </div>
 
-    <div class="p-2">
-        <hr />
+    <div class="px-3 py-1">
+        <hr class="my-1" />
+    </div>
+
+    <div class="px-2">
+        <h5 class="text-center" style="font-weight: bold;">Phương thức thanh toán</h5>
+        <div class="form-group mb-0 px-4">
+            <input type="radio" name="payment_method" value="point" id="payment_method_point">
+            <label for="payment_method_point">Đổi điểm</label>
+        </div>
+        <div class="form-group mb-0 px-4">
+            <input type="radio" name="payment_method" value="bank" id="payment_method_bank" checked>
+            <label for="payment_method_bank">Chuyển khoản</label>
+        </div>
+    </div>
+
+    <div class="px-3 py-1">
+        <hr class="my-1" />
     </div>
 
     <div class="text-center mt-3 mb-5">
         <button class="btn btn-primary btn-pay">Thanh toán</button>
+    </div>
+
+    <div class="modal fade" id="areaPointInfoModal" tabindex="-1" role="dialog"
+        aria-labelledby="areaPointInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h5 class="text-center font-weight-bold">Thanh toán bằng điểm</h5>
+                    <div class="loading-data">
+                        <div class="lds-roller">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-access btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-access btn-primary btn-point-pay">
+                        Xác nhận thanh toán
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal fade" id="areaBankInfoModal" tabindex="-1" role="dialog" aria-labelledby="areaBankInfoModalLabel"
@@ -138,7 +183,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./script.js?i=1"></script>
+    <script src="/assets/js/autosize.min.js?i=2"></script>
+    <script src="/cart0/script.js?i=2"></script>
 </body>
 
 </html>

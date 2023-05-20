@@ -38,6 +38,7 @@ function getProducts() {
 }
 
 function renderList(data) {
+  window.totalPricePayment = data.price;
   return `
         <div class="list d-flex mb-2">
             <div class="img">
@@ -46,7 +47,8 @@ function renderList(data) {
             <div class="content px-2">
                 <h6 class="mb-1" style="font-weight: bold;">${data.title}</h6>
                 <p class="mb-1">Số lượng: ${data.quantity}</p>
-                <p class="mb-1">Đơn giá: ${data.price}</p>
+                <p class="mb-1">Đơn giá: ${formatMoney(data.price) + " đ"}</p>
+                <p class="mb-1">Thành tiền: ${formatMoney(data.price) + " đ"}</p>
             </div>
         </div>
     `;
@@ -122,7 +124,7 @@ async function init() {
         img: cart.product.images[0],
         title: cart.product.title,
         quantity: cart.quantity,
-        price: formatMoney(cartPrice) + " đ",
+        price: cartPrice,
       })
     );
   });
@@ -160,6 +162,8 @@ async function init() {
     }, 1000);
   });
 
+  autosize($('[name="note"]'));
+
   $('#areaBankInfoModal').on('hide.bs.modal', function () {
     clearInterval(intervalCountdown);
   });
@@ -170,9 +174,15 @@ async function init() {
   });
 
   $('.btn-pay').on('click', function () {
-    const qrCode = `https://img.vietqr.io/image/mbbank-866682826666-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=CTCP%20TM%20VA%20DV%20AN%20KHANG%20GROUP`;
-    $('#areaBankInfoModal').modal({ backdrop: 'static', keyboard: false });
-    $('#areaBankInfoModal').find('[id="QrCode"]').attr('src', qrCode);
+    const paymentMethod = $('[name="payment_method"]:checked').val();
+    console.log("paymentMethod", paymentMethod);
+    if (paymentMethod == 'bank') {
+      const qrCode = `https://img.vietqr.io/image/mbbank-866682826666-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=CTCP%20TM%20VA%20DV%20AN%20KHANG%20GROUP`;
+      $('#areaBankInfoModal').modal({ backdrop: 'static', keyboard: false });
+      $('#areaBankInfoModal').find('[id="QrCode"]').attr('src', qrCode);
+    } else if (paymentMethod == 'point') {
+      $('#areaPointInfoModal').modal({ backdrop: 'static', keyboard: false });
+    }
   });
 
   $(".btn-trace-store").on("click", async function () {
@@ -274,6 +284,119 @@ async function init() {
   $('.btn-confirm-trace').on('click', function () {
     $('#areaBankInfoModal').modal('hide');
     $('#areaUploadBankResult').modal({ backdrop: 'static', keyboard: false });
+  });
+
+  $('.btn-point-pay').on('click', function () {
+    const pointSelect = $('#areaPointInfoModal').find('.point-select.selected');
+    if (pointSelect.length == 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Phải chọn 1 loại điểm thanh toán!'
+      });
+      return;
+    }
+    const pointSelectType = pointSelect.attr('data-type');
+
+    const formData = new FormData;
+    formData.append('point_type', pointSelectType);
+    formData.append('order', JSON.stringify(cartSave));
+    formData.append('user_id', userInfo.id);
+    formData.append('name', $('[name="fullname"]').val());
+    formData.append('phone', $('[name="phone"]').val());
+    formData.append('address', $('[name="address"]').val());
+    formData.append('note', $('[name="note"]').val());
+
+    $(this).addClass('disabled');
+    $('.loadingggg').show();
+    setTimeout(() => {
+      $('.loadingggg').fadeIn(200);
+    }, 10);
+
+    $.ajax({
+      url: api + "order",
+      type: 'post',
+      data: formData,
+      headers: {
+        Authorization: 'Bearer ' + params.get("token")
+      },
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: () => {
+        localStorage.removeItem('cart');
+        $('.loadingggg').fadeOut(200);
+        setTimeout(() => {
+          $('.loadingggg').hide();
+        }, 210);
+        Swal.fire({
+          title: 'Thành công',
+          text: "Đơn hàng đã được đặt thành công!",
+          icon: 'success',
+        }).then(() => {
+          window.location.href = "/";
+        });
+      }, error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: Object.values(err.responseJSON)[0]
+        });
+        $(this).removeClass('disabled');
+        $('.loadingggg').fadeOut(200);
+        setTimeout(() => {
+          $('.loadingggg').hide();
+        }, 210);
+      }
+    });
+  });
+
+  $('#areaPointInfoModal').on('click', '.point-select:not(.disabled)', function () {
+    $('#areaPointInfoModal').find('.point-select.selected').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  $('#areaPointInfoModal').on('hide.bs.modal', function () {
+    $('#areaPointInfoModal').find('.content-payment-point').remove();
+    $('#areaPointInfoModal').find('.loading-data').show();
+    $('#areaPointInfoModal').find('.btn-point-pay').removeClass('disabled');
+  });
+
+  $('#areaPointInfoModal').on('show.bs.modal', function () {
+    $.ajax({
+      url: api + "user/point/check",
+      type: 'post',
+      headers: {
+        Authorization: 'Bearer ' + params.get("token")
+      },
+      dataType: 'json',
+      data: { price: window.totalPricePayment },
+      success: (result) => {
+        const allDisabled = result.cashback.allow == '0' && result.reward.allow == '0';
+        const newData = $('<div />').addClass('content-payment-point');
+        newData.css('display', 'none');
+        const cashbackPayment = `
+          <div class="point-select point-cashback ${result.cashback.allow == '0' ? 'disabled' : ''}" data-type="cashback">
+            Điểm CASHBACK: ${formatMoney(result.cashback.point)} điểm
+          </div>
+        `;
+        const rewardPayment = `
+          <div class="point-select point-reward ${result.reward.allow == '0' ? 'disabled' : ''}" data-type="reward">
+            Điểm thưởng: ${formatMoney(result.reward.point)} điểm
+          </div>
+        `;
+        newData.append(cashbackPayment);
+        newData.append(rewardPayment);
+        $('#areaPointInfoModal').find('.modal-body').append(newData);
+        $('#areaPointInfoModal').find('.loading-data').fadeOut(200);
+        if (allDisabled) {
+          $('#areaPointInfoModal').find('.btn-point-pay').addClass('disabled');
+        }
+        setTimeout(() => {
+          newData.fadeIn(200);
+        }, 200);
+      }
+    });
   });
 }
 
