@@ -23,7 +23,7 @@ export const formatMoney = (amount: any, decimalCount = 0, decimal = ".", thousa
 
         const negativeSign = amount < 0 ? "-" : "";
 
-        let i = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
+        let i: any = parseInt(amount = Math.abs(Number(amount) || 0).toFixed(decimalCount)).toString();
         let j = (i.length > 3) ? i.length % 3 : 0;
 
         return negativeSign +
@@ -34,3 +34,21 @@ export const formatMoney = (amount: any, decimalCount = 0, decimal = ".", thousa
         console.log(e)
     }
 };
+
+export const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    let month: string | number = date.getMonth() + 1;
+    let day: string | number = date.getDate();
+    let hour: string | number = date.getHours();
+    let minute: string | number = date.getMinutes();
+    let second: string | number = date.getSeconds();
+
+    if (month < 10) month = '0' + month;
+    if (day < 10) day = '0' + day;
+    if (hour < 10) hour = '0' + hour;
+    if (minute < 10) minute = '0' + minute;
+    if (second < 10) second = '0' + second;
+
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}

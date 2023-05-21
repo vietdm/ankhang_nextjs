@@ -63,8 +63,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/logo192.png" sizes="512x512" />
       </Head>
       <ThemeProvider theme={theme}>
+
         <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
-          {loading ? <Loading /> : <Component {...pageProps} />}
+          {loading ? (
+            <Loading />
+          ) : (
+            <Component {...pageProps} />
+          )}
         </AnimatePresence>
       </ThemeProvider>
     </>

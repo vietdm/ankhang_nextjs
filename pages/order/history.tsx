@@ -12,8 +12,6 @@ const HistoryOrderPage = () => {
 
     useEffect(() => {
         fetch.post('/order/history').then((result: any) => {
-            console.log(result.history);
-
             setHistories(result.history);
         });
     }, []);

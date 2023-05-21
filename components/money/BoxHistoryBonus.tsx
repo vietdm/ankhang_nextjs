@@ -1,53 +1,43 @@
-import { formatMoney } from "@/utils"
-import { Alert, Box, Stack, Typography } from "@mui/material"
+import { formatDate, formatMoney } from "@/utils"
+import { Alert, AlertProps, Box, Typography } from "@mui/material"
 
-export const BoxHistoryBonus = ({ histories }: { histories: any }) => {
+const AlertHistoryType = ({ color, text }: { color: AlertProps["color"], text: string }) => {
     return (
-        <>
-            {histories.map((history: any, index: number) => (
-                <Box padding="15px" marginBottom={1} borderRadius="7px" border="5px solid green" key={index}>
-                    <Typography component="h5">
-                        Loại:&nbsp;
-                        {history.type == 'cap_bac' && "Cấp bậc"}
-                        {history.type == 'truc_tiep' && "Trực tiếp"}
-                    </Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Nội dung: {history.content}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Ngày nhận: {history.date_bonus}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Từ user: {history.user_from.username}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Số tiền: {formatMoney(history.money_bonus)}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Stack direction="row" justifyContent="center">
-                        <Box width="250px">
-                            {history.status === 0 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="warning">Đang chờ chấp thuận!</Alert>
-                            )}
-                            {history.status === 1 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="info">Đã chấp thuận!</Alert>
-                            )}
-                            {history.status === 2 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="success">Rút thành công!</Alert>
-                            )}
-                            {history.status === 3 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="error">Từ chối!</Alert>
-                            )}
-                        </Box>
-                    </Stack>
-                </Box>
-            ))}
-        </>
+        <Alert
+            color={color}
+            icon={false}
+            sx={{
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '18px'
+            }}
+        >
+            {text}
+        </Alert>
+    );
+}
+
+export const BoxHistoryBonus = ({ history }: { history: any }) => {
+    return (
+        <Box borderRadius="7px">
+            {history.type == 'cap_bac' && <AlertHistoryType color="success" text="Cấp bậc" />}
+            {history.type == 'truc_tiep' && <AlertHistoryType color="info" text="Trực tiếp" />}
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Nội dung: {history.content}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Ngày nhận: {formatDate(history.created_at)}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Từ user: {history.user_from.username}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Số tiền: {formatMoney(history.money_bonus)}</Typography>
+        </Box>
     )
 }

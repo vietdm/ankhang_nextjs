@@ -99,7 +99,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
         </Box>
       </Stack>
 
-      <Box marginTop={2}>
+      <Box marginTop={2} paddingBottom={5}>
         <Box marginY={1}>
           <Typography component="p" textAlign="center" padding={1} marginX={5} onClick={() => copyAffilate(affilate)}>
             Link giới thiệu:
@@ -153,20 +153,11 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
             <ArrowCircleRightOutlinedIcon />
           </Stack>
         </Link>
-        <Link href='/order/history' passHref>
+        <Link href='/histories' passHref>
           <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
             <Stack direction="row">
               <HistoryEduOutlinedIcon sx={{ fill: "#5eaddb" }} />
-              <Typography component="p" marginLeft={1}>Lịch sử mua hàng</Typography>
-            </Stack>
-            <ArrowCircleRightOutlinedIcon />
-          </Stack>
-        </Link>
-        <Link href='/money/history' passHref>
-          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
-            <Stack direction="row">
-              <RequestQuoteOutlinedIcon sx={{ fill: "#5eaddb" }} />
-              <Typography component="p" marginLeft={1}>Lịch sử giao dịch</Typography>
+              <Typography component="p" marginLeft={1}>Lịch sử</Typography>
             </Stack>
             <ArrowCircleRightOutlinedIcon />
           </Stack>
