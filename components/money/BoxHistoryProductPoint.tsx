@@ -1,5 +1,5 @@
 import { formatDate, formatMoney } from "@/utils"
-import { Alert, AlertProps, Box, Stack, Typography } from "@mui/material"
+import { Alert, AlertProps, Box, Typography } from "@mui/material"
 
 const AlertHistoryType = ({ color, text }: { color: AlertProps["color"], text: string }) => {
     return (
