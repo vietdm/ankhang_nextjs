@@ -33,7 +33,7 @@ export const BoxHistoryBonus = ({ history }: { history: any }) => {
             <Box paddingY={1}>
                 <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
             </Box>
-            <Typography component="h5">Từ user: {history.user_from.username}</Typography>
+            <Typography component="h5">Từ user: {history.user_from?.username ?? ''}</Typography>
             <Box paddingY={1}>
                 <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
             </Box>

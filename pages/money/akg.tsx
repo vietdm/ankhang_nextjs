@@ -1,5 +1,5 @@
 import { fetch } from "@/libraries/axios";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SinglePage } from "@/components/ui/SinglePage";
 import { Alert as AlertDialog } from "@/libraries/alert";
@@ -31,6 +31,7 @@ const MoneyAkgHistory = () => {
                         <BoxHistoryAkg history={history} />
                     </Box>
                 ))}
+                {histories.length == 0 && <Typography textAlign="center" component="p" marginTop={2}>Không có lịch sử</Typography>}
             </Box>
         </SinglePage>
     );

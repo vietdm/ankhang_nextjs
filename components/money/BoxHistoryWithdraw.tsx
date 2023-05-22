@@ -1,4 +1,4 @@
-import { formatMoney } from "@/utils"
+import { formatDate, formatMoney } from "@/utils"
 import { Alert, AlertProps, Box, Stack, Typography } from "@mui/material"
 
 const AlertHistoryStatus = ({ color, text }: { color: AlertProps["color"], text: string }) => {
@@ -23,7 +23,7 @@ export const BoxHistoryWithdraw = ({ history }: { history: any }) => {
             <Box paddingY={1}>
                 <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
             </Box>
-            <Typography component="h5">Ngày yêu cầu: {history.date}</Typography>
+            <Typography component="h5">Ngày yêu cầu: {formatDate(history.created_at)}</Typography>
             <Box paddingY={1}>
                 <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
             </Box>
