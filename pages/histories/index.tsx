@@ -35,6 +35,15 @@ const HistoriesPage = () => {
                         <ArrowCircleRightOutlinedIcon />
                     </Stack>
                 </Link>
+                <Link href='/money/akg' passHref>
+                    <Stack direction="row" justifyContent="space-between" paddingY={2} sx={{ borderBottom: '1px solid #3333' }}>
+                        <Stack direction="row">
+                            <HistoryEduOutlinedIcon sx={{ fill: "#5eaddb" }} />
+                            <Typography component="p" marginLeft={1}>Lịch sử nhận AKG</Typography>
+                        </Stack>
+                        <ArrowCircleRightOutlinedIcon />
+                    </Stack>
+                </Link>
             </Box>
         </SinglePage>
     );
