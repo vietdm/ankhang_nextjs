@@ -39,8 +39,8 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
   }
 
   const affilate = useMemo(() => {
-    if (!user) return '';
-    return window.location.origin + '/r/' + (user?.username || '');
+    if (!user || !user?.username) return '';
+    return window.location.origin + '/r/' + user.username.toLowerCase();
   }, [user]);
 
   return (
@@ -93,29 +93,31 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
             {user?.fullname}
           </Typography>
           <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-            Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{user?.package_joined && UserHelper.getPackageName(user.package_joined)}</b>
+            Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user?.package_joined)}</b>
           </Typography>
         </Box>
       </Stack>
 
       <Box marginTop={2} paddingBottom={5}>
-        <Box marginY={1}>
-          <Typography component="p" textAlign="center" padding={1} marginX={5} onClick={() => copyAffilate(affilate)}>
-            Link giới thiệu:
-            <br />
-            <span>{affilate}</span>
-            <br />
-            {affilate != '' && (
-              <Typography
-                component="span"
-                color={copied ? "#27ae60" : "#1976d2"}
-                fontWeight="700"
-              >
-                [{copied ? "Đã sao chép" : "Sao chép"}]
-              </Typography>
-            )}
-          </Typography>
-        </Box>
+        {affilate !== '' && (
+          <Box marginY={1}>
+            <Typography component="p" textAlign="center" padding={1} marginX={5} onClick={() => copyAffilate(affilate)}>
+              Link giới thiệu:
+              <br />
+              <span>{affilate}</span>
+              <br />
+              {affilate != '' && (
+                <Typography
+                  component="span"
+                  color={copied ? "#27ae60" : "#1976d2"}
+                  fontWeight="700"
+                >
+                  [{copied ? "Đã sao chép" : "Sao chép"}]
+                </Typography>
+              )}
+            </Typography>
+          </Box>
+        )}
         <Link href='/user/edit' passHref>
           <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
             <Stack direction="row">
