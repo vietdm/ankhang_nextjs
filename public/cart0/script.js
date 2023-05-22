@@ -287,6 +287,7 @@ async function init() {
   });
 
   $('.btn-point-pay').on('click', function () {
+    if ($(this).hasClass('disabled')) return;
     const pointSelect = $('#areaPointInfoModal').find('.point-select.selected');
     if (pointSelect.length == 0) {
       Swal.fire({

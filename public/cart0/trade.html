@@ -47,15 +47,15 @@
         </div>
     </div>
 
-    <div class="cart-list px-2">
-        <div class="lists"></div>
-    </div>
+    <div class="contents">
+        <div class="cart-list">
+            <div class="lists"></div>
+        </div>
 
-    <div class="px-3 py-1">
-        <hr class="my-1" />
-    </div>
+        <div class="py-1">
+            <hr class="my-1" />
+        </div>
 
-    <div class="px-2">
         <h5 class="text-center" style="font-weight: bold;">Thông tin nhận hàng</h5>
         <form action="" style="display: block; width: 350px; margin: auto;">
             <div class="form-group">
@@ -75,30 +75,30 @@
                 <textarea rows="3" class="form-control" name="note"></textarea>
             </div>
         </form>
-    </div>
 
-    <div class="px-3 py-1">
-        <hr class="my-1" />
-    </div>
+        <div class="py-1">
+            <hr class="my-1" />
+        </div>
 
-    <div class="px-2">
         <h5 class="text-center" style="font-weight: bold;">Phương thức thanh toán</h5>
-        <div class="form-group mb-0 px-4">
-            <input type="radio" name="payment_method" value="point" id="payment_method_point">
-            <label for="payment_method_point">Đổi điểm</label>
+        <div class="d-flex justify-content-around">
+            <div class="form-group mb-0">
+                <input type="radio" name="payment_method" value="bank" id="payment_method_bank" checked>
+                <label for="payment_method_bank">Chuyển khoản</label>
+            </div>
+            <div class="form-group mb-0">
+                <input type="radio" name="payment_method" value="point" id="payment_method_point">
+                <label for="payment_method_point">Đổi điểm</label>
+            </div>
         </div>
-        <div class="form-group mb-0 px-4">
-            <input type="radio" name="payment_method" value="bank" id="payment_method_bank" checked>
-            <label for="payment_method_bank">Chuyển khoản</label>
+
+        <div class="py-1">
+            <hr class="my-1" />
         </div>
-    </div>
 
-    <div class="px-3 py-1">
-        <hr class="my-1" />
-    </div>
-
-    <div class="text-center mt-3 mb-5">
-        <button class="btn btn-primary btn-pay">Thanh toán</button>
+        <div class="text-center mt-3 mb-5">
+            <button class="btn btn-primary btn-pay">Thanh toán</button>
+        </div>
     </div>
 
     <div class="modal fade" id="areaPointInfoModal" tabindex="-1" role="dialog"
