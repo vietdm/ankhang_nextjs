@@ -38,7 +38,6 @@ function getProducts() {
 }
 
 function renderList(data) {
-  window.totalPricePayment = data.price;
   return `
         <div class="list d-flex mb-2">
             <div class="img">
@@ -48,7 +47,7 @@ function renderList(data) {
                 <h6 class="mb-1" style="font-weight: bold;">${data.title}</h6>
                 <p class="mb-1">Số lượng: ${data.quantity}</p>
                 <p class="mb-1">Đơn giá: ${formatMoney(data.price) + " đ"}</p>
-                <p class="mb-1">Thành tiền: ${formatMoney(data.price) + " đ"}</p>
+                <p class="mb-1">Thành tiền: ${formatMoney(data.totalPrice) + " đ"}</p>
             </div>
         </div>
     `;
@@ -88,6 +87,8 @@ function fillDefaultData(userInfo) {
   $('[name="address"]').val(userInfo.address);
 }
 
+const moneyWantPay = () => parseInt($('#price_want_pay').val().trim().replaceAll(',', ''));
+
 async function init() {
   const userInfo = await getUserInfo();
   const carts = getCart();
@@ -124,10 +125,14 @@ async function init() {
         img: cart.product.images[0],
         title: cart.product.title,
         quantity: cart.quantity,
-        price: cartPrice,
+        price: cart.product.price,
+        totalPrice: cartPrice,
       })
     );
   });
+
+  $('.total-price-pay').empty().text(formatMoney(totalPrice) + ' đ');
+  $('#price_want_pay').val(formatMoney(totalPrice));
 
   let intervalCountdown = null;
 
@@ -173,11 +178,33 @@ async function init() {
     $('#fileBankResult').val('');
   });
 
+  $('#price_want_pay').on('input', function () {
+    const value = parseInt(this.value.replaceAll(',', ''));
+    this.value = formatMoney(value);
+  });
+
+  $('[name="payment_method"]').on('change', function () {
+    if (this.value == 'point') {
+      $('#price_want_pay').prop('disabled', true);
+    }
+    if (this.value == 'bank') {
+      $('#price_want_pay').prop('disabled', false);
+    }
+  });
+
   $('.btn-pay').on('click', function () {
     const paymentMethod = $('[name="payment_method"]:checked').val();
-    console.log("paymentMethod", paymentMethod);
     if (paymentMethod == 'bank') {
-      const qrCode = `https://img.vietqr.io/image/mbbank-866682826666-11sAiww.jpg?amount=${totalPrice}&addInfo=${userInfo.username}&accountName=CTCP%20TM%20VA%20DV%20AN%20KHANG%20GROUP`;
+      const totalPricePayment = moneyWantPay();
+      if (totalPricePayment < totalPrice) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Số tiền thanh toán phải lớn hơn hoặc bằng giá trị của đơn hàng!'
+        });
+        return;
+      }
+      const qrCode = `https://img.vietqr.io/image/mbbank-866682826666-11sAiww.jpg?amount=${totalPricePayment}&addInfo=${userInfo.username}&accountName=CTCP%20TM%20VA%20DV%20AN%20KHANG%20GROUP`;
       $('#areaBankInfoModal').modal({ backdrop: 'static', keyboard: false });
       $('#areaBankInfoModal').find('[id="QrCode"]').attr('src', qrCode);
     } else if (paymentMethod == 'point') {
@@ -371,7 +398,7 @@ async function init() {
         Authorization: 'Bearer ' + params.get("token")
       },
       dataType: 'json',
-      data: { price: window.totalPricePayment },
+      data: { price: totalPrice },
       success: (result) => {
         const allDisabled = result.cashback.allow == '0' && result.reward.allow == '0';
         const newData = $('<div />').addClass('content-payment-point');

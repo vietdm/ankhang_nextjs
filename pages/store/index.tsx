@@ -5,6 +5,9 @@ import { SinglePage } from "@/components/ui/SinglePage";
 import { BoxProductSimple } from "@/components/store/BoxProductSimple";
 import { HrTag } from "@/components/ui/HrTag";
 import { formatMoney } from "@/utils";
+import { saveCarts } from "@/utils/helper/cart";
+import { useRouter } from "next/router";
+import { CartItem } from "@/interfaces/product";
 
 const StorePage = () => {
     const [products, setProducts] = useState<any>([]);
@@ -12,6 +15,7 @@ const StorePage = () => {
     const [menuActive, setMenuActive] = useState<string>('sp');
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [carts, setCarts] = useState<any>({});
+    const router = useRouter();
 
     const filterProduct = () => {
         const productActive = products.filter((product: any) => {
@@ -25,6 +29,15 @@ const StorePage = () => {
     const onChangeQuantity = (quantity: number, productId: number) => {
         carts[productId] = quantity;
         setCarts({ ...carts });
+    }
+
+    const selectBuyOptions = () => {
+        const newCart: CartItem[] = [];
+        Object.keys(carts).map((id: any) => {
+            newCart.push({ quantity: carts[id], id });
+        });
+        saveCarts(newCart);
+        router.push('/cart');
     }
 
     useEffect(() => {
@@ -59,6 +72,8 @@ const StorePage = () => {
             total += product.price * carts[productId];
         }
         setTotalPrice(total);
+        console.log(carts);
+
     }, [carts]);
 
     return (
@@ -116,12 +131,19 @@ const StorePage = () => {
                     );
                 })}
             </Stack>
-            <HrTag p={2} />
             {menuActive == 'option' && (
                 <Stack paddingBottom={3}>
+                    <HrTag p={2} />
                     <Typography variant="h6" textAlign="center">Tổng giá trị: {formatMoney(totalPrice)}</Typography>
                     <Box textAlign="center">
-                        <Button variant="contained" color="warning" disabled={totalPrice < 3000000 || true}>Mua combo ngay</Button>
+                        <Button
+                            variant="contained"
+                            color="warning"
+                            disabled={totalPrice < 3000000}
+                            onClick={() => selectBuyOptions()}
+                        >
+                            Mua combo ngay
+                        </Button>
                     </Box>
                 </Stack>
             )}
