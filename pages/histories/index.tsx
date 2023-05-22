@@ -44,6 +44,15 @@ const HistoriesPage = () => {
                         <ArrowCircleRightOutlinedIcon />
                     </Stack>
                 </Link>
+                <Link href='/money/product_point' passHref>
+                    <Stack direction="row" justifyContent="space-between" paddingY={2} sx={{ borderBottom: '1px solid #3333' }}>
+                        <Stack direction="row">
+                            <HistoryEduOutlinedIcon sx={{ fill: "#5eaddb" }} />
+                            <Typography component="p" marginLeft={1}>Lịch sử điểm mua hàng</Typography>
+                        </Stack>
+                        <ArrowCircleRightOutlinedIcon />
+                    </Stack>
+                </Link>
             </Box>
         </SinglePage>
     );

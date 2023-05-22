@@ -233,6 +233,7 @@ async function init() {
     formData.append('phone', $('[name="phone"]').val());
     formData.append('address', $('[name="address"]').val());
     formData.append('note', $('[name="note"]').val());
+    formData.append('total_price_pay', moneyWantPay());
 
     $('.loadingggg').show();
     setTimeout(() => {
@@ -266,7 +267,7 @@ async function init() {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: Object.values(err.responseJSON)[0]
+          text: typeof err.message != 'undefined' ? err.message : Object.values(err.responseJSON)[0]
         });
         $(this).prop('disabled', false);
         $('.loadingggg').fadeOut(200);
