@@ -52,3 +52,7 @@ export const formatDate = (dateStr: string) => {
 
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
+
+export const randomNumber = (min: number, max: number) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+}

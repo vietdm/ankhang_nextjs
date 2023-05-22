@@ -1,6 +1,6 @@
 import { Alert } from '@/libraries/alert';
 import { fetch } from '@/libraries/axios';
-import { youtubeParser } from '@/utils';
+import { randomNumber, youtubeParser } from '@/utils';
 import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import YouTube from 'react-youtube';
@@ -14,6 +14,7 @@ import axios from "axios";
 import { Loading } from '../layout/Loading';
 
 export const MissionComponent = ({ active = false }: { active?: boolean }) => {
+    const [swiper, setSwiper] = useState<any>(null);
     const [limit, setLimit] = useState<number>(0);
     const [videoMission, setVideoMission] = useState<string | null>(null);
     const [listVideoMission, setListVideoMission] = useState<any>({});
@@ -30,12 +31,13 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
         },
     });
 
+    const slideTo = (index: number) => {
+        if (swiper) swiper.slideTo(index)
+    };
+
     useEffect(() => {
         fetch.get('/mission-list/video').then(async (result: any) => {
-            const idVideo = youtubeParser(result.mission[0].content.url);
             setLimit(result.limit);
-            setVideoMission(idVideo);
-            setMissionId(result.mission[0].id);
 
             let listMission: any = {};
 
@@ -104,6 +106,18 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
         }
     }, [active]);
 
+    useEffect(() => {
+        const lengthMission = Object.keys(listVideoMission).length;
+        if (lengthMission <= 0) return;
+        const indexMissionActive = randomNumber(0, lengthMission);
+        const videoId = Object.keys(listVideoMission)[indexMissionActive];
+        setVideoMission(videoId);
+        setMissionId(listVideoMission[videoId].id);
+        setTimeout(() => {
+            slideTo(indexMissionActive);
+        }, 10);
+    }, [listVideoMission]);
+
     return (
         <Box display={active ? 'block' : 'none'}>
             {!player && <Loading height="calc(100% - 90px)" />}
@@ -127,31 +141,34 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
                     ></Box>
                 </Box>
             )}
-            <Box marginTop={3}>
-                <Swiper
-                    effect={"coverflow"}
-                    grabCursor={true}
-                    centeredSlides={true}
-                    slidesPerView={"auto"}
-                    coverflowEffect={{
-                        rotate: 50,
-                        stretch: 0,
-                        depth: 100,
-                        modifier: 1,
-                        slideShadows: true,
-                    }}
-                    pagination={true}
-                    modules={[EffectCoverflow, Pagination]}
-                    className="mySwiper"
-                >
-                    {Object.keys(listVideoMission).map((ms: string, index: number) => (
-                        <SwiperSlide style={{ width: '50%' }} key={index} onClick={() => changeVideo(ms)}>
-                            <img src={`https://img.youtube.com/vi/${ms}/hqdefault.jpg`} style={{ width: '100%' }} />
-                            <h4>{listVideoMission[ms].title}</h4>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </Box>
+            {Object.keys(listVideoMission).length > 0 && (
+                <Box marginTop={3}>
+                    <Swiper
+                        effect={"coverflow"}
+                        grabCursor={true}
+                        centeredSlides={true}
+                        slidesPerView={"auto"}
+                        coverflowEffect={{
+                            rotate: 50,
+                            stretch: 0,
+                            depth: 100,
+                            modifier: 1,
+                            slideShadows: true,
+                        }}
+                        pagination={true}
+                        modules={[EffectCoverflow, Pagination]}
+                        onSwiper={setSwiper}
+                        className="mySwiper"
+                    >
+                        {Object.keys(listVideoMission).map((ms: string, index: number) => (
+                            <SwiperSlide style={{ width: '50%' }} key={index} onClick={() => changeVideo(ms)}>
+                                <img src={`https://img.youtube.com/vi/${ms}/hqdefault.jpg`} style={{ width: '100%' }} />
+                                <h4>{listVideoMission[ms].title}</h4>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </Box>
+            )}
             <Box marginTop={3}>
                 <Typography component="p" textAlign="center">Hôm nay bạn còn <b style={{ color: "blue" }}>{limit}</b> lần xem có thưởng!</Typography>
             </Box>
