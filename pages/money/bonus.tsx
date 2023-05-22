@@ -1,5 +1,5 @@
 import { fetch } from "@/libraries/axios";
-import { Box, Stack } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SinglePage } from "@/components/ui/SinglePage";
 import { BoxHistoryBonus } from "@/components/money/BoxHistoryBonus";
