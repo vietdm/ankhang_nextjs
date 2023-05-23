@@ -183,7 +183,10 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     {dashboardData?.joined_cashback == '1' && (
                         <>
                             <HrTag p={2} />
-                            <Alert icon={false} color="success" sx={{ textAlign: 'center', paddingY: 0 }}>Đã được xếp vào hàng đợi <b>Cashback</b></Alert>
+                            <Alert icon={false} color="success" sx={{ textAlign: 'center', paddingY: 0 }}>
+                                <Typography variant="body1"><b>Chúc mừng bạn!</b></Typography>
+                                Đã có trong danh sách chờ nhận <b>Cashback</b>
+                            </Alert>
                         </>
                     )}
                 </Stack>
