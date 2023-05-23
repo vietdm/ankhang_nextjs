@@ -139,7 +139,7 @@ const StorePage = () => {
                         <Button
                             variant="contained"
                             color="warning"
-                            disabled={totalPrice < 3000000}
+                            disabled={totalPrice < 3000000 || true}
                             onClick={() => selectBuyOptions()}
                         >
                             Mua combo ngay
