@@ -3,12 +3,12 @@ import { Pagination, Autoplay } from "swiper";
 import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/autoplay";
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Stack, Typography } from "@mui/material";
 import { useUser } from "@/hooks/useUser";
 import { useEffect, useState } from "react";
 import { fetch } from "@/libraries/axios";
 import { UserHelper } from "@/utils/helper/UserHelper";
-import { Alert } from "@/libraries/alert";
+import { Alert as AlertDialog } from "@/libraries/alert";
 import Link from "next/link";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import { Color } from "@/libraries/color";
@@ -66,7 +66,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
         });
 
         window.addEventListener('appinstalled', () => {
-            Alert.success('Cài đặt app thành công! Có thể sẽ mất từ 1 - 2 phút để hiển thị ở màn hình chính!');
+            AlertDialog.success('Cài đặt app thành công! Có thể sẽ mất từ 1 - 2 phút để hiển thị ở màn hình chính!');
         });
 
         window.addEventListener('resize', function () {
@@ -119,65 +119,73 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                 </SwiperSlide>
             </Swiper>
             {user && (
-                <Stack direction="row" width="90%" maxWidth="650px" margin="1.5rem auto 0 auto" sx={{
+                <Stack width="90%" maxWidth="650px" margin="1.5rem auto 0 auto" sx={{
                     backgroundColor: '#e3e3e3',
                     padding: '14px',
                     borderRadius: '14px',
                     background: "radial-gradient(#f4f9fd, #bae4f4)",
                     boxShadow: '0 4px 4px 1px rgba(0, 0, 0, 0.2)'
                 }}>
-                    <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
-                        <Box position="relative" textAlign="center" height={80} width={80}>
-                            {user.level == 'nomal' ? (
-                                <Box sx={{
-                                    position: 'absolute',
-                                    width: '100%',
-                                    height: '100%',
-                                    top: 0,
-                                    left: 0,
-                                    backgroundImage: 'url("/user.png")',
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    backgroundRepeat: 'no-repeat',
-                                    overflow: 'hidden',
-                                    borderRadius: '50%',
-                                    zIndex: 8,
-                                    border: '7px solid ' + (user.total_buy == 0 ? Color.new : Color[user.level])
-                                }} />
-                            ) : (
-                                <Box>
-                                    <img src={`/imgs/capbac/${user.level}_1.png`} alt="" style={{
+                    <Stack direction="row" >
+                        <Stack width="80px" direction="row" justifyContent="center" alignItems="center">
+                            <Box position="relative" textAlign="center" height={80} width={80}>
+                                {user.level == 'nomal' ? (
+                                    <Box sx={{
                                         position: 'absolute',
                                         width: '100%',
                                         height: '100%',
                                         top: 0,
                                         left: 0,
+                                        backgroundImage: 'url("/user.png")',
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
                                         overflow: 'hidden',
                                         borderRadius: '50%',
-                                        zIndex: 9,
+                                        zIndex: 8,
+                                        border: '7px solid ' + (user.total_buy == 0 ? Color.new : Color[user.level])
                                     }} />
-                                </Box>
+                                ) : (
+                                    <Box>
+                                        <img src={`/imgs/capbac/${user.level}_1.png`} alt="" style={{
+                                            position: 'absolute',
+                                            width: '100%',
+                                            height: '100%',
+                                            top: 0,
+                                            left: 0,
+                                            overflow: 'hidden',
+                                            borderRadius: '50%',
+                                            zIndex: 9,
+                                        }} />
+                                    </Box>
+                                )}
+                            </Box>
+                        </Stack>
+                        <Box width="calc(100% - 80px)" paddingLeft={2}>
+                            {user && (
+                                <>
+                                    <Typography component="h6" sx={{ fontSize: '20px' }} fontWeight="400">
+                                        Xin chào, <b>{user.fullname}</b>
+                                    </Typography>
+                                    <Typography component="h6" sx={{ fontSize: '20px' }} fontWeight="400">
+                                        Chức vụ: <b>{userLevel(user.level)}</b>
+                                    </Typography>
+                                    <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
+                                        Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
+                                    </Typography>
+                                    <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
+                                        Điểm CASHBACK: <b>{formatMoney(user.cashback_point)}</b>
+                                    </Typography>
+                                </>
                             )}
                         </Box>
                     </Stack>
-                    <Box width="calc(100% - 80px)" paddingLeft={2}>
-                        {user && (
-                            <>
-                                <Typography component="h6" sx={{ fontSize: '20px' }} fontWeight="400">
-                                    Xin chào, <b>{user.fullname}</b>
-                                </Typography>
-                                <Typography component="h6" sx={{ fontSize: '20px' }} fontWeight="400">
-                                    Chức vụ: <b>{userLevel(user.level)}</b>
-                                </Typography>
-                                <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
-                                    Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
-                                </Typography>
-                                <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
-                                    Điểm CASHBACK: <b>{formatMoney(user.cashback_point)}</b>
-                                </Typography>
-                            </>
-                        )}
-                    </Box>
+                    {dashboardData?.joined_cashback == '1' && (
+                        <>
+                            <HrTag p={2} />
+                            <Alert icon={false} color="success" sx={{ textAlign: 'center', paddingY: 0 }}>Đã được xếp vào hàng đợi <b>Cashback</b></Alert>
+                        </>
+                    )}
                 </Stack>
             )}
 
