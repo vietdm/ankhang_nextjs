@@ -401,21 +401,27 @@ async function init() {
       dataType: 'json',
       data: { price: totalPrice },
       success: (result) => {
-        const allDisabled = result.cashback.allow == '0' && result.reward.allow == '0';
+        const allDisabled = result.cashback.allow == '0' && result.reward.allow == '0' && result.product.allow == '0';
         const newData = $('<div />').addClass('content-payment-point');
         newData.css('display', 'none');
         const cashbackPayment = `
           <div class="point-select point-cashback ${result.cashback.allow == '0' ? 'disabled' : ''}" data-type="cashback">
-            Điểm CASHBACK: ${formatMoney(result.cashback.point)} điểm
+            Điểm CASHBACK: ${formatMoney(result.cashback.point)}
           </div>
         `;
         const rewardPayment = `
           <div class="point-select point-reward ${result.reward.allow == '0' ? 'disabled' : ''}" data-type="reward">
-            Điểm thưởng: ${formatMoney(result.reward.point)} điểm
+            Điểm thưởng: ${formatMoney(result.reward.point)}
+          </div>
+        `;
+        const productPayment = `
+          <div class="point-select point-product ${result.product.allow == '0' ? 'disabled' : ''}" data-type="product">
+            Điểm mua hàng: ${formatMoney(result.product.point)}
           </div>
         `;
         newData.append(cashbackPayment);
         newData.append(rewardPayment);
+        newData.append(productPayment);
         $('#areaPointInfoModal').find('.modal-body').append(newData);
         $('#areaPointInfoModal').find('.loading-data').fadeOut(200);
         if (allDisabled) {
