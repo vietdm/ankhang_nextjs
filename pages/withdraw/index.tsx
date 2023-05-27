@@ -11,11 +11,14 @@ import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlin
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
+import { createCapcha, sendOtpSms } from "@/hooks/firebase";
 
 const WithdrawPage = () => {
+    const [appVerifier, setAppVerifier] = useState<any>(null);
+    const [resultSendOtp, setResultSendOtp] = useState<any>(null);
     const [moneyCanWithdraw, setMoneyCanWithdraw] = useState<number>(0);
     const [money, setMoney] = useState<number | null>(null);
-    const [requesting, setRequesting] = useState<boolean>(false);
+    const [requesting, setRequesting] = useState<boolean>(true);
     const [bankInfo, setBankInfo] = useState<any>({
         account_number: 'loading..',
         bank_name: 'loading..',
@@ -40,13 +43,16 @@ const WithdrawPage = () => {
 
     const sendOtp = () => {
         setRequesting(true);
-        fetch.post('/user/otp/withdraw').then((result: any) => {
-            Alert.success(result.message);
-            setRequesting(false);
-        }).catch((error: any) => {
-            Alert.error(error.message);
-            setRequesting(false);
-        })
+        // fetch.post('/user/otp/withdraw').then((result: any) => {
+        //     Alert.success(result.message);
+        //     setRequesting(false);
+        // }).catch((error: any) => {
+        //     Alert.error(error.message);
+        //     setRequesting(false);
+        // })
+        sendOtpSms('+84329012526', appVerifier).then((sendOtpResult) => {
+            setResultSendOtp(sendOtpResult);
+        });
     }
 
     useEffect(() => {
@@ -61,6 +67,10 @@ const WithdrawPage = () => {
                 setRequesting(true);
             }
         });
+        const verifier = createCapcha('recaptcha-container', () => {
+            setRequesting(false);
+        });
+        setAppVerifier(verifier);
     }, []);
 
     return (
@@ -86,7 +96,7 @@ const WithdrawPage = () => {
                     id="money"
                     label="Nhập số tiền rút"
                     type="number"
-                    value={money}
+                    value={money ?? ''}
                     onChange={(e: any) => {
                         setMoney(e.target.value);
                     }}
@@ -181,6 +191,7 @@ const WithdrawPage = () => {
                         readOnly: requesting
                     }}
                 />
+                <Box id="recaptcha-container" />
                 <Button variant="contained" disabled={requesting} onClick={() => sendOtp()}>Lấy mã OTP</Button>
             </Stack>
             <HrTag p={2} />
