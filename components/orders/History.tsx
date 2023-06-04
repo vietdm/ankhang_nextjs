@@ -1,4 +1,4 @@
-import { formatMoney } from "@/utils";
+import { formatDate, formatMoney } from "@/utils";
 import { Alert, Box, Stack, Typography } from "@mui/material"
 
 export const OrderHistory = ({ history }: { history: any }) => {
@@ -14,6 +14,10 @@ export const OrderHistory = ({ history }: { history: any }) => {
                 <Stack direction="row">
                     <Typography component="span">Mã ĐH:&nbsp;</Typography>
                     <Typography component="span" fontWeight={600}>{history.code}</Typography>
+                </Stack>
+                <Stack direction="row">
+                    <Typography component="span">Ngày đặt:&nbsp;</Typography>
+                    <Typography component="span" fontWeight={600}>{formatDate(history.created_at)}</Typography>
                 </Stack>
                 <Stack direction="row">
                     <Typography component="span">Số lượng:&nbsp;</Typography>
