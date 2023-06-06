@@ -16,9 +16,12 @@ export function getCartDetail(products: Product[]): CartItem[] {
 }
 
 export function saveCart(data: CartItem) {
-  const cartData = [data];
+  saveCarts([data]);
+}
+
+export function saveCarts(data: CartItem[]) {
   localStorage.removeItem("cart");
-  localStorage.setItem("cart", JSON.stringify(cartData));
+  localStorage.setItem("cart", JSON.stringify(data));
 }
 
 export function deleteProductFromCart(id: number) {

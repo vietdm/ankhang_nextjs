@@ -1,45 +1,56 @@
-import { formatMoney } from "@/utils"
-import { Alert, Box, Stack, Typography } from "@mui/material"
+import { formatDate, formatMoney } from "@/utils"
+import { Alert, AlertProps, Box, Stack, Typography } from "@mui/material"
 
-export const BoxHistoryWithdraw = ({ histories }: { histories: any }) => {
+const AlertHistoryStatus = ({ color, text }: { color: AlertProps["color"], text: string }) => {
     return (
-        <>
-            {histories.map((history: any, index: number) => (
-                <Box padding="15px" marginBottom={1} borderRadius="7px" border="5px solid red" key={index}>
-                    <Typography component="h5">Mã GD: {history.id}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Ngày yêu cầu: {history.date}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Số tiền: {formatMoney(history.money)}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Typography component="h5">Số tiền thực nhận: {formatMoney(history.money_real)}</Typography>
-                    <Box paddingY={1}>
-                        <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
-                    </Box>
-                    <Stack direction="row" justifyContent="center">
-                        <Box width="250px">
-                            {history.status === 0 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="warning">Đang chờ chấp thuận!</Alert>
-                            )}
-                            {history.status === 1 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="info">Đã chấp thuận!</Alert>
-                            )}
-                            {history.status === 2 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="success">Rút thành công!</Alert>
-                            )}
-                            {history.status === 3 && (
-                                <Alert sx={{ justifyContent: "center" }} variant="standard" icon={false} severity="error">Từ chối!</Alert>
-                            )}
-                        </Box>
-                    </Stack>
+        <Alert
+            color={color}
+            icon={false}
+            sx={{
+                justifyContent: 'center',
+                padding: 0
+            }}
+        >
+            {text}
+        </Alert>
+    );
+}
+
+export const BoxHistoryWithdraw = ({ history }: { history: any }) => {
+    return (
+        <Box borderRadius="7px">
+            <Typography component="h5">Mã GD: {history.id}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Ngày yêu cầu: {formatDate(history.created_at)}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Số tiền: {formatMoney(history.money)}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Typography component="h5">Số tiền thực nhận: {formatMoney(history.money_real)}</Typography>
+            <Box paddingY={1}>
+                <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
+            </Box>
+            <Stack direction="row" justifyContent="center">
+                <Box width="250px">
+                    {history.status === 0 && (
+                        <AlertHistoryStatus color="warning" text="Đang chờ chấp thuận!" />
+                    )}
+                    {history.status === 1 && (
+                        <AlertHistoryStatus color="info" text="Đã chấp thuận!" />
+                    )}
+                    {history.status === 2 && (
+                        <AlertHistoryStatus color="success" text="Rút thành công!" />
+                    )}
+                    {history.status === 3 && (
+                        <AlertHistoryStatus color="error" text="Từ chối!" />
+                    )}
                 </Box>
-            ))}
-        </>
+            </Stack>
+        </Box>
     )
 }

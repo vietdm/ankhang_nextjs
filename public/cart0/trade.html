@@ -47,16 +47,38 @@
         </div>
     </div>
 
-    <div class="cart-list px-2">
-        <div class="lists"></div>
-    </div>
+    <div class="contents">
+        <h5 class="text-center mb-3" style="font-weight: bold;">Thông tin đặt hàng</h5>
+        <div class="cart-list">
+            <div class="lists"></div>
+        </div>
 
-    <div class="px-3 py-1">
-        <hr class="my-1" />
-    </div>
+        <div class="py-1">
+            <hr class="my-1" />
+        </div>
 
-    <div class="px-2">
-        <h5 class="text-center" style="font-weight: bold;">Thông tin nhận hàng</h5>
+        <h5 class="text-center mb-3" style="font-weight: bold;">Thông tin thanh toán</h5>
+        <div class="mb-3">
+            <div class="d-flex justify-content-between">
+                <b style="font-size: 18px">Tổng tiền:</b>
+                <span class="total-price-pay">0 đ</span>
+            </div>
+            <div class="form-group">
+                <label for="price_want_pay" class="d-block font-weight-bold mb-0 mt-2">Số tiền muốn thanh toán:</label>
+                <i class="mb-2 d-block">* Nếu số tiền thanh toán lớn hơn giá trị đơn hàng, phần thừa sẽ được cộng vào
+                    điểm mua
+                    hàng. Điểm mua
+                    hàng có thể sử dụng để mua sản phẩm.</i>
+                <input type="text" name="price_want_pay" id="price_want_pay" value="0" class="form-control"
+                    onfocus="this.select()" />
+            </div>
+        </div>
+
+        <div class="py-1">
+            <hr class="my-1" />
+        </div>
+
+        <h5 class="text-center mb-3" style="font-weight: bold;">Thông tin nhận hàng</h5>
         <form action="" style="display: block; width: 350px; margin: auto;">
             <div class="form-group">
                 <label for="">Họ và tên</label>
@@ -75,30 +97,30 @@
                 <textarea rows="3" class="form-control" name="note"></textarea>
             </div>
         </form>
-    </div>
 
-    <div class="px-3 py-1">
-        <hr class="my-1" />
-    </div>
-
-    <div class="px-2">
-        <h5 class="text-center" style="font-weight: bold;">Phương thức thanh toán</h5>
-        <div class="form-group mb-0 px-4">
-            <input type="radio" name="payment_method" value="point" id="payment_method_point">
-            <label for="payment_method_point">Đổi điểm</label>
+        <div class="py-1">
+            <hr class="my-1" />
         </div>
-        <div class="form-group mb-0 px-4">
-            <input type="radio" name="payment_method" value="bank" id="payment_method_bank" checked>
-            <label for="payment_method_bank">Chuyển khoản</label>
+
+        <h5 class="text-center mb-3" style="font-weight: bold;">Phương thức thanh toán</h5>
+        <div class="d-flex justify-content-around">
+            <div class="form-group mb-0">
+                <input type="radio" name="payment_method" value="bank" id="payment_method_bank" checked>
+                <label for="payment_method_bank">Chuyển khoản</label>
+            </div>
+            <div class="form-group mb-0">
+                <input type="radio" name="payment_method" value="point" id="payment_method_point">
+                <label for="payment_method_point">Đổi điểm</label>
+            </div>
         </div>
-    </div>
 
-    <div class="px-3 py-1">
-        <hr class="my-1" />
-    </div>
+        <div class="py-1">
+            <hr class="my-1" />
+        </div>
 
-    <div class="text-center mt-3 mb-5">
-        <button class="btn btn-primary btn-pay">Thanh toán</button>
+        <div class="text-center mt-3 mb-5">
+            <button class="btn btn-primary btn-pay">Thanh toán</button>
+        </div>
     </div>
 
     <div class="modal fade" id="areaPointInfoModal" tabindex="-1" role="dialog"

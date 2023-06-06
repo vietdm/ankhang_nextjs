@@ -14,6 +14,10 @@ type Props = {
 export const SinglePage = ({ children, title = '', hasHomeIcon = true, hasBackIcon = true }: Props) => {
     const router = useRouter();
 
+    const routeBack = () => {
+        router.back();
+    }
+
     return (
         <Box height="100vh" maxHeight="100vh" minHeight="100vh" >
             <Stack
@@ -25,7 +29,7 @@ export const SinglePage = ({ children, title = '', hasHomeIcon = true, hasBackIc
                 sx={{ background: "#0984e3" }}
             >
                 {hasBackIcon ? (
-                    <Box padding={1} onClick={() => router.back()}>
+                    <Box padding={1} onClick={() => routeBack()}>
                         <ArrowBackOutlinedIcon sx={{ color: "#fff" }} />
                     </Box>
                 ) : (

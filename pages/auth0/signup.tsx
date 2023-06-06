@@ -3,7 +3,7 @@ import { Alert } from "@/libraries/alert";
 import { fetch } from "@/libraries/axios";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import PhoneAndroidOutlinedIcon from "@mui/icons-material/PhoneAndroidOutlined";
 import PasswordOutlinedIcon from "@mui/icons-material/PasswordOutlined";
@@ -26,10 +26,7 @@ type FormValues = {
 
 const SignupPage = () => {
     const router = useRouter();
-    const [presentName, setPresentName] = useState<any>(null);
     const [requesting, setRequesting] = useState<boolean>(false);
-
-    const debounceTimeoutRef = useRef<any>(null);
 
     const {
         register,
@@ -58,14 +55,6 @@ const SignupPage = () => {
             });
     });
 
-    const getPresentName = (code: string) => {
-        fetch.get('/present/name?code=' + code).then((result: any) => {
-            setPresentName(result.name);
-        }).catch(() => {
-            setPresentName(null);
-        })
-    };
-
     const hasAffilate = useMemo(() => {
         return !!router.query?.r;
     }, [router.query]);
@@ -74,20 +63,8 @@ const SignupPage = () => {
         if (hasAffilate) {
             const username = router.query.r as string;
             setValue('present_code', username);
-            getPresentName(username);
         }
     }, [hasAffilate]);
-
-    useEffect(() => {
-        const subscription = watch((value, { name }) => {
-            clearTimeout(debounceTimeoutRef.current);
-            if (name !== 'present_code' || hasAffilate) return;
-            debounceTimeoutRef.current = setTimeout(() => {
-                getPresentName(value.present_code ?? '');
-            }, 300);
-        });
-        return () => subscription.unsubscribe();
-    }, [watch]);
 
     return (
         <AuthLayout title="Đăng ký tài khoản">
@@ -160,7 +137,6 @@ const SignupPage = () => {
                             role="presentation"
                             {...register("present_code", { required: "Hãy nhập mã giới thiệu!" })}
                         />
-                        {presentName && <Box width="100%" marginTop={1} paddingLeft="60px">{presentName}</Box>}
                         <ErrorMessage errors={errors} name="present_code" render={({ message }) => <Error mgs={message} />} />
                     </Stack>
                     <Stack direction="row" alignItems="center" marginBottom="1.25rem" flexWrap="wrap">
