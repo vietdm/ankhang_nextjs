@@ -5,12 +5,14 @@ export const OrderHistory = ({ history }: { history: any }) => {
     return (
         <Stack direction="row">
             <Box width="100px" padding="5px">
-                <img src={history.product.images[0]} alt="Img" style={{
-                    width: '100%'
-                }} />
+                {history?.product && (
+                    <img src={history.product.images[0]} alt="Img" style={{
+                        width: '100%'
+                    }} />
+                )}
             </Box>
             <Box width="calc(100% - 100px)" paddingLeft="5px">
-                <Typography component="h3" fontWeight={600}>{history.product.title}</Typography>
+                <Typography component="h3" fontWeight={600}>{history.product?.title ?? 'Unknow'}</Typography>
                 <Stack direction="row">
                     <Typography component="span">Mã ĐH:&nbsp;</Typography>
                     <Typography component="span" fontWeight={600}>{history.code}</Typography>
