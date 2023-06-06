@@ -19,8 +19,12 @@ export function saveCart(data: CartItem) {
   saveCarts([data]);
 }
 
-export function saveCarts(data: CartItem[]) {
+export function clearCart() {
   localStorage.removeItem("cart");
+}
+
+export function saveCarts(data: CartItem[]) {
+  clearCart();
   localStorage.setItem("cart", JSON.stringify(data));
 }
 
@@ -28,7 +32,7 @@ export function deleteProductFromCart(id: number) {
   const cartData = getCart() as CartItem[];
   let index = cartData.findIndex(item => item.id == id);
   cartData.splice(index, 1);
-  localStorage.removeItem("cart");
+  clearCart();
   localStorage.setItem("cart", JSON.stringify(cartData));
 }
 

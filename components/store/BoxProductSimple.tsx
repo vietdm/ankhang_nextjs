@@ -23,7 +23,7 @@ export const BoxProductSimple = ({ product, menuActive, onChangeQuantity }: { pr
 
     const onAddToCart = () => {
         saveCart({ quantity, id: product.id });
-        router.push('/cart');
+        router.push('/checkout');
     }
 
     useEffect(() => {

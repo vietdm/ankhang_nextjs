@@ -16,7 +16,7 @@ const ProductPage = () => {
   const handleAddToCart = (quantity: number) => {
     saveCart({ quantity, id: product.id });
     setOpenModal(false);
-    router.push('/cart');
+    router.push('/checkout');
   }
 
   useEffect(() => {

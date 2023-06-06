@@ -2,6 +2,7 @@ import { fetch } from "@/libraries/axios";
 import { useEffect, useState } from "react";
 
 export interface UserInterface {
+    id: number;
     username: string;
     cccd: string;
     email: string;

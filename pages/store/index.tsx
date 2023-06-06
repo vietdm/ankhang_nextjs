@@ -37,7 +37,7 @@ const StorePage = () => {
             newCart.push({ quantity: carts[id], id });
         });
         saveCarts(newCart);
-        router.push('/cart');
+        router.push('/checkout');
     }
 
     useEffect(() => {

@@ -14,7 +14,7 @@ export const CartIcon = () => {
 
     return (
         <Box padding={1} position="relative">
-            <Link href="/cart?redirect=0" passHref>
+            <Link href="/checkout?redirect=0" passHref>
                 <ShoppingCartOutlinedIcon sx={{ color: "#fff" }} />
             </Link>
             <Typography component="span" color="#0984e3" sx={{
