@@ -1,11 +1,12 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { Box, createTheme, ThemeProvider } from "@mui/material";
 import Head from "next/head";
 import { AnimatePresence } from 'framer-motion';
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/layout/Loading";
+import Link from "next/link";
 
 const theme = createTheme({
   typography: {
@@ -65,11 +66,29 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
 
         <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <Component {...pageProps} />
-          )}
+          <Box>
+            {loading ? (
+              <Loading />
+            ) : (
+              <Component {...pageProps} />
+            )}
+            <Link href='tel:0566866333' passHref>
+              <Box position="fixed" sx={{
+                bottom: '100px',
+                right: '10px',
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                boxShadow: '1px 2px 4px 1px rgba(0, 0, 0, 0.2)',
+                overflow: 'hidden',
+                padding: '14px',
+                background: '#fff'
+              }}
+              >
+                <img src="/phone.gif" alt="Phone Gif" style={{ width: '100%' }} />
+              </Box>
+            </Link>
+          </Box>
         </AnimatePresence>
       </ThemeProvider>
     </>
