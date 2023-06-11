@@ -6,7 +6,6 @@ import { AnimatePresence } from 'framer-motion';
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/layout/Loading";
-import Link from "next/link";
 
 const theme = createTheme({
   typography: {
