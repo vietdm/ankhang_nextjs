@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { getQuantityOfProduct, saveCart } from "@/utils/helper/cart";
 import { fetch } from "@/libraries/axios";
 import { SinglePage } from "@/components/ui/SinglePage";
+import nl2br from "react-nl2br";
 
 const ProductPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -49,7 +50,7 @@ const ProductPage = () => {
       }} />
       <Box paddingBottom="40px" position="relative">
         <Typography component="p">
-          {productDescription}
+          {nl2br(productDescription)}
         </Typography>
         <Button variant="outlined" onClick={() => setShowFull(!showFull)} sx={{
           position: 'absolute',
