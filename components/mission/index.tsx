@@ -12,6 +12,7 @@ import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
 import axios from "axios";
 import { Loading } from '../layout/Loading';
+import { CallSupport } from '../ui/CallSupport';
 
 export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     const [swiper, setSwiper] = useState<any>(null);
@@ -172,6 +173,7 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
             <Box marginTop={3}>
                 <Typography component="p" textAlign="center">Hôm nay bạn còn <b style={{ color: "blue" }}>{limit}</b> lần xem có thưởng!</Typography>
             </Box>
+            <CallSupport bottom="100px" />
         </Box>
     );
 }

@@ -15,6 +15,7 @@ import { Color } from "@/libraries/color";
 import { BoxMenu, BoxMenuLink } from "./BoxMenu";
 import { formatMoney, userLevel } from "@/utils";
 import { HrTag } from "../ui/HrTag";
+import { CallSupport } from "../ui/CallSupport";
 
 let deferredPrompt: any = null;
 
@@ -86,7 +87,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
     };
 
     return (
-        <Box paddingBottom="50px" display={active ? 'block' : 'none'}>
+        <Box display={active ? 'block' : 'none'}>
             <Swiper
                 pagination={true}
                 modules={[Pagination, Autoplay]}
@@ -247,6 +248,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                     <Typography color="#0049a5" fontWeight="700" component="p" fontSize={16} textAlign="right">{dashboardData?.total_child}</Typography>
                 </BoxMenuLink>
             </Stack>
+            <CallSupport bottom="100px" />
         </Box>
     )
 }

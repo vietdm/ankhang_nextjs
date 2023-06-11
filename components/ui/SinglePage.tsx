@@ -3,6 +3,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import { useRouter } from "next/router";
 import { ReactNode } from 'react';
+import { CallSupport } from "./CallSupport";
 
 type Props = {
     children: ReactNode;
@@ -19,7 +20,7 @@ export const SinglePage = ({ children, title = '', hasHomeIcon = true, hasBackIc
     }
 
     return (
-        <Box height="100vh" maxHeight="100vh" minHeight="100vh" >
+        <Box height="100vh" maxHeight="100vh" minHeight="100vh">
             <Stack
                 direction="row"
                 justifyContent="space-between"
@@ -44,9 +45,10 @@ export const SinglePage = ({ children, title = '', hasHomeIcon = true, hasBackIc
                     <Box></Box>
                 )}
             </Stack>
-            <Box height="calc(100% - 50px)" overflow="auto" width="100%" paddingX="15px" margin="auto" paddingBottom={5}>
+            <Box height="calc(100% - 50px)" overflow="auto" width="100%" paddingX="15px" margin="auto" paddingBottom='100px'>
                 {children}
             </Box>
+            <CallSupport />
         </Box>
     );
 }

@@ -52,11 +52,7 @@ const StorePage = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            let cart: any = {};
-            for (let p of productShow) {
-                cart[p.id] = 1;
-            }
-            setCarts(cart);
+            setCarts({});
         }, 10);
     }, [productShow]);
 
@@ -72,8 +68,6 @@ const StorePage = () => {
             total += product.price * carts[productId];
         }
         setTotalPrice(total);
-        console.log(carts);
-
     }, [carts]);
 
     return (
@@ -139,7 +133,7 @@ const StorePage = () => {
                         <Button
                             variant="contained"
                             color="warning"
-                            disabled={totalPrice < 3000000}
+                            disabled={totalPrice <= 0}
                             onClick={() => selectBuyOptions()}
                         >
                             Mua combo ngay

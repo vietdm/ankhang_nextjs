@@ -66,28 +66,12 @@ export default function App({ Component, pageProps }: AppProps) {
       <ThemeProvider theme={theme}>
 
         <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
-          <Box>
+          <Box position="relative">
             {loading ? (
               <Loading />
             ) : (
               <Component {...pageProps} />
             )}
-            <Link href='tel:0566866333' passHref>
-              <Box position="fixed" sx={{
-                bottom: '100px',
-                right: '10px',
-                width: '60px',
-                height: '60px',
-                borderRadius: '50%',
-                boxShadow: '1px 2px 4px 1px rgba(0, 0, 0, 0.2)',
-                overflow: 'hidden',
-                padding: '14px',
-                background: '#fff'
-              }}
-              >
-                <img src="/phone.gif" alt="Phone Gif" style={{ width: '100%' }} />
-              </Box>
-            </Link>
           </Box>
         </AnimatePresence>
       </ThemeProvider>

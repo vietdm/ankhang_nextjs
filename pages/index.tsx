@@ -52,7 +52,7 @@ const Home = () => {
   return (
     <Layout>
       <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
-        <Box height="calc(100vh - 90px)" overflow="auto">
+        <Box height="calc(100vh - 90px)" overflow="auto" paddingBottom="100px">
           <StoreComponent active={menuActive == 'store'} />
           <UserComponent active={menuActive == 'user'} />
           {loadedMission && <MissionComponent active={menuActive == 'mission'} />}

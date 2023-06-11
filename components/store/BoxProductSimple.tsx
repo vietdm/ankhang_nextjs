@@ -1,19 +1,28 @@
-import { Box, Button, Stack, TextField, Typography } from "@mui/material";
+import { BackdropProps, Box, Button, Stack, TextField, Typography } from "@mui/material";
 import Link from "next/link";
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineOutlinedIcon from '@mui/icons-material/RemoveCircleOutlineOutlined';
 import { useEffect, useState } from "react";
 import { saveCart } from "@/utils/helper/cart";
 import { useRouter } from "next/router";
+import { formatMoney } from "@/utils";
 
-export const BoxProductSimple = ({ product, menuActive, onChangeQuantity }: { product: any, menuActive: string, onChangeQuantity: any }) => {
-    const [quantity, setQuantity] = useState<number>(1);
-    const [priceTemp, setPriceTemp] = useState<number>(product.price);
+type Props = {
+    product: any,
+    menuActive: string,
+    onChangeQuantity: any,
+};
+
+export const BoxProductSimple = ({ product, menuActive, onChangeQuantity }: Props) => {
+    const [quantity, setQuantity] = useState<number>(0);
+    const [priceTemp, setPriceTemp] = useState<number>(0);
     const [itemProductInRow, setItemProductInRow] = useState<number>(2);
     const router = useRouter();
 
+    const isOption = menuActive == 'option';
+
     const minusQuantity = () => {
-        if (quantity == 1) return;
+        if (quantity == 0) return;
         setQuantity(quantity - 1);
     };
 
@@ -44,7 +53,8 @@ export const BoxProductSimple = ({ product, menuActive, onChangeQuantity }: { pr
                 <Box position="relative" width="100%">
                     <img alt={product.title} src={product.images[0]} style={{ width: '100%' }} />
                 </Box>
-                <Typography component="p" textAlign="center" marginTop={1} fontSize="16px">
+                <i style={{textAlign: 'center', display: 'block'}}>Giá bán: {formatMoney(product.price)}</i>
+                <Typography component="p" textAlign="center" fontSize="16px">
                     {product.title}
                 </Typography>
                 <Typography component="p" textAlign="center" color="#0984e3">
@@ -74,9 +84,9 @@ export const BoxProductSimple = ({ product, menuActive, onChangeQuantity }: { pr
                     <AddCircleOutlineOutlinedIcon sx={{ height: '100%', fill: 'grey', marginLeft: '5px' }} />
                 </Stack>
             </Stack>
-            {menuActive != 'option' && (
+            {!isOption && (
                 <Box sx={{ textAlign: 'center', marginTop: '4px' }}>
-                    <Button variant="contained" color='info' onClick={() => onAddToCart()}>Mua ngay</Button>
+                    <Button variant="contained" color='info' onClick={() => onAddToCart()} disabled={quantity == 0}>Mua ngay</Button>
                 </Box>
             )}
         </Box>

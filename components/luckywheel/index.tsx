@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { CallSupport } from "../ui/CallSupport";
 
 export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
     return (
@@ -9,6 +10,7 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
             <Box textAlign="center" marginTop={5}>
                 Chức năng {'"'}Vòng Quay May Mắn{'"'} đang phát triển!
             </Box>
+            <CallSupport bottom="100px" />
         </Box>
     );
 }

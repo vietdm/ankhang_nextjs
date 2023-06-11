@@ -14,6 +14,7 @@ import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlin
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Color } from "@/libraries/color";
+import { CallSupport } from "../ui/CallSupport";
 
 export const UserComponent = ({ active = false }: { active?: boolean }) => {
   const router = useRouter();
@@ -98,7 +99,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
         </Box>
       </Stack>
 
-      <Box marginTop={2} paddingBottom={5}>
+      <Box marginTop={2}>
         {affilate !== '' && (
           <Box marginY={1}>
             <Typography component="p" textAlign="center" padding={1} marginX={5} onClick={() => copyAffilate(affilate)}>
@@ -179,6 +180,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
           </Stack>
         </Stack>
       </Box>
+      <CallSupport bottom="100px" />
     </Box >
   )
 }
