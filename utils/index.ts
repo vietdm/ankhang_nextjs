@@ -56,3 +56,7 @@ export const formatDate = (dateStr: string) => {
 export const randomNumber = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export const asset = (url: string) => {
+    return 'https://ankhangmilk.com/' + url;
+}

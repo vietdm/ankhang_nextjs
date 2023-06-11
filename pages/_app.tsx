@@ -6,6 +6,7 @@ import { AnimatePresence } from 'framer-motion';
 import Router from "next/router";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/layout/Loading";
+import { asset } from "@/utils";
 
 const theme = createTheme({
   typography: {
@@ -47,20 +48,29 @@ export default function App({ Component, pageProps }: AppProps) {
       <Head>
         <link rel="manifest" href="/manifest.json" />
         <title>An Khang Group</title>
-        <meta name="description" content="Vì chất lượng cuộc sống của cộng đồng" />
+        <meta name="description" content="Vì chất lượng cuộc sống gia đình bạn" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/logo192.png" />
+        <link rel="icon" href={asset("logo192.png")} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="green" />
         <meta name="apple-mobile-web-app-title" content="FreeCodeCamp" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="72x72" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="96x96" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="128x128" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="144x144" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="152x152" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="192x192" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="384x384" />
-        <link rel="apple-touch-icon" href="/logo192.png" sizes="512x512" />
+
+        <meta property="og:title" content="An Khang Group" />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content="Vì chất lượng cuộc sống gia đình bạn" />
+        <meta property="og:site_name" content="AnKhang" />
+        <meta property="og:image" content={asset("logo192.png")} />
+        <meta property="og:image:alt" content="An Khang Group" />
+        <meta property="og:url" content="https://ankhangmilk.com" />
+
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="72x72" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="96x96" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="128x128" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="144x144" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="152x152" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="192x192" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="384x384" />
+        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="512x512" />
       </Head>
       <ThemeProvider theme={theme}>
 
