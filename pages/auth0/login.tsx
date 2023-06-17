@@ -18,7 +18,6 @@ type FormValues = {
 };
 
 const LoginPage = () => {
-
     const router = useRouter();
     const [isRequesting, setIsRequesting] = useState<boolean>(false);
 
@@ -46,7 +45,6 @@ const LoginPage = () => {
                 setIsRequesting(false);
             });
     });
-
 
     return (
         <AuthLayout>

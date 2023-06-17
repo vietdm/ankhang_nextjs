@@ -172,7 +172,7 @@ export const HomeComponent = ({ active = false }: { active?: boolean }) => {
                                         Chức vụ: <b>{userLevel(user.level)}</b>
                                     </Typography>
                                     <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
-                                        Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user.package_joined)}</b>
+                                        Gói tham gia: <b>{UserHelper.getPackageName(user.package_joined)}</b>
                                     </Typography>
                                     <Typography component="h6" sx={{ fontSize: '16px' }} fontWeight="400">
                                         Điểm CASHBACK: <b>{formatMoney(user.cashback_point)}</b>

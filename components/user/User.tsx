@@ -94,7 +94,7 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
             {user?.fullname}
           </Typography>
           <Typography component="h6" textAlign="center" sx={{ fontSize: '16px' }} fontWeight="400">
-            Gói tham gia: <b style={{ textTransform: 'uppercase' }}>{UserHelper.getPackageName(user?.package_joined)}</b>
+            Gói tham gia: <b>{UserHelper.getPackageName(user?.package_joined)}</b>
           </Typography>
         </Box>
       </Stack>
@@ -119,6 +119,12 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
             </Typography>
           </Box>
         )}
+        <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
+          <Stack direction="row">
+            <AccountCircleOutlinedIcon sx={{ fill: "#5eaddb" }} />
+            <Typography component="p" marginLeft={1}>Mã giới thiệu: <b>{ user?.username }</b></Typography>
+          </Stack>
+        </Stack>
         <Link href='/user/edit' passHref>
           <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5} sx={{ borderBottom: '1px solid #3333' }}>
             <Stack direction="row">
