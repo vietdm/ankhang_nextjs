@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 type Props = {
   open: boolean;
+  // eslint-disable-next-line unused-imports/no-unused-vars
   onSubmit: (quantity: number) => void;
   onClose: () => void;
   name: string;
@@ -40,7 +41,7 @@ export const DialogAddToCart = ({ open, onSubmit, onClose, name, price, quantity
 
   return (
     <div>
-      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { paddingBottom: '15px' } }}>
+      <Dialog open={open} onClose={handleClose} PaperProps={{ sx: { paddingBottom: "15px" } }}>
         <DialogTitle textAlign="center">{name}</DialogTitle>
         <DialogContent sx={{ overflowY: "initial" }}>
           <Stack direction="row">
