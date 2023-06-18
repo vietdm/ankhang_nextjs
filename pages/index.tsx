@@ -10,7 +10,6 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-// import StoreOutlinedIcon from '@mui/icons-material/StoreOutlined';
 import { Layout } from "@/components/layout";
 import { useRouter } from "next/router";
 
@@ -23,8 +22,8 @@ const Home = () => {
   const router = useRouter();
 
   const changeTab = (tab: BottomMenu) => {
-    router.push('/?t=' + tab);
-  }
+    router.push("/?t=" + tab);
+  };
 
   useEffect(() => {
     withAuth(() => {
@@ -44,7 +43,7 @@ const Home = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (menuActive == 'mission') {
+    if (menuActive == "mission") {
       setLoadedMission(true);
     }
   }, [menuActive]);
@@ -53,19 +52,19 @@ const Home = () => {
     <Layout>
       <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
         <Box height="calc(100vh - 90px)" overflow="auto" paddingBottom="100px">
-          <StoreComponent active={menuActive == 'store'} />
-          <UserComponent active={menuActive == 'user'} />
-          {loadedMission && <MissionComponent active={menuActive == 'mission'} />}
-          <LuckyWheel active={menuActive == 'gift'} />
-          <HomeComponent active={menuActive == 'main'} />
+          <StoreComponent active={menuActive == "store"} />
+          <UserComponent active={menuActive == "user"} />
+          {loadedMission && <MissionComponent active={menuActive == "mission"} />}
+          <LuckyWheel active={menuActive == "gift"} />
+          <HomeComponent active={menuActive == "main"} />
         </Box>
         <div id="Menu">
           <div className="Menu__list">
             <ul>
-              <li className={'Menu__list--item ' + (menuActive == 'main' ? 'active' : '')}>
+              <li className={"Menu__list--item " + (menuActive == "main" ? "active" : "")}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  changeTab('main');
+                  changeTab("main");
                 }}>
                   <div className="icon">
                     <HomeOutlinedIcon />
@@ -79,10 +78,10 @@ const Home = () => {
                   </Typography>
                 </a>
               </li>
-              <li className={'Menu__list--item ' + (menuActive == 'mission' ? 'active' : '')}>
+              <li className={"Menu__list--item " + (menuActive == "mission" ? "active" : "")}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  changeTab('mission');
+                  changeTab("mission");
                 }}>
                   <div className="icon">
                     <AssignmentTurnedInOutlinedIcon />
@@ -107,10 +106,10 @@ const Home = () => {
                 </a>
               </li>
               <li className='Menu__list--item'></li> */}
-              <li className={'Menu__list--item ' + (menuActive == 'gift' ? 'active' : '')}>
+              <li className={"Menu__list--item " + (menuActive == "gift" ? "active" : "")}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  changeTab('gift');
+                  changeTab("gift");
                 }}>
                   <div className="icon">
                     <CardGiftcardOutlinedIcon />
@@ -124,10 +123,10 @@ const Home = () => {
                   </Typography>
                 </a>
               </li>
-              <li className={'Menu__list--item ' + (menuActive == 'user' ? 'active' : '')}>
+              <li className={"Menu__list--item " + (menuActive == "user" ? "active" : "")}>
                 <a href="" onClick={(e) => {
                   e.preventDefault();
-                  changeTab('user');
+                  changeTab("user");
                 }}>
                   <div className="icon">
                     <PersonOutlineOutlinedIcon />

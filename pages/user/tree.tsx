@@ -121,7 +121,7 @@ const UserTree = () => {
                           overflow: "hidden",
                           borderRadius: "50%",
                           zIndex: 8,
-                          border: "7px solid " + (userTree.total_buy == 0 ? Color.new : Color[userTree.level]),
+                          border: "7px solid " + (userTree.total_buy == 0 ? Color("new") : Color(userTree.level)),
                         }} />
                       ) : (
                         <Box>
@@ -223,7 +223,7 @@ const UserTree = () => {
                             overflow: "hidden",
                             borderRadius: "50%",
                             zIndex: 8,
-                            border: "7px solid " + (tree.total_buy == 0 ? Color.new : Color[tree.level]),
+                            border: "7px solid " + (tree.total_buy == 0 ? Color("new") : Color(tree.level)),
                           }} />
                         ) : (
                           <Box>

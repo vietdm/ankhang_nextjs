@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import Head from "next/head";
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from "framer-motion";
 import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Loading } from "@/components/layout/Loading";
@@ -24,24 +24,24 @@ const theme = createTheme({
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  
+
   const start = () => {
     setLoading(true);
-  }
+  };
 
   const end = () => {
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
-    Router.events.on("routeChangeStart", start)
-    Router.events.on("routeChangeComplete", end)
-    Router.events.on("routeChangeError", end)
+    Router.events.on("routeChangeStart", start);
+    Router.events.on("routeChangeComplete", end);
+    Router.events.on("routeChangeError", end);
     return () => {
-      Router.events.off("routeChangeStart", start)
-      Router.events.off("routeChangeComplete", end)
-      Router.events.off("routeChangeError", end)
-    }
+      Router.events.off("routeChangeStart", start);
+      Router.events.off("routeChangeComplete", end);
+      Router.events.off("routeChangeError", end);
+    };
   }, []);
 
   return (
@@ -62,17 +62,17 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta property="og:site_name" content="AnKhang" />
         <meta property="og:image" content={asset("logo192.png")} />
         <meta property="og:image:alt" content="An Khang Group" />
-        <meta property="og:url" content={'https://ankhangmilk.com' + router.pathname} />
+        <meta property="og:url" content={"https://ankhangmilk.com" + router.pathname} />
 
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="72x72" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="96x96" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="128x128" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="144x144" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="152x152" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="192x192" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="384x384" />
-        <link rel="apple-touch-icon" href={asset('logo192.png')} sizes="512x512" />
-        <link rel="canonical" href={'https://ankhangmilk.com' + router.pathname} />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="72x72" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="96x96" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="128x128" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="144x144" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="152x152" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="192x192" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="384x384" />
+        <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="512x512" />
+        <link rel="canonical" href={"https://ankhangmilk.com" + router.pathname} />
       </Head>
       <ThemeProvider theme={theme}>
 

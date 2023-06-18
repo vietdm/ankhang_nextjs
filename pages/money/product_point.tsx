@@ -6,35 +6,36 @@ import { Alert as AlertDialog } from "@/libraries/alert";
 import { BoxHistoryProductPoint } from "@/components/money/BoxHistoryProductPoint";
 
 const MoneyProductPointHistory = () => {
-    const [histories, setHistories] = useState<any[]>([]);
+  const [histories, setHistories] = useState<any[]>([]);
 
-    useEffect(() => {
-        let urlHistory = '/user/product_point/history';
-        fetch.post(urlHistory).then((result: any) => {
-            setHistories(result.histories);
-        }).catch((error: any) => {
-            setHistories([]);
-            AlertDialog.error(error.message);
-        });
-    }, []);
+  useEffect(() => {
+    let urlHistory = "/user/product_point/history";
+    fetch.post(urlHistory).then((result: any) => {
+      setHistories(result.histories);
+    }).catch((error: any) => {
+      setHistories([]);
+      AlertDialog.error(error.message);
+    });
+  }, []);
 
-    return (
-        <SinglePage title="Lịch sử điểm mua hàng">
-            <Box paddingY='15px'>
-                {histories.map((history: any, index: number) => (
-                    <Box key={index} sx={{
-                        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                        padding: '15px',
-                        borderRadius: '7px',
-                        marginBottom: '15px'
-                    }}>
-                        <BoxHistoryProductPoint history={history} />
-                    </Box>
-                ))}
-                {histories.length == 0 && <Typography textAlign="center" component="p" marginTop={2}>Không có lịch sử</Typography>}
-            </Box>
-        </SinglePage>
-    );
-}
+  return (
+    <SinglePage title="Lịch sử điểm mua hàng">
+      <Box paddingY="15px">
+        {histories.map((history: any, index: number) => (
+          <Box key={index} sx={{
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            padding: "15px",
+            borderRadius: "7px",
+            marginBottom: "15px",
+          }}>
+            <BoxHistoryProductPoint history={history} />
+          </Box>
+        ))}
+        {histories.length == 0 &&
+          <Typography textAlign="center" component="p" marginTop={2}>Không có lịch sử</Typography>}
+      </Box>
+    </SinglePage>
+  );
+};
 
 export default MoneyProductPointHistory;

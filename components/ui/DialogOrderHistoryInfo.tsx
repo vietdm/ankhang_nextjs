@@ -15,7 +15,7 @@ type Props = {
 export const DialogOrderHistoryInfo = ({ open, onClose, history }: Props) => {
   if (!history) return <></>;
   return (
-    <Dialog open={open} onClose={() => onClose()} PaperProps={{ sx: { paddingBottom: '15px' } }}>
+    <Dialog open={open} onClose={() => onClose()} PaperProps={{ sx: { paddingBottom: "15px" } }}>
       <DialogTitle textAlign="center">
         <Typography variant="h5" fontWeight={500}>Chi tiết lịch sử</Typography>
       </DialogTitle>

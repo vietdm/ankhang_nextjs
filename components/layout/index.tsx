@@ -14,16 +14,16 @@ export const Layout = ({ children }: { children: any }) => (
     }}
   >
     <Box sx={{
-      position: 'fixed',
+      position: "fixed",
       top: 0,
       left: 0,
-      width: '100vw',
-      height: '100vh',
+      width: "100vw",
+      height: "100vh",
       zIndex: -1,
-      background: 'url("/imgs/bg_down_page.jpg")',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
+      background: "url(\"/imgs/bg_down_page.jpg\")",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
     }}></Box>
     {children}
   </motion.div>

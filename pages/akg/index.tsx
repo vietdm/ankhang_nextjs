@@ -91,7 +91,7 @@ const AkgPage = () => {
                   overflow: "hidden",
                   borderRadius: "50%",
                   zIndex: 8,
-                  border: "7px solid " + (user.total_buy == 0 ? Color.new : Color[user.level]),
+                  border: "7px solid " + (user.total_buy == 0 ? Color("new") : Color(user.level)),
                 }} />
               ) : (
                 <Box>

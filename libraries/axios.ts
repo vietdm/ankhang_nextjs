@@ -9,7 +9,7 @@ instance.interceptors.request.use(
   async (config) => {
     // Implement function to get token
     const token = {
-      accessToken: Storage.get('_token'),
+      accessToken: Storage.get("_token"),
       refreshToken: "",
     };
 

@@ -11,7 +11,6 @@ body {
 }
 
 body {
-    color: rgb(var(--foreground-rgb));
     font-family: "Mulish", "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
@@ -139,7 +138,7 @@ a {
     width: 100%;
 }
 
-#Menu_tree details>details {
+#Menu_tree details > details {
     margin-left: 20px;
 }
 
@@ -391,7 +390,7 @@ a {
     border-radius: 0 0 4px 4px
 }
 
-@media(max-width:550px) {
+@media (max-width: 550px) {
     .flipdown {
         width: 312px;
         height: 70px

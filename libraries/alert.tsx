@@ -8,7 +8,7 @@ export const Alert = {
       icon: "error",
       confirmButtonText: "Đóng",
     }).then(() => {
-      if (typeof callback == 'function') {
+      if (typeof callback == "function") {
         callback();
       }
     });
