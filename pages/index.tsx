@@ -10,7 +10,6 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AssignmentTurnedInOutlinedIcon from "@mui/icons-material/AssignmentTurnedInOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import { Layout } from "@/components/layout";
 import { useRouter } from "next/router";
 import { DialogQc } from "@/components/home/DialogQc";
 

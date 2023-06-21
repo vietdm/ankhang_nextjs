@@ -3,8 +3,8 @@ import type { AppProps } from "next/app";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import Head from "next/head";
 import { AnimatePresence } from "framer-motion";
-import Router, { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { Loading } from "@/components/layout/Loading";
 import { asset } from "@/utils";
 
@@ -24,25 +24,6 @@ const theme = createTheme({
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-
-  const start = () => {
-    setLoading(true);
-  };
-
-  const end = () => {
-    setLoading(false);
-  };
-
-  // useEffect(() => {
-  //   Router.events.on("routeChangeStart", start);
-  //   Router.events.on("routeChangeComplete", end);
-  //   Router.events.on("routeChangeError", end);
-  //   return () => {
-  //     Router.events.off("routeChangeStart", start);
-  //     Router.events.off("routeChangeComplete", end);
-  //     Router.events.off("routeChangeError", end);
-  //   };
-  // }, []);
 
   return (
     <>
