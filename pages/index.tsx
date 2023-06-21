@@ -12,6 +12,7 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Layout } from "@/components/layout";
 import { useRouter } from "next/router";
+import { DialogQc } from "@/components/home/DialogQc";
 
 type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
 
@@ -144,6 +145,7 @@ const Home = () => {
           </div>
         </div>
       </Box>
+      {menuActive == 'main' && <DialogQc />}
     </Layout>
   );
 };
