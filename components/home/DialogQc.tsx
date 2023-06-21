@@ -5,16 +5,18 @@ import { Storage } from "@/libraries/storage";
 
 export const DialogQc = () => {
     const [showQc, setShowQc] = useState<boolean>(false);
+    const [horizontal, setHorizontal] = useState<boolean>(false);
 
     useEffect(() => {
-        const flagIgnoreQcHome = Storage.get('ignore-qc-home');
-        if (flagIgnoreQcHome !== 'true') {
+        const flagIgnoreQcHomeDate = Storage.get('ignore-qc-home-date');
+        if (flagIgnoreQcHomeDate != (new Date).getDate().toString()) {
             setShowQc(true);
         }
+        setHorizontal(window.innerWidth > window.innerHeight);
     }, []);
 
     const closeForever = () => {
-        Storage.set('ignore-qc-home', 'true');
+        Storage.set('ignore-qc-home-date', (new Date).getDate().toString());
         setShowQc(false);
     }
 
@@ -31,11 +33,11 @@ export const DialogQc = () => {
                 top: 0,
                 left: 0,
                 alignItems: 'center',
-                paddingTop: '80px'
+                justifyContent: 'center'
             }}
         >
-            <Box width="95vw" position="relative">
-                <img src="/imgs/qc/qc1.jpg" alt="" style={{ width: '100%' }} />
+            <Box height={horizontal ? '80vh' : 'auto'} width={horizontal ? 'auto' : '95vw'} position="relative">
+                <img src="/imgs/qc/qc1.jpg" alt="" style={horizontal ? { height: '100%' } : { width: '100%' }} />
                 {/* <Box
                     sx={{
                         position: 'absolute',
@@ -47,8 +49,7 @@ export const DialogQc = () => {
                     <HighlightOffIcon sx={{ fontSize: '40px' }} />
                 </Box> */}
             </Box>
-            <Box>
-                <Button variant="contained" color="secondary" sx={{marginRight: '7px'}} onClick={() => setShowQc(false)}>Đóng</Button>
+            <Box marginTop="10px">
                 <Button variant="contained" color="primary" onClick={closeForever}>Đóng và không hiện lại</Button>
             </Box>
         </Stack>
