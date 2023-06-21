@@ -198,7 +198,7 @@ const AkgPage = () => {
       </Box>
       {histories.map((history: any, index: number) => (
         <Box padding="15px" marginBottom={1} borderRadius="7px" border="5px solid green" key={index}>
-          <Typography component="h5">Đến: {history.to_user.username}</Typography>
+          <Typography component="h5">Đến: {history.to_user?.username}</Typography>
           <Box paddingY={1}>
             <Box boxShadow="0 0 1px 0.5px rgba(0, 0, 0, 0.2)" />
           </Box>

@@ -23,7 +23,7 @@ const Home = () => {
   const router = useRouter();
 
   const changeTab = (tab: BottomMenu) => {
-    router.push("/?t=" + tab);
+    router.push("/?t=" + tab, undefined, { shallow: true });
   };
 
   useEffect(() => {
@@ -50,7 +50,19 @@ const Home = () => {
   }, [menuActive]);
 
   return (
-    <Layout>
+    <Box>
+      <Box sx={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        zIndex: -1,
+        background: "url(\"/imgs/bg_down_page.jpg\")",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}></Box>
       <Box minHeight="100vh" position="relative" sx={{ opacity: ready ? 1 : 0 }}>
         <Box height="calc(100vh - 90px)" overflow="auto" paddingBottom="100px">
           <StoreComponent active={menuActive == "store"} />
@@ -146,7 +158,7 @@ const Home = () => {
         </div>
       </Box>
       {menuActive == 'main' && <DialogQc />}
-    </Layout>
+    </Box>
   );
 };
 
