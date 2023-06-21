@@ -50,7 +50,7 @@ export const DialogQc = () => {
                 </Box> */}
             </Box>
             <Box marginTop="10px">
-                <Button variant="contained" color="primary" onClick={closeForever}>Đóng và không hiện lại</Button>
+                <Button variant="contained" color="primary" onClick={closeForever}>Đóng</Button>
             </Box>
         </Stack>
     );
