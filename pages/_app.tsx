@@ -4,7 +4,7 @@ import { Box, createTheme, ThemeProvider } from "@mui/material";
 import Head from "next/head";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
-import { useState } from "react";
+// import { useState } from "react";
 import { Loading } from "@/components/layout/Loading";
 import { asset } from "@/utils";
 
@@ -22,7 +22,8 @@ const theme = createTheme({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
+  const loading = false;
   const router = useRouter();
 
   return (
