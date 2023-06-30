@@ -44,7 +44,7 @@ const UserRefPage = () => {
                 <Stack direction="row" justifyContent="space-between" paddingY={2} sx={{ borderBottom: "1px solid #3333" }}>
                     <Stack direction="row">
                         <AccountCircleOutlinedIcon sx={{ fill: "#5eaddb" }} />
-                        <Typography component="p" marginLeft={1} onClick={() => copyAffilate(affilate)}>
+                        <Typography component="p" paddingX={1} onClick={() => copyAffilate(affilate)}>
                             Link giới thiệu:
                             <br />
                             <b>{affilate}</b>
@@ -63,7 +63,7 @@ const UserRefPage = () => {
                 <Stack direction="row" justifyContent="space-between" paddingY={2} sx={{ borderBottom: "1px solid #3333" }}>
                 <Stack direction="row">
                     <AccountCircleOutlinedIcon sx={{ fill: "#5eaddb" }} />
-                    <Typography component="p" marginLeft={1} onClick={() => copyAffilate(affilate)}>
+                    <Typography component="p" paddingX={1}>
                         QrCode giới thiệu:
                         <br />
                         <img src={qrCode} style={{ width: '200px' }} alt="Hi" />
