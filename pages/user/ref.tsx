@@ -66,7 +66,7 @@ const UserRefPage = () => {
                     <Typography component="p" marginLeft={1} onClick={() => copyAffilate(affilate)}>
                         QrCode giới thiệu:
                         <br />
-                        <img src={qrCode} style={{ width: '200px' }} />
+                        <img src={qrCode} style={{ width: '200px' }} alt="Hi" />
                     </Typography>
                 </Stack>
             </Stack>
