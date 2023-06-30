@@ -8,6 +8,8 @@ import { formatMoney } from "@/utils";
 import { saveCarts } from "@/utils/helper/cart";
 import { useRouter } from "next/router";
 import { CartItem } from "@/interfaces/product";
+import { useUser } from "@/hooks/useUser";
+import { Alert } from "@/libraries/alert";
 
 const StorePage = () => {
   const [products, setProducts] = useState<any>([]);
@@ -16,6 +18,7 @@ const StorePage = () => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [carts, setCarts] = useState<any>({});
   const router = useRouter();
+  const { user } = useUser();
 
   const filterProduct = () => {
     const productActive = products.filter((product: any) => {
@@ -32,6 +35,15 @@ const StorePage = () => {
   };
 
   const selectBuyOptions = () => {
+    if (!user) {
+      Alert.error("Cần đăng nhập mới có thể mua hàng!");
+      return;
+    }
+    if (!user.fullname || !user.email) {
+      Alert.error("Bạn cần cập nhật đầy đủ họ tên và email mới có thể mua hàng!");
+      setTimeout(() => router.push("/user/edit"), 500);
+      return;
+    }
     const newCart: CartItem[] = [];
     Object.keys(carts).map((id: any) => {
       newCart.push({ quantity: carts[id], id });
