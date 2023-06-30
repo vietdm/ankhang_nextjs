@@ -98,32 +98,16 @@ export const UserComponent = ({ active = false }: { active?: boolean }) => {
       </Stack>
 
       <Box marginTop={2}>
-        {affilate !== "" && (
-          <Box marginY={1}>
-            <Typography component="p" textAlign="center" padding={1} marginX={5} onClick={() => copyAffilate(affilate)}>
-              Link giới thiệu:
-              <br />
-              <span>{affilate}</span>
-              <br />
-              {affilate != "" && (
-                <Typography
-                  component="span"
-                  color={copied ? "#27ae60" : "#1976d2"}
-                  fontWeight="700"
-                >
-                  [{copied ? "Đã sao chép" : "Sao chép"}]
-                </Typography>
-              )}
-            </Typography>
-          </Box>
-        )}
-        <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5}
-               sx={{ borderBottom: "1px solid #3333" }}>
-          <Stack direction="row">
-            <AccountCircleOutlinedIcon sx={{ fill: "#5eaddb" }} />
-            <Typography component="p" marginLeft={1}>Mã giới thiệu: <b>{user?.username}</b></Typography>
+        <Link href="/user/ref" passHref>
+          <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5}
+                 sx={{ borderBottom: "1px solid #3333" }}>
+            <Stack direction="row">
+              <AccountCircleOutlinedIcon sx={{ fill: "#5eaddb" }} />
+              <Typography component="p" marginLeft={1}>Giới thiệu người dùng</Typography>
+            </Stack>
+            <ArrowCircleRightOutlinedIcon />
           </Stack>
-        </Stack>
+        </Link>
         <Link href="/user/edit" passHref>
           <Stack direction="row" justifyContent="space-between" paddingY={2} marginX={5}
                  sx={{ borderBottom: "1px solid #3333" }}>
