@@ -4,7 +4,6 @@ import { UserHelper } from "@/utils/helper/UserHelper";
 import { Box, Typography, Stack } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
 import ArrowCircleRightOutlinedIcon from "@mui/icons-material/ArrowCircleRightOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
@@ -19,28 +18,11 @@ import { CallSupport } from "../ui/CallSupport";
 export const UserComponent = ({ active = false }: { active?: boolean }) => {
   const router = useRouter();
   const { user } = useUser();
-  const [copied, setCopied] = useState<boolean>(false);
 
   const Logout = () => {
     Storage.delete("_token");
     router.push("/auth0");
   };
-
-  const copyAffilate = (value: string) => {
-    const tempInput = document.createElement("input");
-    tempInput.value = value;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const affilate = useMemo(() => {
-    if (!user || !user?.username) return "";
-    return window.location.origin + "/r/" + user.username.toLowerCase();
-  }, [user]);
 
   return (
     <Box display={active ? "block" : "none"}>
