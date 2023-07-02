@@ -44,6 +44,8 @@ const CartPage = () => {
   const [requesting, setRequesting] = useState<boolean>(false);
   const [pointSelect, setPointSelect] = useState<string>("");
   const [conditionSelectPoint, setConditionSelectPoint] = useState<any>(null);
+  const [deliveryAddressType, setDeliveryAddressType] = useState<string>("home");
+  const [deliveryAddress, setDeliveryAddress] = useState<string>("");
 
   let intervalTimeCountdown: any = null;
 
@@ -193,6 +195,8 @@ const CartPage = () => {
     formData.append("name", user.fullname);
     formData.append("phone", user.phone);
     formData.append("address", address);
+    formData.append("delivery_address_type", deliveryAddressType);
+    formData.append("delivery_address", deliveryAddress);
     formData.append("note", note);
     formData.append("total_price_pay", String(moneyPays));
 
@@ -226,6 +230,8 @@ const CartPage = () => {
     formData.append("name", user.fullname);
     formData.append("phone", user.phone);
     formData.append("address", address);
+    formData.append("delivery_address_type", deliveryAddressType);
+    formData.append("delivery_address", deliveryAddress);
     formData.append("note", note);
 
     fetch({
@@ -361,15 +367,44 @@ const CartPage = () => {
       </Box>
       <Box mb={1}>
         <Typography component="p" fontSize="18px">Địa chỉ nhận hàng:</Typography>
-        <TextField
-          variant="outlined"
-          size="small"
-          value={address}
-          sx={{ width: "100%" }}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setAddress(event.target.value);
-          }}
-        />
+        <Box>
+          <RadioGroup
+            row
+            value={deliveryAddressType}
+            name="delivery_address_type"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setDeliveryAddressType(event.target.value);
+            }}
+          >
+            <FormControlLabel value="home" control={<Radio />} label="Tại nhà" />
+            <FormControlLabel value="branch" control={<Radio />} label="Tại chi nhánh" />
+          </RadioGroup>
+        </Box>
+        {deliveryAddressType == 'home' && (
+          <TextField
+            variant="outlined"
+            size="small"
+            value={address}
+            sx={{ width: "100%" }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setAddress(event.target.value);
+            }}
+          />
+        )}
+        {deliveryAddressType == 'branch' && (
+          <Box mt={1}>
+            <RadioGroup
+              value={deliveryAddress}
+              name="delivery_address"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setDeliveryAddress(event.target.value);
+              }}
+            >
+              <FormControlLabel value="hd" sx={{ mb: 1 }} control={<Radio />} label="Hải Dương: Số 199 Lương Thế Vinh, TP Hải Dương" />
+              <FormControlLabel value="hn" control={<Radio />} label="Hà Nội: 33 Mạc Thái Tổ, Yên Hoà, Cầu Giấy, Hà Nội" />
+            </RadioGroup>
+          </Box>
+        )}
       </Box>
       <Box mb={1}>
         <Typography component="p" fontSize="18px">Ghi chú:</Typography>
@@ -409,7 +444,7 @@ const CartPage = () => {
 
       {/* Dialog */}
       <Dialog open={modalOpen == "bank"} sx={{ ".MuiDialog-container": { alignItems: "flex-start" } }}
-              PaperProps={{ sx: { margin: 1 } }}>
+        PaperProps={{ sx: { margin: 1 } }}>
         <DialogContent sx={{ padding: "20px 6px" }}>
           <Box textAlign="center">
             <Typography component="h4">Quý khách vui lòng quét mã và thanh toán trong vòng 10 phút.</Typography>
@@ -425,14 +460,14 @@ const CartPage = () => {
         </DialogContent>
         <DialogActions>
           <Button variant="contained" color="secondary" disabled={requesting}
-                  onClick={() => setModalOpen("")}>Hủy</Button>
+            onClick={() => setModalOpen("")}>Hủy</Button>
           <Button variant="contained" color="primary" disabled={requesting} onClick={() => setModalOpen("upload")}>Xác
             nhận thanh toán</Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={modalOpen == "upload"} sx={{ ".MuiDialog-container": { alignItems: "flex-start" } }}
-              PaperProps={{ sx: { margin: 1 } }}>
+        PaperProps={{ sx: { margin: 1 } }}>
         <DialogContent>
           <Typography component="b" fontSize="22px" fontWeight="700" textAlign="center">Tải lên hình ảnh thanh
             toán</Typography>
@@ -468,14 +503,14 @@ const CartPage = () => {
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button variant="contained" color="secondary" disabled={requesting}
-                  onClick={() => setModalOpen("")}>Hủy</Button>
+            onClick={() => setModalOpen("")}>Hủy</Button>
           <Button variant="contained" color="primary" disabled={requesting} onClick={() => submitOrder()}>Đặt
             hàng</Button>
         </DialogActions>
       </Dialog>
 
       <Dialog open={modalOpen == "point"} sx={{ ".MuiDialog-container": { alignItems: "flex-start" } }}
-              PaperProps={{ sx: { margin: 1, width: "100%" } }}>
+        PaperProps={{ sx: { margin: 1, width: "100%" } }}>
         <DialogContent>
           <Typography component="div" fontSize="22px" fontWeight="700" textAlign="center">Thanh toán bằng
             điểm</Typography>
