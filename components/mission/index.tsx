@@ -14,6 +14,8 @@ import axios from "axios";
 import { Loading } from "../layout/Loading";
 import { CallSupport } from "../ui/CallSupport";
 
+const timeCallApiMissionUpdate = 10; //giây
+
 export const MissionComponent = ({ active = false }: { active?: boolean }) => {
   const [swiper, setSwiper] = useState<any>(null);
   const [limit, setLimit] = useState<number>(0);
@@ -53,6 +55,12 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
       }
       setListVideoMission(listMission);
     });
+
+    setOpts({
+      ...opts,
+      width: String(window.innerWidth),
+      height: String(window.innerWidth * 0.609375),
+    });
   }, []);
 
   const onReady = (event: any) => {
@@ -60,17 +68,22 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     event.target.pauseVideo();
   };
 
+  const callApiMissionUpdate = () => {
+    fetch.post("/mission/update", { mission_list_id: missionId }).then((result: any) => {
+      Alert.success(result.message);
+      setLimit(result.limit);
+      setCalledMission(true);
+    }).catch((error) => {
+      Alert.success(error.message);
+      setCalledMission(true);
+    });
+  }
+
   const onStateChange = (event: any) => {
     const playerState = event.target.getPlayerState();
 
     if (playerState === YouTube.PlayerState.ENDED && !calledMission) {
-      fetch.post("/mission/update", { mission_list_id: missionId }).then((result: any) => {
-        Alert.success(result.message);
-        setLimit(result.limit);
-        setCalledMission(true);
-      }).catch(() => {
-        setCalledMission(true);
-      });
+      callApiMissionUpdate();
     }
   };
 
@@ -90,12 +103,19 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
   };
 
   useEffect(() => {
-    setOpts({
-      ...opts,
-      width: String(window.innerWidth),
-      height: String(window.innerWidth * 0.609375),
-    });
-  }, []);
+    const intervalListenPlayVideo = setInterval(() => {
+      if (!player) return;
+      if (player.getPlayerState() != YouTube.PlayerState.PLAYING) return;
+      const currentTime = Math.floor(player.getCurrentTime());
+      if (currentTime < timeCallApiMissionUpdate) return;
+      if (calledMission) return;
+      callApiMissionUpdate();
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalListenPlayVideo);
+    }
+  }, [player, calledMission]);
 
   useEffect(() => {
     try {
