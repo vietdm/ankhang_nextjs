@@ -134,7 +134,7 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
     const videoId = Object.keys(listVideoMission)[indexMissionActive];
     setVideoMission(videoId);
     setMissionId(listVideoMission[videoId].id);
-    setTimeout(() => slideTo(indexMissionActive), 10);
+    setTimeout(() => slideTo(indexMissionActive), 500);
   }, [listVideoMission]);
 
   return (
