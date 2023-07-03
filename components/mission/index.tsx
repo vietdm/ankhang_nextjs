@@ -14,7 +14,7 @@ import axios from "axios";
 import { Loading } from "../layout/Loading";
 import { CallSupport } from "../ui/CallSupport";
 
-const timeCallApiMissionUpdate = 10; //giây
+const timeCallApiMissionUpdate = 90; //giây
 
 export const MissionComponent = ({ active = false }: { active?: boolean }) => {
   const [swiper, setSwiper] = useState<any>(null);
@@ -74,7 +74,7 @@ export const MissionComponent = ({ active = false }: { active?: boolean }) => {
       setLimit(result.limit);
       setCalledMission(true);
     }).catch((error) => {
-      Alert.success(error.message);
+      Alert.error(error.message);
       setCalledMission(true);
     });
   }
