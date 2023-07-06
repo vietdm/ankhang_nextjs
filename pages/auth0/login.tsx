@@ -54,7 +54,7 @@ const LoginPage = () => {
             <PhoneAndroidOutlinedIcon sx={{ width: "60px", color: "grey" }} />
             <TextField
               id="phone"
-              label="Username hoặc Số điện thoại"
+              label="Tên đăng nhập hoặc Số điện thoại"
               variant="standard"
               sx={{ width: "calc(100% - 60px)" }}
               autoComplete="off"

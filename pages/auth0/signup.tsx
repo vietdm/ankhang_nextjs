@@ -86,7 +86,7 @@ const SignupPage = () => {
             <Person2OutlinedIcon sx={{ width: "60px", color: "grey" }} />
             <TextField
               id="username"
-              label="Username"
+              label="Tên đăng nhập"
               variant="standard"
               sx={{ width: "calc(100% - 60px)" }}
               type="text"
