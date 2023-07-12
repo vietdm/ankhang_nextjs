@@ -1,5 +1,4 @@
 import { Box, Button, Stack } from "@mui/material";
-// import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useEffect, useState } from "react";
 import { Storage } from "@/libraries/storage";
 
@@ -8,7 +7,7 @@ export const DialogQc = () => {
     const [horizontal, setHorizontal] = useState<boolean>(false);
 
     useEffect(() => {
-        const flagIgnoreQcHomeDate = Storage.get('ignore-qc-home-date');
+        const flagIgnoreQcHomeDate = Storage.get('ignore-qc-lucky-date');
         if (flagIgnoreQcHomeDate != (new Date).getDate().toString()) {
             setShowQc(true);
         }
@@ -16,7 +15,7 @@ export const DialogQc = () => {
     }, []);
 
     const closeForever = () => {
-        Storage.set('ignore-qc-home-date', (new Date).getDate().toString());
+        Storage.set('ignore-qc-lucky-date', (new Date).getDate().toString());
         setShowQc(false);
     }
 
@@ -37,17 +36,7 @@ export const DialogQc = () => {
             }}
         >
             <Box height={horizontal ? '80vh' : 'auto'} width={horizontal ? 'auto' : '95vw'} position="relative">
-                <img src="/imgs/qc/qc1.jpg" alt="" style={horizontal ? { height: '100%' } : { width: '100%' }} />
-                {/* <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        color: '#3355bd'
-                    }}
-                >
-                    <HighlightOffIcon sx={{ fontSize: '40px' }} />
-                </Box> */}
+                <img src="/imgs/qc/qc2.jpg" alt="" style={horizontal ? { height: '100%' } : { width: '100%' }} />
             </Box>
             <Box marginTop="10px">
                 <Button variant="contained" color="primary" onClick={closeForever}>Đóng</Button>
