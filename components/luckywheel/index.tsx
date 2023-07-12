@@ -14,10 +14,10 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
   return (
     <Box display={active ? "block" : "none"}>
       <Box sx={{ fontSize: '18px', padding: '15px' }}>
-        📢🔥 <b>"Thịnh vượng cùng An Khang"</b> - Chương trình khuyến mãi lớn đang đổ bộ!
+        📢🔥 <b>&quot;Thịnh vượng cùng An Khang&quot;</b> - Chương trình khuyến mãi lớn đang đổ bộ!
         <br />
         <br />
-        🌟🎉 Bạn đã sẵn sàng cho sự kiện thịnh vượng lớn? Hãy cùng <b>An Khang</b> trải nghiệm cảm giác <b>"Mua là có - Quay là trúng"</b>!
+        🌟🎉 Bạn đã sẵn sàng cho sự kiện thịnh vượng lớn? Hãy cùng <b>An Khang</b> trải nghiệm cảm giác <b>&quot;Mua là có - Quay là trúng&quot;</b>!
         <br />
         <br />
         🎁🎉 Chương trình khuyến mãi đặc biệt này dành cho tất cả khách hàng, bất kể bạn muốn mua bất cứ sản phẩm nào từ <b>An Khang</b>. Chỉ cần đặt hàng từ 1 sản phẩm trở lên, bạn sẽ có cơ hội tham gia quay trúng thưởng và nhận ngay những phần quà vô cùng hấp dẫn!
@@ -32,7 +32,7 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
         ⏰🎉 Thời gian áp dụng của chương trình kéo dài từ ngày 12/7 đến 31/7. Đừng để lỡ cơ hội hiếm có này!
         <br />
         <br />
-        🎉🎁 Hãy tham gia ngay <b>"Thịnh Vượng Cùng An Khang"</b> và cùng chúng tôi chinh phục những phần quà hấp dẫn!
+        🎉🎁 Hãy tham gia ngay <b>&quot;Thịnh Vượng Cùng An Khang&quot;</b> và cùng chúng tôi chinh phục những phần quà hấp dẫn!
         <br />
         <br />
         <Box sx={{ wordBreak: 'break-word' }}>
