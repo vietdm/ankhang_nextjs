@@ -1,6 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { CallSupport } from "../ui/CallSupport";
-import { DialogQc } from "../home/DialogQc";
 import { DialogBeforeSpin } from "./DialogBeforeSpin";
 import { useState } from "react";
 import { Alert } from "@/libraries/alert";
@@ -56,7 +55,6 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
         <Button variant="contained" onClick={() => setOpenModalBeforeSpin(true)}>Vào vòng quay may mắn</Button>
       </Box>
       <DialogBeforeSpin open={openModalBeforeSpin} handleClose={() => setOpenModalBeforeSpin(false)} handleSuccess={handleSuccess} />
-      <DialogQc />
       <CallSupport bottom="100px" />
     </Box>
   );
