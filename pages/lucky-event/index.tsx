@@ -31,13 +31,13 @@ const propItems = [
         backgroundColor: '#fd79a8'
     },
     {
-        label: 'Sức khỏe',
+        label: 'Vé sức khỏe',
         alias: 'SK',
         fullname: 'Vé sức khỏe',
         backgroundColor: '#f3a683'
     },
     {
-        label: 'Tri thức',
+        label: 'Vé tri thức',
         alias: 'TT',
         fullname: 'Hộp tri thức',
         backgroundColor: '#778beb'
@@ -49,7 +49,7 @@ const propItems = [
         backgroundColor: '#63cdda'
     },
     {
-        label: `Bí mật`,
+        label: `Hộp bí mật`,
         alias: 'BM',
         fullname: 'Hộp bí mật',
         backgroundColor: '#f8a5c2'
