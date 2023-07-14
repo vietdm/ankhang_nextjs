@@ -1,11 +1,35 @@
 import { SinglePage } from "@/components/ui/SinglePage";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Wheel } from '../../public/assets/js/spin-wheel-esm';
 import { Box, Button, Typography } from "@mui/material";
 import { fetch } from "@/libraries/axios";
 import { Alert } from "@/libraries/alert";
 
 const propItems = [
+    {
+        label: '10 AKG',
+        alias: '10AKG',
+        fullname: '10 AKG',
+        backgroundColor: '#a29bfe'
+    },
+    {
+        label: 'Điểm thưởng video',
+        alias: 'VD',
+        fullname: 'Điểm thưởng video',
+        backgroundColor: '#00cec9'
+    },
+    {
+        label: 'Thẻ điện thoại',
+        alias: 'TDT',
+        fullname: 'Thẻ điện thoại',
+        backgroundColor: '#55efc4'
+    },
+    {
+        label: '1 sản phẩm sữa',
+        alias: 'SPS',
+        fullname: '1 sản phẩm sữa',
+        backgroundColor: '#fd79a8'
+    },
     {
         label: 'Sức khỏe',
         alias: 'SK',
