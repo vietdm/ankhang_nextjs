@@ -1,8 +1,21 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { CallSupport } from "../ui/CallSupport";
 import { DialogQc } from "../home/DialogQc";
+import { DialogBeforeSpin } from "./DialogBeforeSpin";
+import { useState } from "react";
+import { Alert } from "@/libraries/alert";
+import { useRouter } from "next/router";
 
 export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
+  const [openModalBeforeSpin, setOpenModalBeforeSpin] = useState<boolean>(false);
+  const router = useRouter();
+
+  const handleSuccess = () => {
+    Alert.confirm('Phần quà từ vòng quay may mắn chỉ được trao tới bạn khi và chỉ khi chúng tôi có kết quả khảo sát từ quý khách hàng!', () => {
+      router.push('/lucky-event');
+    });
+  }
+
   const HasTag = (hasTag: string) => {
     return (
       <>
@@ -13,7 +26,7 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
 
   return (
     <Box display={active ? "block" : "none"}>
-      <Box sx={{ fontSize: '18px', padding: '15px', paddingTop: 5 }}>
+      <Box sx={{ fontSize: '18px', padding: '15px', paddingTop: 3 }}>
         📢🔥 <b>&quot;Thịnh vượng cùng An Khang&quot;</b> - Chương trình khuyến mãi lớn đang đổ bộ!
         <br />
         <br />
@@ -39,9 +52,10 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
           {HasTag("#HấpDẫn")}
         </Stack>
       </Box>
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <Button variant="contained">Vào vòng quay may mắn</Button>
+      <Box sx={{ textAlign: 'center' }}>
+        <Button variant="contained" onClick={() => setOpenModalBeforeSpin(true)}>Vào vòng quay may mắn</Button>
       </Box>
+      <DialogBeforeSpin open={openModalBeforeSpin} handleClose={() => setOpenModalBeforeSpin(false)} handleSuccess={handleSuccess} />
       <DialogQc />
       <CallSupport bottom="100px" />
     </Box>
