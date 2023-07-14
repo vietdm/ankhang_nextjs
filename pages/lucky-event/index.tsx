@@ -37,7 +37,7 @@ const propItems = [
         backgroundColor: '#f3a683'
     },
     {
-        label: 'Vé tri thức',
+        label: 'Hộp tri thức',
         alias: 'TT',
         fullname: 'Hộp tri thức',
         backgroundColor: '#778beb'
