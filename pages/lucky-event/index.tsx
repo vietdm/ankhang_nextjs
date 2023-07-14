@@ -13,19 +13,19 @@ const propItems = [
         backgroundColor: '#a29bfe'
     },
     {
-        label: 'Điểm thưởng video',
+        label: 'Điểm video',
         alias: 'VD',
         fullname: 'Điểm thưởng video',
         backgroundColor: '#00cec9'
     },
     {
-        label: 'Thẻ điện thoại',
+        label: 'Thẻ cào',
         alias: 'TDT',
         fullname: 'Thẻ điện thoại',
         backgroundColor: '#55efc4'
     },
     {
-        label: '1 sản phẩm sữa',
+        label: '1 SP sữa',
         alias: 'SPS',
         fullname: '1 sản phẩm sữa',
         backgroundColor: '#fd79a8'
@@ -102,7 +102,7 @@ const LuckyEventPage = () => {
         itemLabelFont: 'Mulish',
         itemLabelFontSizeMax: 46,
         lineColor: '#353b48',
-        lineWidth: 1,
+        lineWidth: 0,
         rotationSpeedMax: 1000,
         onRest: onWheelDone
     }
@@ -140,16 +140,7 @@ const LuckyEventPage = () => {
                 <Typography component="h6" fontWeight={700}>Ghi chú:</Typography>
                 <ul style={{ paddingLeft: '32px' }}>
                     <li>
-                        <Typography component="p">Sức khỏe: Vé sức khỏe</Typography>
-                    </li>
-                    <li>
-                        <Typography component="p">Tri thức: Hộp tri thức</Typography>
-                    </li>
-                    <li>
                         <Typography component="p">Good luck: Chúc may mắn lần sau</Typography>
-                    </li>
-                    <li>
-                        <Typography component="p">Bí mật: Hộp bí mật</Typography>
                     </li>
                 </ul>
             </Box>
