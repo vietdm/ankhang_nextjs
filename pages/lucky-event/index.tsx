@@ -7,9 +7,9 @@ import { Alert } from "@/libraries/alert";
 
 const propItems = [
     {
-        label: '10 AKG',
+        label: 'AKG',
         alias: '10AKG',
-        fullname: '10 AKG',
+        fullname: 'AKG',
         backgroundColor: '#a29bfe'
     },
     {
