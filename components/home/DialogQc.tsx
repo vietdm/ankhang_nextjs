@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { Storage } from "@/libraries/storage";
 
 export const DialogQc = () => {
-    const [showQc, setShowQc] = useState<boolean>(false);
+    const [showQc, setShowQc] = useState<boolean>(true);
     const [horizontal, setHorizontal] = useState<boolean>(false);
 
     useEffect(() => {
-        const flagIgnoreQcHomeDate = Storage.get('ignore-qc-lucky-date');
-        if (flagIgnoreQcHomeDate != (new Date).getDate().toString()) {
-            setShowQc(true);
-        }
+        // const flagIgnoreQcHomeDate = Storage.get('ignore-qc-lucky-date');
+        // if (flagIgnoreQcHomeDate != (new Date).getDate().toString()) {
+        //     setShowQc(true);
+        // }
         setHorizontal(window.innerWidth > window.innerHeight);
     }, []);
 
