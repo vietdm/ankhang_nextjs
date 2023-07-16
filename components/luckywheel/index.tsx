@@ -32,7 +32,7 @@ export const LuckyWheel = ({ active = false }: { active?: boolean }) => {
         🌟🎉 Bạn đã sẵn sàng cho sự kiện thịnh vượng lớn? Hãy cùng An Khang trải nghiệm cảm giác <b>&quot;Mua là có - Quay là trúng&quot;</b>!
         <br />
         <br />
-        📢🎁 Chương trình khuyến mãi đặc biệt này dành cho tất cả khách hàng, bất kể bạn muốn mua bất cứ sản phẩm nào từ <b>An Khang</b>. Chỉ cần đặt hàng từ 1 sản phẩm trở lên, bạn sẽ có cơ hội tham gia quay trúng thưởng và nhận ngay những phần quà vô cùng hấp dẫn!
+        📢🎁 Chương trình khuyến mãi đặc biệt này dành cho tất cả khách hàng, bất kể bạn muốn mua bất cứ sản phẩm nào từ <b>An Khang</b>. Chỉ cần đặt hàng <b>từ 1 sản phẩm trở lên</b>, bạn sẽ có cơ hội tham gia quay trúng thưởng và nhận ngay những phần quà vô cùng hấp dẫn!
         <br />
         <br />
         ⏰🎉 Thời gian áp dụng của chương trình kéo dài từ ngày <b>14/7</b> đến <b>31/7</b>. Đừng để lỡ cơ hội hiếm có này!
