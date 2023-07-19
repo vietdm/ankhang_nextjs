@@ -30,11 +30,12 @@ const Home = () => {
   };
 
   const initNotificationGift = () => {
-    if (window.start_init !== 1) return;
     window.start_init += 1;
-    fetch.get('/random-lucky-event').then((result: any) => {
-      setCountGift(result.count);
-    });
+    if (window.start_init === 1) {
+      fetch.get('/random-lucky-event').then((result: any) => {
+        setCountGift(result.count);
+      });
+    }
   }
 
   useEffect(() => {
@@ -172,7 +173,7 @@ const Home = () => {
       {menuActive === 'main' && ready && (
         <DialogQc
           cbAfterClose={() => {
-            if (countGift > 0) {
+            if (countGift > 0 && window.start_init === 1) {
               setShowModalNotifGift(true);
             }
           }}
