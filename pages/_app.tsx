@@ -55,6 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="384x384" />
         <link rel="apple-touch-icon" href={asset("logo192.png")} sizes="512x512" />
         <link rel="canonical" href={"https://ankhangmilk.com" + router.pathname} />
+        <script>window.start_init=1</script>
       </Head>
       <ThemeProvider theme={theme}>
 

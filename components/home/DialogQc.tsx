@@ -1,8 +1,12 @@
 import { Box, Button, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Storage } from "@/libraries/storage";
+// import { Storage } from "@/libraries/storage";
 
-export const DialogQc = () => {
+type Props = {
+    cbAfterClose?: () => void;
+}
+
+export const DialogQc = ({ cbAfterClose }: Props) => {
     const [showQc, setShowQc] = useState<boolean>(true);
     const [horizontal, setHorizontal] = useState<boolean>(false);
 
@@ -15,8 +19,11 @@ export const DialogQc = () => {
     }, []);
 
     const closeForever = () => {
-        Storage.set('ignore-qc-lucky-date', (new Date).getDate().toString());
+        // Storage.set('ignore-qc-lucky-date', (new Date).getDate().toString());
         setShowQc(false);
+        if (typeof cbAfterClose == 'function') {
+            cbAfterClose();
+        }
     }
 
     if (!showQc) return <></>;

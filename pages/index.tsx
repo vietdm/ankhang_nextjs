@@ -12,6 +12,8 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { useRouter } from "next/router";
 import { DialogQc } from "@/components/home/DialogQc";
+import { fetch } from "@/libraries/axios";
+import { DialogNotifGift } from "@/components/luckywheel/DialogNotifGift";
 
 type BottomMenu = "store" | "mission" | "main" | "gift" | "user";
 
@@ -19,15 +21,26 @@ const Home = () => {
   const [menuActive, setMenuActive] = useState<BottomMenu>("main");
   const [ready, setReady] = useState<boolean>(false);
   const [loadedMission, setLoadedMission] = useState<boolean>(false);
+  const [countGift, setCountGift] = useState<number>(0);
+  const [showModalNotifGift, setShowModalNotifGift] = useState<boolean>(false);
   const router = useRouter();
 
   const changeTab = (tab: BottomMenu) => {
     router.push("/?t=" + tab, undefined, { shallow: true });
   };
 
+  const initNotificationGift = () => {
+    if (window.start_init !== 1) return;
+    window.start_init += 1;
+    fetch.get('/random-lucky-event').then((result: any) => {
+      setCountGift(result.count);
+    });
+  }
+
   useEffect(() => {
     withAuth(() => {
       setReady(true);
+      initNotificationGift();
     });
   }, []);
 
@@ -156,7 +169,23 @@ const Home = () => {
           </div>
         </div>
       </Box>
-      {menuActive === 'main' && <DialogQc />}
+      {menuActive === 'main' && ready && (
+        <DialogQc
+          cbAfterClose={() => {
+            if (countGift > 0) {
+              setShowModalNotifGift(true);
+            }
+          }}
+        />
+      )}
+      <DialogNotifGift
+        open={showModalNotifGift}
+        handleClose={() => setShowModalNotifGift(false)}
+        handleSuccess={() => {
+          setShowModalNotifGift(false);
+          changeTab("gift");
+        }}
+      />
     </Box>
   );
 };
