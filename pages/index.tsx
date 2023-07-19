@@ -41,11 +41,11 @@ const Home = () => {
   useEffect(() => {
     withAuth(() => {
       setReady(true);
-      initNotificationGift();
     });
   }, []);
 
   useEffect(() => {
+    initNotificationGift();
     if (!router.query?.t) {
       return;
     }
