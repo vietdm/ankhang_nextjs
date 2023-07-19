@@ -180,6 +180,7 @@ const Home = () => {
       )}
       <DialogNotifGift
         open={showModalNotifGift}
+        countGift={countGift}
         handleClose={() => setShowModalNotifGift(false)}
         handleSuccess={() => {
           setShowModalNotifGift(false);
