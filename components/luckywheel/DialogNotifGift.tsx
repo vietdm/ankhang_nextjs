@@ -1,6 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, Stack, Typography } from "@mui/material";
-import CallMadeOutlinedIcon from '@mui/icons-material/CallMadeOutlined';
-import { HrTag } from "../ui/HrTag";
+import { Button, Dialog, DialogActions, DialogContent, Typography } from "@mui/material";
 
 type Props = {
     handleClose?: any,
