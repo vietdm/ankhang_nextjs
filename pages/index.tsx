@@ -45,7 +45,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    initNotificationGift();
     if (!router.query?.t) {
       return;
     }
@@ -53,6 +52,7 @@ const Home = () => {
     if (!["store", "mission", "main", "gift", "user"].includes(tab)) {
       return;
     }
+    initNotificationGift();
     setMenuActive(tab as BottomMenu);
   }, [router.query]);
 
