@@ -23,24 +23,19 @@ const Home = () => {
   const [loadedMission, setLoadedMission] = useState<boolean>(false);
   const [countGift, setCountGift] = useState<number>(0);
   const [showModalNotifGift, setShowModalNotifGift] = useState<boolean>(false);
+  const [showedModalNotifGift, setShowedModalNotifGift] = useState<boolean>(false);
   const router = useRouter();
 
   const changeTab = (tab: BottomMenu) => {
     router.push("/?t=" + tab, undefined, { shallow: true });
   };
 
-  const initNotificationGift = () => {
-    window.start_init += 1;
-    if (window.start_init === 1) {
-      fetch.get('/random-lucky-event').then((result: any) => {
-        setCountGift(result.count);
-      });
-    }
-  }
-
   useEffect(() => {
     withAuth(() => {
       setReady(true);
+      fetch.get('/random-lucky-event').then((result: any) => {
+        setCountGift(result.count);
+      });
     });
   }, []);
 
@@ -52,7 +47,6 @@ const Home = () => {
     if (!["store", "mission", "main", "gift", "user"].includes(tab)) {
       return;
     }
-    initNotificationGift();
     setMenuActive(tab as BottomMenu);
   }, [router.query]);
 
@@ -173,7 +167,7 @@ const Home = () => {
       {menuActive === 'main' && ready && (
         <DialogQc
           cbAfterClose={() => {
-            if (countGift > 0 && window.start_init === 1) {
+            if (countGift > 0 && !showedModalNotifGift) {
               setShowModalNotifGift(true);
             }
           }}
@@ -182,9 +176,13 @@ const Home = () => {
       <DialogNotifGift
         open={showModalNotifGift}
         countGift={countGift}
-        handleClose={() => setShowModalNotifGift(false)}
+        handleClose={() => {
+          setShowModalNotifGift(false);
+          setShowedModalNotifGift(true);
+        }}
         handleSuccess={() => {
           setShowModalNotifGift(false);
+          setShowedModalNotifGift(true);
           changeTab("gift");
         }}
       />
