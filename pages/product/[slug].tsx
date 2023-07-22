@@ -49,9 +49,7 @@ const ProductPage = () => {
         backgroundImage: `url("${product?.images[0]}")`,
       }} />
       <Box paddingBottom="40px" position="relative">
-        <Typography component="p">
-          {nl2br(productDescription)}
-        </Typography>
+        <div dangerouslySetInnerHTML={{ __html: productDescription }}></div>
         <Button variant="outlined" onClick={() => setShowFull(!showFull)} sx={{
           position: "absolute",
           bottom: "5px",
