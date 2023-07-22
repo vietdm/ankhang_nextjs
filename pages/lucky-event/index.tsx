@@ -74,7 +74,7 @@ const LuckyEventPage = () => {
         if (propItems[indexGift].alias == 'MM') {
             Alert.success(`${propItems[indexGift].fullname}!`)
         } else {
-            Alert.success(`Chúc mừng bạn đã nhận được ${propItems[indexGift].fullname}!`);
+            Alert.success(`Chúc mừng bạn đã nhận được ${propItems[indexGift].fullname}! Bộ phân CSKH sẽ liên hệ tới bạn trong thời gian sớm nhất!`);
         }
         fetch.post('random-lucky-event/update', { event_id: eventId, gift: successGift })
             .then(() => {
