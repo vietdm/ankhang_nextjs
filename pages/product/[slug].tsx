@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { getQuantityOfProduct, saveCart } from "@/utils/helper/cart";
 import { fetch } from "@/libraries/axios";
 import { SinglePage } from "@/components/ui/SinglePage";
-import nl2br from "react-nl2br";
 
 const ProductPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
